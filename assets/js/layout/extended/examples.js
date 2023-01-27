@@ -16,7 +16,7 @@ const KTLayoutExamples = (function () {
 
         if (copy) {
           const clipboard = new ClipboardJS(copy, {
-            target: function (trigger) {
+            target (trigger) {
               const example = trigger.closest('.example')
               let el = KTUtil.find(example, '.example-code .tab-pane.active')
 
@@ -79,7 +79,7 @@ const KTLayoutExamples = (function () {
         // Handle copy
         if (copy) {
           var clipboard = new ClipboardJS(copy, {
-            target: function (trigger) {
+            target (trigger) {
               const example = trigger.closest('.example')
               let el = KTUtil.find(example, '.example-code .tab-pane.active')
 
@@ -105,7 +105,7 @@ const KTLayoutExamples = (function () {
   }
 
   return {
-    init: function (element, options) {
+    init (element, options) {
       initDefaultMode(element)
       initCompactMode(element)
     },

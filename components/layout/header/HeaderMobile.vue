@@ -27,7 +27,9 @@
         class="btn p-0 burger-icon ml-4"
       >
         <span>
-          <inline-svg src="media/svg/icons/Text/Align-left.svg" />
+          <inline-svg
+            :src="require('~/assets/media/svg/icons/Text/Align-left.svg')"
+          />
         </span>
       </button>
       <!--end::Header Menu Mobile Toggle-->
@@ -39,7 +41,9 @@
       >
         <span class="svg-icon svg-icon-xl">
           <!--begin::Svg Icon | path:svg/icons/General/User.svg-->
-          <inline-svg class="svg-icon" src="media/svg/icons/General/User.svg" />
+          <inline-svg
+            :src="require('~/assets/media/svg/icons/General/User.svg')"
+          />
           <!--end::Svg Icon-->
         </span>
       </button>
@@ -54,10 +58,13 @@ import { mapGetters } from 'vuex'
 import KTLayoutHeaderTopbar from '@/assets/js/layout/base/header-topbar.js'
 
 export default {
-  name: 'KTHeaderMobile',
+  name: 'HeaderMobile',
 
   computed: {
-    ...mapGetters(['layoutConfig', 'getClasses']),
+    ...mapGetters({
+      layoutConfig: 'config.module/layoutConfig',
+      getClasses: 'htmlclass.module/getClasses',
+    }),
 
     /**
      * Get header logo

@@ -37,7 +37,7 @@ const KTHeader = function (elementId, options) {
      * Run plugin
      * @returns {KTHeader}
      */
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('header')) {
         the = KTUtil.data(element).get('header')
       } else {
@@ -57,7 +57,7 @@ const KTHeader = function (elementId, options) {
      * Handles subheader click toggle
      * @returns {KTHeader}
      */
-    init: function (options) {
+    init (options) {
       the.events = []
 
       // merge default and user defined options
@@ -68,7 +68,7 @@ const KTHeader = function (elementId, options) {
      * Reset header
      * @returns {KTHeader}
      */
-    build: function () {
+    build () {
       let eventTriggerState = true
       let lastScrollTop = 0
 
@@ -154,7 +154,7 @@ const KTHeader = function (elementId, options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name, args) {
+    eventTrigger (name, args) {
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
         if (event.name == name) {
@@ -170,7 +170,7 @@ const KTHeader = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

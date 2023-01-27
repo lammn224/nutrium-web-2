@@ -1,16 +1,16 @@
 <template>
   <div class="d-flex flex-column flex-root">
     <!-- begin:: Header Mobile -->
-    <KTHeaderMobile></KTHeaderMobile>
+    <header-mobile></header-mobile>
     <!-- end:: Header Mobile -->
 
-    <Loader v-if="loaderEnabled" :logo="loaderLogo"></Loader>
+    <!--    <Loader v-if="loaderEnabled" :logo="loaderLogo"></Loader>-->
 
     <div class="d-flex flex-row flex-column-fluid page">
       <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
         <!-- begin:: Header -->
-        <KTHeader></KTHeader>
-        <!-- end:: Header -->
+        <MainHeader></MainHeader>
+        <!-- end:: header -->
 
         <!-- begin:: Content -->
         <div
@@ -27,7 +27,7 @@
             >
               <div class="d-lg-flex flex-row-fluid">
                 <!-- begin:: Aside Left -->
-                <KTAside v-if="asideEnabled"></KTAside>
+                <MainAside v-if="asideEnabled"></MainAside>
                 <!-- end:: Aside Left -->
                 <div class="content-wrapper flex-row-fluid">
                   <transition name="fade-in-up">
@@ -39,12 +39,12 @@
           </div>
         </div>
 
-        <KTFooter></KTFooter>
+        <MainFooter></MainFooter>
       </div>
     </div>
 
-    <KTStickyToolbar v-if="toolbarDisplay"></KTStickyToolbar>
-    <KTScrollTop></KTScrollTop>
+    <StickyToolbar v-if="toolbarDisplay"></StickyToolbar>
+    <ScrollTop></ScrollTop>
   </div>
 </template>
 
@@ -117,11 +117,16 @@ export default {
   },
 
   beforeMount() {
+    const htmlClass = new HtmlClass(this.$store)
+    htmlClass.init(this.layoutConfig())
     // show page loading
-    this.$store.dispatch(ADD_BODY_CLASSNAME, 'page-loading')
+    this.$store.dispatch(
+      `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+      'page-loading'
+    )
 
     // initialize html element classes
-    HtmlClass.init(this.layoutConfig())
+    htmlClass.init(this)
   },
   mounted() {
     // check if current user is authenticated
@@ -132,7 +137,10 @@ export default {
     // Simulate the delay page loading
     setTimeout(() => {
       // Remove page loader after some time
-      this.$store.dispatch(REMOVE_BODY_CLASSNAME, 'page-loading')
+      this.$store.dispatch(
+        `htmlclass.module/${REMOVE_BODY_CLASSNAME}`,
+        'page-loading'
+      )
     }, 2000)
   },
   methods: {

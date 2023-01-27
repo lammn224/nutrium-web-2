@@ -29,7 +29,7 @@ const KTDialog = function (options) {
      * Construct
      */
 
-    construct: function (options) {
+    construct (options) {
       Plugin.init(options)
 
       return the
@@ -38,7 +38,7 @@ const KTDialog = function (options) {
     /**
      * Handles subtoggle click toggle
      */
-    init: function (options) {
+    init (options) {
       the.events = []
 
       // merge default and user defined options
@@ -50,7 +50,7 @@ const KTDialog = function (options) {
     /**
      * Show dialog
      */
-    show: function () {
+    show () {
       Plugin.eventTrigger('show')
 
       element = document.createElement('DIV')
@@ -76,7 +76,7 @@ const KTDialog = function (options) {
     /**
      * Hide dialog
      */
-    hide: function () {
+    hide () {
       if (element) {
         Plugin.eventTrigger('hide')
 
@@ -92,7 +92,7 @@ const KTDialog = function (options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name) {
+    eventTrigger (name) {
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
 
@@ -109,7 +109,7 @@ const KTDialog = function (options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

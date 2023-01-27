@@ -18,7 +18,7 @@ const KTLayoutStickyCard = (function () {
         offset,
         zIndex: 90,
         position: {
-          top: function () {
+          top () {
             let pos = 0
             const body = KTUtil.getBody()
 
@@ -47,10 +47,10 @@ const KTLayoutStickyCard = (function () {
 
             return pos
           },
-          left: function (card) {
+          left (card) {
             return KTUtil.offset(_element).left
           },
-          right: function (card) {
+          right (card) {
             const body = KTUtil.getBody()
 
             const cardWidth = parseInt(KTUtil.css(_element, 'width'))
@@ -72,7 +72,7 @@ const KTLayoutStickyCard = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
@@ -83,7 +83,7 @@ const KTLayoutStickyCard = (function () {
       _init()
     },
 
-    update: function () {
+    update () {
       if (_object) {
         _object.updateSticky()
       }

@@ -31,7 +31,7 @@ const KTScrolltop = function (elementId, options) {
      * Run plugin
      * @returns {mscrolltop}
      */
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('scrolltop')) {
         the = KTUtil.data(element).get('scrolltop')
       } else {
@@ -51,14 +51,14 @@ const KTScrolltop = function (elementId, options) {
      * Handles subscrolltop click toggle
      * @returns {mscrolltop}
      */
-    init: function (options) {
+    init (options) {
       the.events = []
 
       // merge default and user defined options
       the.options = KTUtil.deepExtend({}, defaultOptions, options)
     },
 
-    build: function () {
+    build () {
       let timer
 
       window.addEventListener('scroll', function () {
@@ -78,7 +78,7 @@ const KTScrolltop = function (elementId, options) {
     /**
      * Handles scrolltop click scrollTop
      */
-    handle: function () {
+    handle () {
       const pos = KTUtil.getScrollTop() // current vertical position
 
       if (pos > the.options.offset) {
@@ -93,7 +93,7 @@ const KTScrolltop = function (elementId, options) {
     /**
      * Handles scrolltop click scrollTop
      */
-    scroll: function (e) {
+    scroll (e) {
       e.preventDefault()
 
       KTUtil.scrollTop(0, the.options.speed)
@@ -102,7 +102,7 @@ const KTScrolltop = function (elementId, options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name, args) {
+    eventTrigger (name, args) {
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
         if (event.name == name) {
@@ -118,7 +118,7 @@ const KTScrolltop = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

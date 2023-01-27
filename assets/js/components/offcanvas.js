@@ -26,7 +26,7 @@ const KTOffcanvas = function (elementId, options) {
   /// /////////////////////////
 
   var Plugin = {
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('offcanvas')) {
         the = KTUtil.data(element).get('offcanvas')
       } else {
@@ -42,7 +42,7 @@ const KTOffcanvas = function (elementId, options) {
       return the
     },
 
-    init: function (options) {
+    init (options) {
       the.events = []
 
       // merge default and user defined options
@@ -57,7 +57,7 @@ const KTOffcanvas = function (elementId, options) {
       the.state = KTUtil.hasClass(element, the.classShown) ? 'shown' : 'hidden'
     },
 
-    build: function () {
+    build () {
       // offcanvas toggle
       if (the.options.toggleBy) {
         if (typeof the.options.toggleBy === 'string') {
@@ -120,11 +120,11 @@ const KTOffcanvas = function (elementId, options) {
       }
     },
 
-    isShown: function () {
+    isShown () {
       return the.state == 'shown'
     },
 
-    toggle: function () {
+    toggle () {
       Plugin.eventTrigger('toggle')
 
       if (the.state == 'shown') {
@@ -134,7 +134,7 @@ const KTOffcanvas = function (elementId, options) {
       }
     },
 
-    show: function () {
+    show () {
       if (the.state == 'shown') {
         return
       }
@@ -168,7 +168,7 @@ const KTOffcanvas = function (elementId, options) {
       Plugin.eventTrigger('afterShow')
     },
 
-    hide: function () {
+    hide () {
       if (the.state == 'hidden') {
         return
       }
@@ -193,7 +193,7 @@ const KTOffcanvas = function (elementId, options) {
       Plugin.eventTrigger('afterHide')
     },
 
-    toggleClass: function (mode) {
+    toggleClass (mode) {
       const id = KTUtil.attr(the.target, 'id')
       let toggleBy
 
@@ -224,7 +224,7 @@ const KTOffcanvas = function (elementId, options) {
       }
     },
 
-    eventTrigger: function (name, args) {
+    eventTrigger (name, args) {
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
         if (event.name == name) {
@@ -240,7 +240,7 @@ const KTOffcanvas = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

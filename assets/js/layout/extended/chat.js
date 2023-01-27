@@ -21,7 +21,7 @@ const KTLayoutChat = (function () {
       resetHeightOnDestroy: true, // reset css height on scroll feature destroyed
       handleWindowResize: true, // recalculate hight on window resize
       rememberPosition: true, // remember scroll position in cookie
-      height: function () {
+      height () {
         // calculate height
         let height
 
@@ -164,7 +164,7 @@ const KTLayoutChat = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       // Init modal chat example
       _init(KTUtil.getById(id))
 
@@ -187,7 +187,7 @@ const KTLayoutChat = (function () {
       }
     },
 
-    setup: function (element) {
+    setup (element) {
       _init(element)
     },
   }

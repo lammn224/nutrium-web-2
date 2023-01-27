@@ -30,7 +30,7 @@ const KTLayoutHeader = (function () {
 
   // Public methods
   return {
-    init: function (id, idForMobile) {
+    init (id, idForMobile) {
       _element = KTUtil.getById(id)
       _elementForMobile = KTUtil.getById(idForMobile)
 
@@ -38,31 +38,31 @@ const KTLayoutHeader = (function () {
       }
     },
 
-    isFixed: function () {
+    isFixed () {
       return KTUtil.hasClass(KTUtil.getBody(), 'header-fixed')
     },
 
-    isFixedForMobile: function () {
+    isFixedForMobile () {
       return KTUtil.hasClass(KTUtil.getBody(), 'header-mobile-fixed')
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
 
-    getElementForMobile: function () {
+    getElementForMobile () {
       return _elementForMobile
     },
 
-    getHeader: function () {
+    getHeader () {
       return _object
     },
 
-    getHeight: function () {
+    getHeight () {
       return _getHeight()
     },
 
-    getHeightForMobile: function () {
+    getHeightForMobile () {
       return _getHeightForMobile()
     },
   }

@@ -32,7 +32,7 @@ const KTWizard = function (elementId, options) {
      * Construct
      */
 
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('wizard')) {
         the = KTUtil.data(element).get('wizard')
       } else {
@@ -51,7 +51,7 @@ const KTWizard = function (elementId, options) {
     /**
      * Init wizard
      */
-    init: function (options) {
+    init (options) {
       the.element = element
       the.events = []
 
@@ -85,7 +85,7 @@ const KTWizard = function (elementId, options) {
     /**
      * Build Form Wizard
      */
-    build: function () {
+    build () {
       if (the.options.navigation) {
         // Next button event handler
         KTUtil.addEvent(the.btnNext, 'click', function (e) {
@@ -140,7 +140,7 @@ const KTWizard = function (elementId, options) {
     /**
      * Handles wizard click wizard
      */
-    goTo: function (number) {
+    goTo (number) {
       // Skip if stopped
       if (the.stopped === true) {
         the.stopped = false
@@ -170,42 +170,42 @@ const KTWizard = function (elementId, options) {
     /**
      * Stop wizard
      */
-    stop: function () {
+    stop () {
       the.stopped = true
     },
 
     /**
      * Resume wizard
      */
-    resume: function () {
+    resume () {
       the.stopped = false
     },
 
     /**
      * Check last step
      */
-    isLastStep: function () {
+    isLastStep () {
       return the.currentStep === the.totalSteps
     },
 
     /**
      * Check first step
      */
-    isFirstStep: function () {
+    isFirstStep () {
       return the.currentStep === 1
     },
 
     /**
      * Check between step
      */
-    isBetweenStep: function () {
+    isBetweenStep () {
       return Plugin.isLastStep() === false && Plugin.isFirstStep() === false
     },
 
     /**
      * Update wizard UI after step change
      */
-    updateUI: function () {
+    updateUI () {
       let stepType = ''
       const index = the.currentStep - 1
 
@@ -268,7 +268,7 @@ const KTWizard = function (elementId, options) {
     /**
      * Get next step number
      */
-    getNextStep: function () {
+    getNextStep () {
       if (the.totalSteps >= the.currentStep + 1) {
         return the.currentStep + 1
       } else {
@@ -279,7 +279,7 @@ const KTWizard = function (elementId, options) {
     /**
      * Get prev step number
      */
-    getPrevStep: function () {
+    getPrevStep () {
       if (the.currentStep - 1 >= 1) {
         return the.currentStep - 1
       } else {
@@ -290,21 +290,21 @@ const KTWizard = function (elementId, options) {
     /**
      * Get new step number
      */
-    getNewStep: function () {
+    getNewStep () {
       return the.newStep
     },
 
     /**
      * Set new step
      */
-    setNewStep: function (step) {
+    setNewStep (step) {
       the.newStep = step
     },
 
     /**
      * Trigger events
      */
-    eventTrigger: function (name, nested) {
+    eventTrigger (name, nested) {
       // KTUtil.triggerCustomEvent(name);
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
@@ -321,7 +321,7 @@ const KTWizard = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

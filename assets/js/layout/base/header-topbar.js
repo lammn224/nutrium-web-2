@@ -1,5 +1,8 @@
 'use strict'
 
+import KTToggle from "~/assets/js/components/toggle";
+import KTUtil from "~/assets/js/components/util";
+
 const KTLayoutHeaderTopbar = (function () {
   // Private properties
   let _toggleElement
@@ -15,7 +18,7 @@ const KTLayoutHeaderTopbar = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _toggleElement = KTUtil.getById(id)
 
       if (!_toggleElement) {
@@ -26,7 +29,7 @@ const KTLayoutHeaderTopbar = (function () {
       _init()
     },
 
-    getToggleElement: function () {
+    getToggleElement () {
       return _toggleElement
     },
   }

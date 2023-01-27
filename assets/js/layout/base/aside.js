@@ -1,5 +1,8 @@
 'use strict'
 
+import KTUtil from "~/assets/js/components/util";
+import KTOffcanvas from "~/assets/js/components/offcanvas";
+
 const KTLayoutAside = (function () {
   // Private properties
   let _body
@@ -31,7 +34,7 @@ const KTLayoutAside = (function () {
       disableForMobile: true,
       resetHeightOnDestroy: true,
       handleWindowResize: true,
-      height: function () {
+      height () {
         let height = parseInt(KTUtil.getViewPort().height)
 
         height =
@@ -46,7 +49,7 @@ const KTLayoutAside = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
       _asideMenuWrapperElement = KTUtil.getById('kt_aside_menu_wrapper')
       _body = KTUtil.getBody()
@@ -60,11 +63,11 @@ const KTLayoutAside = (function () {
       _initScroll()
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
 
-    getOffcanvas: function () {
+    getOffcanvas () {
       return _offcanvasObject
     },
   }

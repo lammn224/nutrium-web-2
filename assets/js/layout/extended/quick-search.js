@@ -24,7 +24,7 @@ const KTLayoutQuickSearch = (function () {
       disableForMobile: true,
       resetHeightOnDestroy: true,
       handleWindowResize: true,
-      height: function () {
+      height () {
         let height = parseInt(KTUtil.getViewPort().height)
 
         if (header) {
@@ -59,7 +59,7 @@ const KTLayoutQuickSearch = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
@@ -70,7 +70,7 @@ const KTLayoutQuickSearch = (function () {
       _init()
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
   }

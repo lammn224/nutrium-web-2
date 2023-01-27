@@ -1,5 +1,8 @@
 'use strict'
 
+import KTOffcanvas from "~/assets/js/components/offcanvas";
+import KTUtil from "~/assets/js/components/util";
+
 const KTLayoutQuickActions = (function () {
   // Private properties
   let _element
@@ -22,7 +25,7 @@ const KTLayoutQuickActions = (function () {
       disableForMobile: true,
       resetHeightOnDestroy: true,
       handleWindowResize: true,
-      height: function () {
+      height () {
         let height = parseInt(KTUtil.getViewPort().height)
 
         if (header) {
@@ -48,7 +51,7 @@ const KTLayoutQuickActions = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
@@ -59,7 +62,7 @@ const KTLayoutQuickActions = (function () {
       _init()
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
   }

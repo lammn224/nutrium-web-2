@@ -3,7 +3,7 @@
   <div
     id="kt_footer"
     class="footer kt-grid__item bgi-position-center-center bgi-size-cover bgi-no-cover"
-    style="background-image: url('media/bg/bg-2.jpg')"
+    style="background-image: url('assets/media/bg/bg-2.jpg')"
   >
     <!--begin::Container-->
     <div class="container py-lg-18 py-8">
@@ -87,7 +87,7 @@
         <div class="d-flex align-items-center order-lg-1 order-2">
           <img
             alt="Logo"
-            src="media/logos/logo-letter-1.png"
+            src="~assets/media/logos/logo-letter-1.png"
             class="logo-sticky max-h-35px"
           />
           <span class="text-muted font-weight-bold mx-2">2020©</span>

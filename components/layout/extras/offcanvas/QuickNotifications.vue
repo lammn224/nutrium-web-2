@@ -63,7 +63,7 @@
 import KTLayoutQuickNotifications from '@/assets/js/layout/extended/quick-notifications.js'
 
 export default {
-  name: 'KTQuickPanel',
+  name: 'KTQuickNotifications',
   data() {
     return {
       list1: [

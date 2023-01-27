@@ -46,7 +46,7 @@ const KTMenu = function (elementId, options) {
      * Run plugin
      * @returns {KTMenu}
      */
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('menu')) {
         the = KTUtil.data(element).get('menu')
       } else {
@@ -69,7 +69,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu click toggle
      * @returns {KTMenu}
      */
-    init: function (options) {
+    init (options) {
       the.events = []
 
       the.eventHandlers = {}
@@ -83,7 +83,7 @@ const KTMenu = function (elementId, options) {
       the.uid = KTUtil.getUniqueID()
     },
 
-    update: function (options) {
+    update (options) {
       // merge default and user defined options
       the.options = KTUtil.deepExtend({}, defaultOptions, options)
 
@@ -101,7 +101,7 @@ const KTMenu = function (elementId, options) {
       KTUtil.data(element).set('menu', the)
     },
 
-    reload: function () {
+    reload () {
       // reset menu
       Plugin.reset()
 
@@ -116,7 +116,7 @@ const KTMenu = function (elementId, options) {
      * Reset menu
      * @returns {KTMenu}
      */
-    build: function () {
+    build () {
       // General accordion submenu toggle
       the.eventHandlers.event_1 = KTUtil.on(
         element,
@@ -177,7 +177,7 @@ const KTMenu = function (elementId, options) {
      * Reset menu
      * @returns {KTMenu}
      */
-    reset: function () {
+    reset () {
       KTUtil.off(element, 'click', the.eventHandlers.event_1)
 
       // dropdown submenu - hover toggle
@@ -196,7 +196,7 @@ const KTMenu = function (elementId, options) {
      * Init scroll menu
      *
      */
-    scrollInit: function () {
+    scrollInit () {
       if (the.options.scroll && the.options.scroll.height) {
         KTUtil.scrollDestroy(element, true)
         KTUtil.scrollInit(element, {
@@ -215,7 +215,7 @@ const KTMenu = function (elementId, options) {
     /**
      * Update scroll menu
      */
-    scrollUpdate: function () {
+    scrollUpdate () {
       if (the.options.scroll && the.options.scroll.height) {
         KTUtil.scrollUpdate(element)
       }
@@ -224,7 +224,7 @@ const KTMenu = function (elementId, options) {
     /**
      * Scroll top
      */
-    scrollTop: function () {
+    scrollTop () {
       if (the.options.scroll && the.options.scroll.height) {
         KTUtil.scrollTop(element)
       }
@@ -234,7 +234,7 @@ const KTMenu = function (elementId, options) {
      * Get submenu mode for current breakpoint and menu state
      * @returns {KTMenu}
      */
-    getSubmenuMode: function (el) {
+    getSubmenuMode (el) {
       if (KTUtil.isBreakpointUp('lg')) {
         if (
           el &&
@@ -273,7 +273,7 @@ const KTMenu = function (elementId, options) {
      * Get submenu mode for current breakpoint and menu state
      * @returns {KTMenu}
      */
-    isConditionalSubmenuDropdown: function () {
+    isConditionalSubmenuDropdown () {
       if (
         KTUtil.isBreakpointUp('lg') &&
         KTUtil.isset(the.options.submenu, 'desktop.state.body')
@@ -288,7 +288,7 @@ const KTMenu = function (elementId, options) {
      * Reset submenu attributes
      * @returns {KTMenu}
      */
-    resetSubmenuProps: function (e) {
+    resetSubmenuProps (e) {
       const submenus = KTUtil.findAll(element, '.menu-submenu')
       if (submenus) {
         for (let i = 0, len = submenus.length; i < len; i++) {
@@ -310,7 +310,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu hover toggle
      * @returns {KTMenu}
      */
-    handleSubmenuDrodownHoverEnter: function (e) {
+    handleSubmenuDrodownHoverEnter (e) {
       if (Plugin.getSubmenuMode(this) === 'accordion') {
         return
       }
@@ -334,7 +334,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu hover toggle
      * @returns {KTMenu}
      */
-    handleSubmenuDrodownHoverExit: function (e) {
+    handleSubmenuDrodownHoverExit (e) {
       if (the.resumeDropdownHover() === false) {
         return
       }
@@ -360,7 +360,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu click toggle
      * @returns {KTMenu}
      */
-    handleSubmenuDropdownClick: function (e) {
+    handleSubmenuDropdownClick (e) {
       if (Plugin.getSubmenuMode(this) === 'accordion') {
         return
       }
@@ -392,7 +392,7 @@ const KTMenu = function (elementId, options) {
      * Handles tab click toggle
      * @returns {KTMenu}
      */
-    handleSubmenuDropdownTabClick: function (e) {
+    handleSubmenuDropdownTabClick (e) {
       if (Plugin.getSubmenuMode(this) === 'accordion') {
         return
       }
@@ -420,7 +420,7 @@ const KTMenu = function (elementId, options) {
      * Handles link click
      * @returns {KTMenu}
      */
-    handleLinkClick: function (e) {
+    handleLinkClick (e) {
       const submenu = this.closest('.menu-item.menu-item-submenu')
 
       // Trigger click event handlers
@@ -438,7 +438,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu dropdown close on link click
      * @returns {KTMenu}
      */
-    handleSubmenuDropdownClose: function (e, el) {
+    handleSubmenuDropdownClose (e, el) {
       // exit if its not submenu dropdown mode
       if (Plugin.getSubmenuMode(el) === 'accordion') {
         return
@@ -465,7 +465,7 @@ const KTMenu = function (elementId, options) {
      * helper functions
      * @returns {KTMenu}
      */
-    handleSubmenuAccordion: function (e, el) {
+    handleSubmenuAccordion (e, el) {
       let query
       const item = el || this
 
@@ -546,7 +546,7 @@ const KTMenu = function (elementId, options) {
      * scroll to item function
      * @returns {KTMenu}
      */
-    scrollToItem: function (item) {
+    scrollToItem (item) {
       // handle auto scroll for accordion submenus
       if (
         KTUtil.isBreakpointUp('lg') &&
@@ -561,7 +561,7 @@ const KTMenu = function (elementId, options) {
      * Hide submenu dropdown
      * @returns {KTMenu}
      */
-    hideSubmenuDropdown: function (item, classAlso) {
+    hideSubmenuDropdown (item, classAlso) {
       // remove submenu activation class
       if (classAlso) {
         KTUtil.removeClass(item, 'menu-item-hover')
@@ -584,7 +584,7 @@ const KTMenu = function (elementId, options) {
      * Hide submenu dropdowns
      * @returns {KTMenu}
      */
-    hideSubmenuDropdowns: function () {
+    hideSubmenuDropdowns () {
       let items
       if (
         (items = element.querySelectorAll(
@@ -601,7 +601,7 @@ const KTMenu = function (elementId, options) {
      * helper functions
      * @returns {KTMenu}
      */
-    showSubmenuDropdown: function (item) {
+    showSubmenuDropdown (item) {
       // close active submenus
       const list = element.querySelectorAll(
         '.menu-item-submenu.menu-item-hover, .menu-item-submenu.menu-item-active-tab'
@@ -651,7 +651,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu slide toggle
      * @returns {KTMenu}
      */
-    createSubmenuDropdownClickDropoff: function (el) {
+    createSubmenuDropdownClickDropoff (el) {
       let query
       const zIndex =
         (query = KTUtil.child(el, '.menu-submenu')
@@ -678,7 +678,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu hover toggle
      * @returns {KTMenu}
      */
-    pauseDropdownHover: function (time) {
+    pauseDropdownHover (time) {
       const date = new Date()
 
       the.pauseDropdownHoverTime = date.getTime() + time
@@ -688,7 +688,7 @@ const KTMenu = function (elementId, options) {
      * Handles submenu hover toggle
      * @returns {KTMenu}
      */
-    resumeDropdownHover: function () {
+    resumeDropdownHover () {
       const date = new Date()
 
       return date.getTime() > the.pauseDropdownHoverTime
@@ -698,7 +698,7 @@ const KTMenu = function (elementId, options) {
      * Reset menu's current active item
      * @returns {KTMenu}
      */
-    resetActiveItem: function (item) {
+    resetActiveItem (item) {
       let list
       let parents
 
@@ -731,7 +731,7 @@ const KTMenu = function (elementId, options) {
      * Sets menu's active item
      * @returns {KTMenu}
      */
-    setActiveItem: function (item) {
+    setActiveItem (item) {
       // reset current active item
       Plugin.resetActiveItem()
 
@@ -747,7 +747,7 @@ const KTMenu = function (elementId, options) {
      * Returns page breadcrumbs for the menu's active item
      * @returns {KTMenu}
      */
-    getBreadcrumbs: function (item) {
+    getBreadcrumbs (item) {
       let query
       const breadcrumbs = []
       const link = KTUtil.child(item, '.menu-link')
@@ -778,7 +778,7 @@ const KTMenu = function (elementId, options) {
      * Returns page title for the menu's active item
      * @returns {KTMenu}
      */
-    getPageTitle: function (item) {
+    getPageTitle (item) {
       let query
 
       return (query = KTUtil.child(item, '.menu-text') ? query.innerHTML : '')
@@ -787,7 +787,7 @@ const KTMenu = function (elementId, options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name, target, e) {
+    eventTrigger (name, target, e) {
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
         if (event.name == name) {
@@ -803,7 +803,7 @@ const KTMenu = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,
@@ -812,7 +812,7 @@ const KTMenu = function (elementId, options) {
       })
     },
 
-    removeEvent: function (name) {
+    removeEvent (name) {
       if (the.events[name]) {
         delete the.events[name]
       }

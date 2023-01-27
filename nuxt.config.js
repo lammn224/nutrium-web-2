@@ -29,14 +29,15 @@ export default {
   css: ['~/assets/sass/plugins.scss', '~/assets/sass/style.vue.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/vue-inline-svg', '~/plugins/vue2-perfect-scrollbar'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
     '~/components',
     '~/components/layout',
     '~/components/layout/header',
-    '~/components/layout/extras',
+    '~/components/layout/footer',
+    '~/components/layout/extras/',
     '~/components/layout/extras/dropdown',
     '~/components/layout/extras/offcanvas',
     '~/components/layout/aside',
@@ -53,7 +54,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['bootstrap-vue/nuxt', '@nuxt/components'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

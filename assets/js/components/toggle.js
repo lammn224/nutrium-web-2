@@ -30,7 +30,7 @@ const KTToggle = function (toggleElement, targetElement, options) {
      * Construct
      */
 
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('toggle')) {
         the = KTUtil.data(element).get('toggle')
       } else {
@@ -49,7 +49,7 @@ const KTToggle = function (toggleElement, targetElement, options) {
     /**
      * Handles subtoggle click toggle
      */
-    init: function (options) {
+    init (options) {
       the.element = element
       the.events = []
 
@@ -76,14 +76,14 @@ const KTToggle = function (toggleElement, targetElement, options) {
     /**
      * Setup toggle
      */
-    build: function () {
+    build () {
       KTUtil.addEvent(element, 'mouseup', Plugin.toggle)
     },
 
     /**
      * Handles offcanvas click toggle
      */
-    toggle: function (e) {
+    toggle (e) {
       Plugin.eventTrigger('beforeToggle')
 
       if (the.state == 'off') {
@@ -102,7 +102,7 @@ const KTToggle = function (toggleElement, targetElement, options) {
     /**
      * Handles toggle click toggle
      */
-    toggleOn: function () {
+    toggleOn () {
       Plugin.eventTrigger('beforeOn')
 
       if (the.options.targetToggleMode == 'class') {
@@ -127,7 +127,7 @@ const KTToggle = function (toggleElement, targetElement, options) {
     /**
      * Handles toggle click toggle
      */
-    toggleOff: function () {
+    toggleOff () {
       Plugin.eventTrigger('beforeOff')
 
       if (the.options.targetToggleMode == 'class') {
@@ -152,7 +152,7 @@ const KTToggle = function (toggleElement, targetElement, options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name) {
+    eventTrigger (name) {
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
 
@@ -169,7 +169,7 @@ const KTToggle = function (toggleElement, targetElement, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

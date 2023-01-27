@@ -5,7 +5,9 @@
       class="btn btn-icon btn-sm btn-clean btn-text-dark-75"
     >
       <span class="svg-icon svg-icon-lg">
-        <inline-svg src="media/svg/icons/Media/Equalizer.svg" />
+        <inline-svg
+          :src="require('assets/media/svg/icons/Media/Equalizer.svg')"
+        />
       </span>
     </div>
 

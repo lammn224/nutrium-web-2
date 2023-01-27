@@ -1,5 +1,8 @@
 'use strict'
 
+import KTUtil from "~/assets/js/components/util";
+import KTOffcanvas from "~/assets/js/components/offcanvas";
+
 const KTLayoutQuickPanel = (function () {
   // Private properties
   let _element
@@ -51,7 +54,7 @@ const KTLayoutQuickPanel = (function () {
       mobileNativeScroll: true,
       resetHeightOnDestroy: true,
       handleWindowResize: true,
-      height: function () {
+      height () {
         return _getContentHeight()
       },
     })
@@ -62,7 +65,7 @@ const KTLayoutQuickPanel = (function () {
       mobileNativeScroll: true,
       resetHeightOnDestroy: true,
       handleWindowResize: true,
-      height: function () {
+      height () {
         return _getContentHeight()
       },
     })
@@ -73,7 +76,7 @@ const KTLayoutQuickPanel = (function () {
       mobileNativeScroll: true,
       resetHeightOnDestroy: true,
       handleWindowResize: true,
-      height: function () {
+      height () {
         return _getContentHeight()
       },
     })
@@ -91,7 +94,7 @@ const KTLayoutQuickPanel = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
       _notificationsElement = KTUtil.getById('kt_quick_panel_notifications')
       _logsElement = KTUtil.getById('kt_quick_panel_logs')

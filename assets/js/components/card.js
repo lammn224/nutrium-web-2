@@ -35,7 +35,7 @@ const KTCard = function (elementId, options) {
      * Construct
      */
 
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('card')) {
         the = KTUtil.data(element).get('card')
       } else {
@@ -54,7 +54,7 @@ const KTCard = function (elementId, options) {
     /**
      * Init card
      */
-    init: function (options) {
+    init (options) {
       the.element = element
       the.events = []
 
@@ -73,7 +73,7 @@ const KTCard = function (elementId, options) {
     /**
      * Build Form Wizard
      */
-    build: function () {
+    build () {
       // Remove
       const remove = KTUtil.find(the.header, '[data-card-tool=remove]')
       if (remove) {
@@ -105,7 +105,7 @@ const KTCard = function (elementId, options) {
     /**
      * Enable stickt mode
      */
-    initSticky: function () {
+    initSticky () {
       const lastScrollTop = 0
       const offset = the.options.sticky.offset
 
@@ -119,7 +119,7 @@ const KTCard = function (elementId, options) {
     /**
      * Window scroll handle event for sticky card
      */
-    onScrollSticky: function (e) {
+    onScrollSticky (e) {
       const offset = the.options.sticky.offset
 
       if (isNaN(offset)) return
@@ -145,7 +145,7 @@ const KTCard = function (elementId, options) {
       }
     },
 
-    updateSticky: function () {
+    updateSticky () {
       if (!the.header) {
         return
       }
@@ -180,7 +180,7 @@ const KTCard = function (elementId, options) {
       }
     },
 
-    resetSticky: function () {
+    resetSticky () {
       if (!the.header) {
         return
       }
@@ -196,7 +196,7 @@ const KTCard = function (elementId, options) {
     /**
      * Remove card
      */
-    remove: function () {
+    remove () {
       if (Plugin.eventTrigger('beforeRemove') === false) {
         return
       }
@@ -215,7 +215,7 @@ const KTCard = function (elementId, options) {
     /**
      * Set content
      */
-    setContent: function (html) {
+    setContent (html) {
       if (html) {
         the.body.innerHTML = html
       }
@@ -224,28 +224,28 @@ const KTCard = function (elementId, options) {
     /**
      * Get body
      */
-    getBody: function () {
+    getBody () {
       return the.body
     },
 
     /**
      * Get self
      */
-    getSelf: function () {
+    getSelf () {
       return element
     },
 
     /**
      * Reload
      */
-    reload: function () {
+    reload () {
       Plugin.eventTrigger('reload')
     },
 
     /**
      * Toggle
      */
-    toggle: function () {
+    toggle () {
       if (
         KTUtil.hasClass(element, 'card-collapse') ||
         KTUtil.hasClass(element, 'card-collapsed')
@@ -259,7 +259,7 @@ const KTCard = function (elementId, options) {
     /**
      * Collapse
      */
-    collapse: function () {
+    collapse () {
       if (Plugin.eventTrigger('beforeCollapse') === false) {
         return
       }
@@ -274,7 +274,7 @@ const KTCard = function (elementId, options) {
     /**
      * Expand
      */
-    expand: function () {
+    expand () {
       if (Plugin.eventTrigger('beforeExpand') === false) {
         return
       }
@@ -290,7 +290,7 @@ const KTCard = function (elementId, options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name) {
+    eventTrigger (name) {
       // KTUtil.triggerCustomEvent(name);
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
@@ -307,7 +307,7 @@ const KTCard = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

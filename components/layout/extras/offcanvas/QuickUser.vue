@@ -5,7 +5,9 @@
       class="btn btn-icon btn-sm btn-clean btn-text-dark-75"
     >
       <span class="svg-icon svg-icon-lg">
-        <inline-svg src="media/svg/icons/General/User.svg" />
+        <inline-svg
+          :src="require('~/assets/media/svg/icons/General/User.svg')"
+        />
       </span>
     </div>
 
@@ -58,7 +60,7 @@
                     <span class="svg-icon svg-icon-lg svg-icon-primary">
                       <!--begin::Svg Icon-->
                       <inline-svg
-                        src="media/svg/icons/Communication/Mail-notification.svg"
+                        src="assets/media/svg/icons/Communication/Mail-notification.svg"
                       />
                       <!--end::Svg Icon-->
                     </span>
@@ -91,7 +93,7 @@
                   <span class="svg-icon svg-icon-md svg-icon-success">
                     <!--begin::Svg Icon-->
                     <inline-svg
-                      src="media/svg/icons/General/Notification2.svg"
+                      src="assets/media/svg/icons/General/Notification2.svg"
                     />
                     <!--end::Svg Icon-->
                   </span>
@@ -123,7 +125,9 @@
                 <div class="symbol-label">
                   <span class="svg-icon svg-icon-md svg-icon-warning">
                     <!--begin::Svg Icon-->
-                    <inline-svg src="media/svg/icons/Shopping/Chart-bar1.svg" />
+                    <inline-svg
+                      src="assets/media/svg/icons/Shopping/Chart-bar1.svg"
+                    />
                     <!--end::Svg Icon-->
                   </span>
                 </div>
@@ -147,7 +151,9 @@
                 <div class="symbol-label">
                   <span class="svg-icon svg-icon-md svg-icon-danger">
                     <!--begin::Svg Icon-->
-                    <inline-svg src="media/svg/icons/Files/Selected-file.svg" />
+                    <inline-svg
+                      src="assets/media/svg/icons/Files/Selected-file.svg"
+                    />
                     <!--end::Svg Icon-->
                   </span>
                 </div>
@@ -172,7 +178,7 @@
                   <span class="svg-icon svg-icon-md svg-icon-primary">
                     <!--begin::Svg Icon-->
                     <inline-svg
-                      src="media/svg/icons/Communication/Mail-opened.svg"
+                      src="assets/media/svg/icons/Communication/Mail-opened.svg"
                     />
                     <!--end::Svg Icon-->
                   </span>
@@ -248,28 +254,28 @@ export default {
           title: 'Another purpose persuade',
           desc: 'Due in 2 Days',
           alt: '+28%',
-          svg: 'media/svg/icons/Home/Library.svg',
+          svg: 'assets/media/svg/icons/Home/Library.svg',
           type: 'warning',
         },
         {
           title: 'Would be to people',
           desc: 'Due in 2 Days',
           alt: '+50%',
-          svg: 'media/svg/icons/Communication/Write.svg',
+          svg: 'assets/media/svg/icons/Communication/Write.svg',
           type: 'success',
         },
         {
           title: 'Purpose would be to persuade',
           desc: 'Due in 2 Days',
           alt: '-27%',
-          svg: 'media/svg/icons/Communication/Group-chat.svg',
+          svg: 'assets/media/svg/icons/Communication/Group-chat.svg',
           type: 'danger',
         },
         {
           title: 'The best product',
           desc: 'Due in 2 Days',
           alt: '+8%',
-          svg: 'media/svg/icons/General/Attachment2.svg',
+          svg: 'assets/media/svg/icons/General/Attachment2.svg',
           type: 'info',
         },
       ],
@@ -277,7 +283,7 @@ export default {
   },
   computed: {
     picture() {
-      return process.env.BASE_URL + 'media/users/300_21.jpg'
+      return process.env.BASE_URL + 'assets/media/users/300_21.jpg'
     },
   },
   mounted() {

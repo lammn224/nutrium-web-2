@@ -1,5 +1,8 @@
 'use strict'
 
+import KTScrolltop from "~/assets/js/components/scrolltop";
+import KTUtil from "~/assets/js/components/util";
+
 const KTLayoutScrolltop = (function () {
   // Private properties
   let _element
@@ -15,7 +18,7 @@ const KTLayoutScrolltop = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
@@ -26,7 +29,7 @@ const KTLayoutScrolltop = (function () {
       _init()
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
   }

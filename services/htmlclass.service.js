@@ -4,10 +4,13 @@ import {
   REMOVE_BODY_CLASSNAME,
   ADD_CLASSNAME,
 } from '~/store/htmlclass.module'
-import store from '~/store'
 
-const HtmlClass = {
-  config: null,
+export default class HtmlClass {
+  constructor(store) {
+    this.store = store
+  }
+
+  config = null
 
   init(config) {
     if (typeof config !== 'undefined') {
@@ -26,7 +29,7 @@ const HtmlClass = {
 
     // init footer
     this.initFooter()
-  },
+  }
 
   /**
    * Init Layout
@@ -39,7 +42,10 @@ const HtmlClass = {
       if (_selfBodyClass) {
         const bodyClasses = _selfBodyClass.split(' ')
         bodyClasses.forEach((cssClass) => {
-          store.dispatch(ADD_BODY_CLASSNAME, cssClass)
+          this.store.dispatch(
+            `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+            cssClass
+          )
         })
       }
     }
@@ -50,13 +56,25 @@ const HtmlClass = {
     }
 
     // Offcanvas directions
-    store.dispatch(ADD_BODY_CLASSNAME, 'quick-panel-right')
-    store.dispatch(ADD_BODY_CLASSNAME, 'demo-panel-right')
-    store.dispatch(ADD_BODY_CLASSNAME, 'offcanvas-right')
+    this.store.dispatch(
+      `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+      'quick-panel-right'
+    )
+    this.store.dispatch(
+      `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+      'demo-panel-right'
+    )
+    this.store.dispatch(
+      `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+      'offcanvas-right'
+    )
 
     // Properly close mobile header menu
-    store.dispatch(REMOVE_BODY_CLASSNAME, 'header-menu-wrapper-on')
-  },
+    this.store.dispatch(
+      `htmlclass.module/${REMOVE_BODY_CLASSNAME}`,
+      'header-menu-wrapper-on'
+    )
+  }
 
   /**
    * Init Header
@@ -64,25 +82,34 @@ const HtmlClass = {
   initHeader() {
     // Fixed header
     if (objectPath.get(this.config, 'header.self.fixed.desktop')) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'header-fixed')
-      store.dispatch(ADD_CLASSNAME, {
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'header-fixed'
+      )
+      this.store.dispatch(`htmlclass.module/${ADD_CLASSNAME}`, {
         position: 'header',
         className: 'header-fixed',
       })
     } else {
-      store.dispatch(ADD_BODY_CLASSNAME, 'header-static')
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'header-static'
+      )
     }
 
     if (objectPath.get(this.config, 'header.self.fixed.mobile')) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'header-mobile-fixed')
-      store.dispatch(ADD_CLASSNAME, {
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'header-mobile-fixed'
+      )
+      this.store.dispatch(`htmlclass.module/${ADD_CLASSNAME}`, {
         position: 'header_mobile',
         className: 'header-mobile-fixed',
       })
     }
 
     if (objectPath.get(this.config, 'header.menu.self.display')) {
-      store.dispatch(ADD_CLASSNAME, {
+      this.store.dispatch(`htmlclass.module/${ADD_CLASSNAME}`, {
         position: 'header_menu',
         className: `header-menu-layout-${objectPath.get(
           this.config,
@@ -92,13 +119,13 @@ const HtmlClass = {
 
       // Menu
       if (objectPath.get(this.config, 'header.menu.self.root-arrow')) {
-        store.dispatch(ADD_CLASSNAME, {
+        this.store.dispatch(`htmlclass.module/${ADD_CLASSNAME}`, {
           position: 'header_menu',
           className: 'header-menu-root-arrow',
         })
       }
     }
-  },
+  }
 
   /**
    * Init Subheader
@@ -109,62 +136,92 @@ const HtmlClass = {
       objectPath.get(this.config, 'subheader.fixed') &&
       objectPath.get(this.config, 'header.self.fixed.desktop')
     ) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'subheader-fixed')
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'subheader-fixed'
+      )
     }
 
     if (objectPath.get(this.config, 'subheader.display')) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'subheader-enabled')
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'subheader-enabled'
+      )
     }
 
     if (objectPath.has(this.config, 'subheader.style')) {
-      store.dispatch(
-        ADD_BODY_CLASSNAME,
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
         `subheader-${objectPath.get(this.config, 'subheader.style')}`
       )
     }
-  },
+  }
 
   /**
    * Init Aside
    */
   initAside() {
     // Reset aside class in body
-    store.dispatch(REMOVE_BODY_CLASSNAME, 'aside-enabled')
-    store.dispatch(REMOVE_BODY_CLASSNAME, 'aside-fixed')
-    store.dispatch(REMOVE_BODY_CLASSNAME, 'aside-static')
-    store.dispatch(REMOVE_BODY_CLASSNAME, 'aside-minimize')
+    this.store.dispatch(
+      `htmlclass.module/${REMOVE_BODY_CLASSNAME}`,
+      'aside-enabled'
+    )
+    this.store.dispatch(
+      `htmlclass.module/${REMOVE_BODY_CLASSNAME}`,
+      'aside-fixed'
+    )
+    this.store.dispatch(
+      `htmlclass.module/${REMOVE_BODY_CLASSNAME}`,
+      'aside-static'
+    )
+    this.store.dispatch(
+      `htmlclass.module/${REMOVE_BODY_CLASSNAME}`,
+      'aside-minimize'
+    )
 
     if (objectPath.get(this.config, 'aside.self.display') !== true) {
       return
     }
 
     // Add aside class enabled in body
-    store.dispatch(ADD_BODY_CLASSNAME, 'aside-enabled')
+    this.store.dispatch(
+      `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+      'aside-enabled'
+    )
 
     // Fixed Aside
     if (objectPath.get(this.config, 'aside.self.fixed')) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'aside-fixed')
-      store.dispatch(ADD_CLASSNAME, {
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'aside-fixed'
+      )
+      this.store.dispatch(`htmlclass.module/${ADD_CLASSNAME}`, {
         position: 'aside',
         className: 'aside-fixed',
       })
     } else {
-      store.dispatch(ADD_BODY_CLASSNAME, 'aside-static')
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'aside-static'
+      )
     }
 
     // Default fixed
     if (objectPath.get(this.config, 'aside.self.minimize.default')) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'aside-minimize')
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'aside-minimize'
+      )
     }
 
     // Dropdown Submenu
     if (objectPath.get(this.config, 'aside.menu.dropdown')) {
-      store.dispatch(ADD_CLASSNAME, {
+      this.store.dispatch(`htmlclass.module/${ADD_CLASSNAME}`, {
         position: 'aside_menu',
         className: 'aside-menu-dropdown',
       })
     }
-  },
+  }
 
   /**
    * Init Footer
@@ -172,9 +229,10 @@ const HtmlClass = {
   initFooter() {
     // Fixed header
     if (objectPath.get(this.config, 'footer.fixed')) {
-      store.dispatch(ADD_BODY_CLASSNAME, 'footer-fixed')
+      this.store.dispatch(
+        `htmlclass.module/${ADD_BODY_CLASSNAME}`,
+        'footer-fixed'
+      )
     }
-  },
+  }
 }
-
-export default HtmlClass

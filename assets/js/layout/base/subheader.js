@@ -1,5 +1,7 @@
 'use strict'
 
+import KTUtil from "~/assets/js/components/util";
+
 const KTLayoutSubheader = (function () {
   // Private properties
   let _element
@@ -17,22 +19,22 @@ const KTLayoutSubheader = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
       }
     },
 
-    isFixed: function () {
+    isFixed () {
       return KTUtil.hasClass(KTUtil.getBody(), 'subheader-fixed')
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
 
-    getHeight: function () {
+    getHeight () {
       return _getHeight()
     },
   }

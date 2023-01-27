@@ -1,5 +1,9 @@
 'use strict'
 
+import KTMenu from "~/assets/js/components/menu";
+import KTLayoutAside from "~/assets/js/layout/base/aside";
+import KTUtil from "~/assets/js/components/util";
+
 const KTLayoutAsideMenu = (function () {
   // Private properties
   let _element
@@ -29,7 +33,7 @@ const KTLayoutAsideMenu = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
@@ -40,21 +44,21 @@ const KTLayoutAsideMenu = (function () {
       _init()
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
 
-    getMenu: function () {
+    getMenu () {
       return _menuObject
     },
 
-    pauseDropdownHover: function (time) {
+    pauseDropdownHover (time) {
       if (_menuObject) {
         _menuObject.pauseDropdownHover(time)
       }
     },
 
-    closeMobileOffcanvas: function () {
+    closeMobileOffcanvas () {
       if (_menuObject && KTUtil.isMobileDevice()) {
         _menuObject.hide()
       }

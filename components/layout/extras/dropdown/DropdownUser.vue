@@ -105,7 +105,7 @@ export default {
   name: 'KTDropdownUser',
   computed: {
     picture() {
-      return process.env.BASE_URL + 'media/users/300_21.jpg'
+      return process.env.BASE_URL + 'assets/media/users/300_21.jpg'
     },
   },
   methods: {

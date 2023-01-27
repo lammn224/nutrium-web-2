@@ -17,15 +17,15 @@ const KTLayoutFooter = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
     },
 
-    getHeight: function () {
+    getHeight () {
       return _getHeight()
     },
 
-    getElement: function () {
+    getElement () {
       return _element
     },
   }

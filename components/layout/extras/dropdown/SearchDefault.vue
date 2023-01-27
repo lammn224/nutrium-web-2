@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import KTSearchResult from '~/components/layout/extras/dropdown/SearchResult.vue'
+
 export default {
   name: 'KTSearchDefault',
+  components: { KTSearchResult },
   data() {
     return {
       data: [],

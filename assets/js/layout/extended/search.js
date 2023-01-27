@@ -83,7 +83,7 @@ const KTLayoutSearch = function () {
           query: _query,
         },
         dataType: 'html',
-        success: function (res) {
+        success (res) {
           _hasResult = true
           _hideProgress()
           KTUtil.addClass(_target, _resultClass)
@@ -91,7 +91,7 @@ const KTLayoutSearch = function () {
           _showDropdown()
           KTUtil.scrollUpdate(_resultWrapper)
         },
-        error: function (res) {
+        error (res) {
           _hasResult = false
           _hideProgress()
           KTUtil.addClass(_target, _resultClass)
@@ -138,7 +138,7 @@ const KTLayoutSearch = function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _target = KTUtil.getById(id)
 
       if (!_target) {

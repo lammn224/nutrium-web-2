@@ -8,7 +8,7 @@ const KTCookie = (function () {
   return {
     // returns the cookie with the given name,
     // or undefined if not found
-    getCookie: function (name) {
+    getCookie (name) {
       const matches = document.cookie.match(
         new RegExp(
           '(?:^|; )' +
@@ -20,7 +20,7 @@ const KTCookie = (function () {
     },
     // Please note that a cookie value is encoded,
     // so getCookie uses a built-in decodeURIComponent function to decode it.
-    setCookie: function (name, value, options) {
+    setCookie (name, value, options) {
       if (!options) {
         options = {}
       }
@@ -48,7 +48,7 @@ const KTCookie = (function () {
       document.cookie = updatedCookie
     },
     // To delete a cookie, we can call it with a negative expiration date:
-    deleteCookie: function (name) {
+    deleteCookie (name) {
       setCookie(name, '', {
         'max-age': -1,
       })

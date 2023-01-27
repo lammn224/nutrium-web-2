@@ -2,7 +2,7 @@
   <!-- begin:: Header Topbar -->
   <div class="topbar">
     <!--begin: Search -->
-    <KTSearchDefault></KTSearchDefault>
+    <DropdownCreate></DropdownCreate>
 
     <!--begin: Quick panel toggle -->
     <KTQuickPanel></KTQuickPanel>
@@ -22,8 +22,19 @@
 </template>
 
 <script>
+import KTQuickUser from '~/components/layout/extras/offcanvas/QuickUser.vue'
+import KTQuickPanel from '~/components/layout/extras/offcanvas/QuickPanel.vue'
+import KTQuickActions from '~/components/layout/extras/offcanvas/QuickActions.vue'
+import KTQuickNotifications from '~/components/layout/extras/offcanvas/QuickNotifications.vue'
+
 export default {
   name: 'KTTopbar',
+  components: {
+    KTQuickNotifications,
+    KTQuickActions,
+    KTQuickPanel,
+    KTQuickUser,
+  },
   data() {
     return {}
   },

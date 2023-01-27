@@ -39,7 +39,7 @@ const KTLayoutStretchedCard = (function () {
 
   // Public methods
   return {
-    init: function (id) {
+    init (id) {
       _element = KTUtil.getById(id)
 
       if (!_element) {
@@ -55,7 +55,7 @@ const KTLayoutStretchedCard = (function () {
       })
     },
 
-    update: function () {
+    update () {
       _init()
     },
   }

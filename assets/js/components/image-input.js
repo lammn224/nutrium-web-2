@@ -30,7 +30,7 @@ const KTImageInput = function (elementId, options) {
      * Construct
      */
 
-    construct: function (options) {
+    construct (options) {
       if (KTUtil.data(element).has('imageinput')) {
         the = KTUtil.data(element).get('imageinput')
       } else {
@@ -49,7 +49,7 @@ const KTImageInput = function (elementId, options) {
     /**
      * Init avatar
      */
-    init: function (options) {
+    init (options) {
       the.element = element
       the.events = []
 
@@ -67,7 +67,7 @@ const KTImageInput = function (elementId, options) {
     /**
      * Build
      */
-    build: function () {
+    build () {
       // Handle change
       KTUtil.addEvent(the.input, 'change', function (e) {
         e.preventDefault()
@@ -129,7 +129,7 @@ const KTImageInput = function (elementId, options) {
     /**
      * Trigger events
      */
-    eventTrigger: function (name) {
+    eventTrigger (name) {
       // KTUtil.triggerCustomEvent(name);
       for (let i = 0; i < the.events.length; i++) {
         const event = the.events[i]
@@ -146,7 +146,7 @@ const KTImageInput = function (elementId, options) {
       }
     },
 
-    addEvent: function (name, handler, one) {
+    addEvent (name, handler, one) {
       the.events.push({
         name,
         handler,

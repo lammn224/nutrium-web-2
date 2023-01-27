@@ -1,6 +1,6 @@
 import objectPath from 'object-path'
 import merge from 'deepmerge'
-import config from '@/config/layout.config.json'
+import config from '@/config/layout.config'
 
 // action types
 export const SET_LAYOUT_CONFIG = 'setLayoutConfig'
