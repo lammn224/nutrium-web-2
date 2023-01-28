@@ -9,6 +9,7 @@
 .login.login-1 {
   // Form modes
   .login-signin,
+  .login-signin-student,
   .login-signup,
   .login-forgot {
     display: none;
@@ -20,6 +21,28 @@
     }
 
     .login-signin {
+      display: block;
+    }
+
+    .login-signin-student {
+      display: none;
+    }
+
+    .login-forgot {
+      display: none;
+    }
+  }
+
+  &.login-signin-student-on {
+    .login-signup {
+      display: none;
+    }
+
+    .login-signin {
+      display: none;
+    }
+
+    .login-signin-student {
       display: block;
     }
 
@@ -48,6 +71,10 @@
     }
 
     .login-signin {
+      display: none;
+    }
+
+    .login-signin-student {
       display: none;
     }
 

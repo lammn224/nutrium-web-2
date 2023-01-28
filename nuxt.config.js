@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'nutrium-web',
+    titleTemplate: '%s - Nutrium',
     htmlAttrs: {
       lang: 'en',
     },
@@ -17,7 +17,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/nutrium-logo.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Mulish:300,400,500,600,700|Roboto:300,400,500,600,700|Material+Icons',
@@ -29,7 +29,12 @@ export default {
   css: ['~/assets/sass/plugins.scss', '~/assets/sass/style.vue.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vue-inline-svg', '~/plugins/vue2-perfect-scrollbar'],
+  plugins: [
+    '~/plugins/vue-inline-svg',
+    '~/plugins/vue2-perfect-scrollbar',
+    '~/plugins/vee-validate',
+    // '~/plugins/axios',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -55,6 +60,20 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['bootstrap-vue/nuxt', '@nuxt/components'],
+
+  env: {
+    baseUrl: process.env.BASE_URL,
+  },
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
+    baseURL: process.env.BASE_URL,
+  },
+  //
+  // router: {
+  //   middleware: ['auth'],
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

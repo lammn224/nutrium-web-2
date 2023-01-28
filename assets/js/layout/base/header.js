@@ -1,5 +1,7 @@
 'use strict'
 
+import KTUtil from "~/assets/js/components/util";
+
 const KTLayoutHeader = (function () {
   // Private properties
   let _element

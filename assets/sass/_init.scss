@@ -2,6 +2,13 @@
 // Main init file of global bootstrap and theme functions, mixins, variables and config
 //
 
+#__layout,
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 // Functions
 @import 'base/functions';
 

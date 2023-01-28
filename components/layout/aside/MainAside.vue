@@ -23,7 +23,7 @@
           class="aside-menu scroll"
           style="max-height: 90vh; position: relative"
         >
-          <MainMenu></MainMenu>
+          <LeftMenu></LeftMenu>
         </perfect-scrollbar>
       </div>
     </div>

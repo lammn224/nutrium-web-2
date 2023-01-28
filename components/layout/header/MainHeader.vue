@@ -95,7 +95,7 @@
         <!--end::Desktop Search-->
       </div>
 
-      <KTTopbar></KTTopbar>
+      <Topbar></Topbar>
     </div>
   </div>
   <!-- end:: Header -->
@@ -103,11 +103,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import KTTopbar from '~/components/layout/header/Topbar.vue'
+import KTLayoutHeader from '~/assets/js/layout/base/header'
 
 export default {
   name: 'MainHeader',
-  components: { KTTopbar },
 
   computed: {
     ...mapGetters({
@@ -151,13 +150,13 @@ export default {
      * Check if header container is fluid
      */
     widthFluid() {
-      return this.layoutConfig('header.self.width') === 'fluid'
+      return this.layoutConfig('header.width') === 'fluid'
     },
   },
 
   mounted() {
     // Init Desktop & Mobile Headers
-    // KTLayoutHeader.init("kt_header", "kt_header_mobile");
+    KTLayoutHeader.init('kt_header', 'kt_header_mobile')
   },
 }
 </script>

@@ -28,7 +28,7 @@ import KTQuickActions from '~/components/layout/extras/offcanvas/QuickActions.vu
 import KTQuickNotifications from '~/components/layout/extras/offcanvas/QuickNotifications.vue'
 
 export default {
-  name: 'KTTopbar',
+  name: 'TopBar',
   components: {
     KTQuickNotifications,
     KTQuickActions,

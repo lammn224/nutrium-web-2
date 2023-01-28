@@ -2,13 +2,13 @@ export default {
   self: {
     layout: 'default',
     logo: {
-      default: require('~/assets/media/logos/logo-letter-1.png'),
-      sticky: require('~/assets/media/logos/logo-letter-1.png'),
+      default: require('~/assets/media/logos/logo-nutrium-green.png'),
+      sticky: require('~/assets/media/logos/logo-nutrium-green.png'),
     },
   },
   loader: {
     type: 'spinner-logo',
-    logo: 'media/logos/logo-letter-1.png',
+    logo: require('~/assets/media/logos/logo-nutrium-green.png'),
     message: 'Please wait...',
   },
   breakpoints: {

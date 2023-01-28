@@ -4,7 +4,7 @@
     <header-mobile></header-mobile>
     <!-- end:: Header Mobile -->
 
-    <!--    <Loader v-if="loaderEnabled" :logo="loaderLogo"></Loader>-->
+    <ContentLoader v-if="loaderEnabled" :logo="loaderLogo"></ContentLoader>
 
     <div class="d-flex flex-row flex-column-fluid page">
       <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <StickyToolbar v-if="toolbarDisplay"></StickyToolbar>
+    <!--    <StickyToolbar v-if="toolbarDisplay"></StickyToolbar>-->
     <ScrollTop></ScrollTop>
   </div>
 </template>
@@ -87,7 +87,7 @@ export default {
      * @returns {string}
      */
     loaderLogo() {
-      return process.env.BASE_URL + this.layoutConfig('loader.logo')
+      return this.layoutConfig('loader.logo')
     },
 
     /**
@@ -126,7 +126,7 @@ export default {
     )
 
     // initialize html element classes
-    htmlClass.init(this)
+    // htmlClass.init(this)
   },
   mounted() {
     // check if current user is authenticated

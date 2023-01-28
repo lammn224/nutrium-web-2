@@ -11,12 +11,10 @@ export const OVERRIDE_PAGE_LAYOUT_CONFIG = 'overridePageLayoutConfig'
 // mutation types
 
 export default {
-  state() {
-    return {
-      config,
-      initial: config,
-    }
-  },
+  state: () => ({
+    config,
+    initial: config,
+  }),
   getters: {
     /**
      * Get config from layout config
