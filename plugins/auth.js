@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { defineAbility } from '@casl/ability'
+// import { defineAbility } from '@casl/ability'
 
 export default function ({ $auth }, inject) {
   axios.interceptors.request.use((request) => {
@@ -11,17 +11,17 @@ export default function ({ $auth }, inject) {
     return request
   })
 
-  inject('can', (checkPerm) => {
-    const ability = defineAbility((can, cannot) => {
-      $auth.user.role.permissions.forEach((p) => {
-        can(p.action, p.object)
-      })
-    })
+  inject('can', (checkRole) => {
+    // const ability = defineAbility((can, cannot) => {
+    //   $auth.user.role.permissions.forEach((p) => {
+    //     can(p.action, p.object)
+    //   })
+    // })
 
-    if (!checkPerm) {
+    if (!checkRole) {
       return true
     }
 
-    return ability.can(...checkPerm)
+    return checkRole.includes($auth.user.role)
   })
 }

@@ -17,6 +17,8 @@
             <a
               id="kt_login_signup"
               class="text-primary font-weight-bolder"
+              tabindex="4"
+              style="cursor: pointer"
               @click="showForm('signup')"
             >
               Đăng ký
@@ -39,6 +41,36 @@
         <h4 v-if="error" class="text-danger">
           Thông tin đăng nhập không đúng!
         </h4>
+
+        <ValidationProvider
+          v-slot="{ errors }"
+          name="Mã trường"
+          rules="required"
+        >
+          <div class="form-group">
+            <label class="font-size-h6 font-weight-bolder text-dark"
+              >Mã trường</label
+            >
+            <div
+              id="school-code-input-group"
+              label="schoolCode"
+              label-for="school-code-input-group"
+            >
+              <input
+                ref="schoolCode"
+                v-model="schoolCode"
+                placeholder="Nhập mã trường..."
+                class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+                type="text"
+                name="schoolCode"
+                tabindex="1"
+                @blur="getSchool"
+              />
+            </div>
+
+            <p class="text-danger mt-1">{{ errors[0] }}</p>
+          </div>
+        </ValidationProvider>
 
         <ValidationProvider
           v-slot="{ errors }"
@@ -125,26 +157,41 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'AuthLogin',
   data() {
     return {
       phoneNumber: '',
       password: '',
+      schoolCode: '',
       isLoading: false,
       error: null,
     }
   },
+
+  computed: {
+    ...mapGetters({
+      school: 'school/school',
+    }),
+  },
+
   methods: {
+    ...mapActions({
+      setSchool: 'school/setSchool',
+    }),
+
     async onSubmit() {
       this.error = null
       try {
         this.isLoading = true
 
-        await this.$auth.login({
+        await this.$auth.loginWith('localUser', {
           data: {
             phoneNumber: this.phoneNumber,
             password: this.password,
+            school: this.school._id,
           },
         })
 
@@ -159,8 +206,20 @@ export default {
       this.error = null
       this.phoneNumber = ''
       this.password = ''
+      this.schoolCode = ''
       this.$refs.observer.reset()
       this.$emit('showForm', form)
+    },
+
+    async getSchool() {
+      try {
+        const { data } = await this.$axios.get('schools/' + this.schoolCode)
+        await this.setSchool(data)
+      } catch (e) {
+        // this.error = e
+      } finally {
+        this.isLoading = false
+      }
     },
   },
 }

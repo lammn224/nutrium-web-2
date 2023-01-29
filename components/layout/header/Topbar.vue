@@ -2,39 +2,33 @@
   <!-- begin:: Header Topbar -->
   <div class="topbar">
     <!--begin: Search -->
-    <DropdownCreate></DropdownCreate>
+    <!--    <DropdownCreate></DropdownCreate>-->
 
     <!--begin: Quick panel toggle -->
-    <KTQuickPanel></KTQuickPanel>
+    <!--    <KTQuickPanel></KTQuickPanel>-->
     <!--end: Quick panel toggle -->
 
     <!--begin: Quick panel toggle -->
-    <KTQuickActions></KTQuickActions>
+    <!--    <KTQuickActions></KTQuickActions>-->
     <!--end: Quick panel toggle -->
 
     <!--begin: User Bar -->
-    <KTQuickUser></KTQuickUser>
+    <QuickUser></QuickUser>
     <!--end: User Bar -->
 
-    <KTQuickNotifications></KTQuickNotifications>
+    <!--    <KTQuickNotifications></KTQuickNotifications>-->
   </div>
   <!-- end:: Header Topbar -->
 </template>
 
 <script>
-import KTQuickUser from '~/components/layout/extras/offcanvas/QuickUser.vue'
-import KTQuickPanel from '~/components/layout/extras/offcanvas/QuickPanel.vue'
-import KTQuickActions from '~/components/layout/extras/offcanvas/QuickActions.vue'
-import KTQuickNotifications from '~/components/layout/extras/offcanvas/QuickNotifications.vue'
+// import KTQuickUser from '~/components/layout/extras/offcanvas/QuickUser.vue'
+// import KTQuickPanel from '~/components/layout/extras/offcanvas/QuickPanel.vue'
+// import KTQuickActions from '~/components/layout/extras/offcanvas/QuickActions.vue'
+// import KTQuickNotifications from '~/components/layout/extras/offcanvas/QuickNotifications.vue'
 
 export default {
   name: 'TopBar',
-  components: {
-    KTQuickNotifications,
-    KTQuickActions,
-    KTQuickPanel,
-    KTQuickUser,
-  },
   data() {
     return {}
   },

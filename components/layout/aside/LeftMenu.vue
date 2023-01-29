@@ -26,7 +26,7 @@ export default {
           item.subMenus = this.getDisplayMenus(item.subMenus)
           return item.subMenus.length > 0
         } else {
-          return item
+          return this.$can(item.role)
         }
       })
     },

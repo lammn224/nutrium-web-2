@@ -41,6 +41,11 @@ export default {
       default: () => null,
     },
   },
+  head() {
+    return {
+      title: 'Error',
+    }
+  },
   computed: {
     backgroundImage() {
       return require('~/assets/media/error/bg4.jpg')

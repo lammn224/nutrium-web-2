@@ -33,7 +33,7 @@ export default {
     '~/plugins/vue-inline-svg',
     '~/plugins/vue2-perfect-scrollbar',
     '~/plugins/vee-validate',
-    // '~/plugins/axios',
+    '~/plugins/axios',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -59,7 +59,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['bootstrap-vue/nuxt', '@nuxt/components'],
+  modules: [
+    'bootstrap-vue/nuxt',
+    '@nuxt/components',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+  ],
 
   env: {
     baseUrl: process.env.BASE_URL,
@@ -70,10 +75,59 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: process.env.BASE_URL,
   },
+
+  auth: {
+    plugins: ['~/plugins/auth.js'],
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/',
+    },
+    strategies: {
+      localUser: {
+        scheme: 'local',
+        token: {
+          property: 'access_token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: '',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/school-users/me', method: 'get' },
+        },
+      },
+
+      localStudent: {
+        scheme: 'local',
+        token: {
+          property: 'access_token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: '',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/auth/login/students', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/students/me', method: 'get' },
+        },
+      },
+    },
+  },
   //
-  // router: {
-  //   middleware: ['auth'],
-  // },
+  router: {
+    middleware: ['auth'],
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

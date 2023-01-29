@@ -17,6 +17,7 @@
             <a
               id="kt_login_signup"
               class="text-primary font-weight-bolder"
+              style="cursor: pointer"
               @click="showForm('signup')"
             >
               Đăng ký
@@ -42,6 +43,36 @@
 
         <ValidationProvider
           v-slot="{ errors }"
+          name="Mã trường"
+          rules="required"
+        >
+          <div class="form-group">
+            <label class="font-size-h6 font-weight-bolder text-dark"
+              >Mã trường</label
+            >
+            <div
+              id="school-code-input-group"
+              label="schoolCode"
+              label-for="school-code-input-group"
+            >
+              <input
+                ref="schoolCode"
+                v-model="schoolCode"
+                placeholder="Nhập mã trường..."
+                class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+                type="text"
+                name="schoolCode"
+                tabindex="1"
+                @blur="getSchool"
+              />
+            </div>
+
+            <p class="text-danger mt-1">{{ errors[0] }}</p>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider
+          v-slot="{ errors }"
           name="Số điện thoại"
           rules="required"
         >
@@ -50,17 +81,17 @@
               >Mã học sinh</label
             >
             <div
-              id="phone-number-input-group"
-              label="phoneNumber"
-              label-for="phone-number-input-group"
+              id="student-id-input-group"
+              label="studentId"
+              label-for="student-id-input-group"
             >
               <input
-                ref="phoneNumber"
-                v-model="phoneNumber"
+                ref="studentId"
+                v-model="studentId"
                 placeholder="Nhập mã học sinh của bạn..."
                 class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
                 type="text"
-                name="phoneNumber"
+                name="studentId"
                 tabindex="1"
               />
             </div>
@@ -125,26 +156,41 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'AuthLoginStudent',
   data() {
     return {
-      phoneNumber: '',
+      studentId: '',
       password: '',
+      schoolCode: '',
       isLoading: false,
       error: null,
     }
   },
+
+  computed: {
+    ...mapGetters({
+      school: 'school/school',
+    }),
+  },
+
   methods: {
+    ...mapActions({
+      setSchool: 'school/setSchool',
+    }),
+
     async onSubmit() {
       this.error = null
       try {
         this.isLoading = true
 
-        await this.$auth.login({
+        await this.$auth.loginWith('localStudent', {
           data: {
-            phoneNumber: this.phoneNumber,
+            studentId: this.studentId,
             password: this.password,
+            school: this.school._id,
           },
         })
 
@@ -157,10 +203,22 @@ export default {
     },
     showForm(form) {
       this.error = null
-      this.phoneNumber = ''
+      this.studentId = ''
       this.password = ''
+      this.schoolCode = ''
       this.$refs.observer.reset()
       this.$emit('showForm', form)
+    },
+
+    async getSchool() {
+      try {
+        const { data } = await this.$axios.get('schools/' + this.schoolCode)
+        await this.setSchool(data)
+      } catch (e) {
+        // this.error = e
+      } finally {
+        this.isLoading = false
+      }
     },
   },
 }
