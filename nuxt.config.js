@@ -33,6 +33,7 @@ export default {
     '~/plugins/vue-inline-svg',
     '~/plugins/vue2-perfect-scrollbar',
     '~/plugins/vee-validate',
+    '~/plugins/bootstrap-notify',
     '~/plugins/axios',
   ],
 
@@ -61,7 +62,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     'bootstrap-vue/nuxt',
-    // '@nuxt/components',
+    '@nuxt/components',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
   ],

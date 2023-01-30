@@ -81,7 +81,7 @@
             <button
               ref="kt_save_changes"
               type="reset"
-              class="btn btn-success mr-2"
+              class="btn btn-primary mr-2"
               @click="save()"
             >
               Lưu thay đổi
@@ -105,6 +105,7 @@
                   ref="fullName"
                   class="form-control form-control-lg form-control-solid"
                   type="text"
+                  placeholder="Họ tên"
                   :value="user.fullName"
                 />
               </div>
@@ -137,7 +138,7 @@
                 <div class="input-group input-group-lg input-group-solid">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="la la-phone"></i>
+                      <i class="flaticon2-phone"></i>
                     </span>
                   </div>
                   <input

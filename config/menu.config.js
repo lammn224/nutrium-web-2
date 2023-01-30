@@ -48,7 +48,7 @@ export default [
     route: '/class',
   },
   {
-    title: 'Quản lý thực phẩm',
+    title: 'Quản lý món ăn',
     icon: 'flaticon2-user',
     route: '/food',
     role: [ADMIN, PARENTS],

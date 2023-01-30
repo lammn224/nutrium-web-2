@@ -1,13 +1,12 @@
 <template>
   <div>
-    <personal-information></personal-information>
+    <user-personal-information></user-personal-information>
   </div>
 </template>
 
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import { mapGetters } from 'vuex'
-import PersonalInformation from '~/components/features/user/PersonalInformation.vue'
 
 // const defaultForm = {
 //   fullName: '',
@@ -16,7 +15,6 @@ import PersonalInformation from '~/components/features/user/PersonalInformation.
 
 export default {
   name: 'ProfilePage',
-  components: { PersonalInformation },
   data() {
     return {
       form: cloneDeep(this.$auth.user),

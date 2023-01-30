@@ -207,7 +207,7 @@ export default {
   mounted() {
     this.loadingInstance = VeLoading({
       target: this.$refs.datatable,
-      name: 'wave',
+      name: null,
     })
 
     this.loadData()

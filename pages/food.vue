@@ -13,7 +13,7 @@
         @editRow="editFood"
         @deleteRow="deleteFood"
       />
-      <!--      <character-modal ref="modal" :on-action-success="reloadData" />-->
+      <food-modal ref="modal" :on-action-success="reloadData" />
     </template>
   </content-card>
 </template>
@@ -84,6 +84,11 @@ export default {
       columns,
     }
   },
+  head() {
+    return {
+      title: 'Foods',
+    }
+  },
   methods: {
     show() {
       this.$refs.modal.show()
@@ -96,7 +101,7 @@ export default {
     },
     deleteFood(food) {
       this.$bvModal
-        .msgBoxConfirm(`Bạn chắc chắn muốn xóa nhân vật "${food.name}"?`, {
+        .msgBoxConfirm(`Bạn chắc chắn muốn xóa món ăn "${food.name}"?`, {
           title: 'Cảnh báo',
           okVariant: 'danger',
           okTitle: 'Đồng ý',
@@ -105,12 +110,12 @@ export default {
         .then(async (value) => {
           if (value) {
             await this.$axios.delete('/foods/' + food._id)
-            // this.$notifyDeleteSuccess('nhân vật')
+            this.$notifyDeleteSuccess('món ăn')
             this.reloadData()
           }
         })
         .catch(() => {
-          // this.$notifyTryAgain()
+          this.$notifyTryAgain()
         })
     },
   },
