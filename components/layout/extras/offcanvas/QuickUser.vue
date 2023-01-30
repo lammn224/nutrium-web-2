@@ -115,7 +115,7 @@
                 </div>
               </div>
               <div class="navi-text">
-                <nuxt-link to="/custom-pages/profile">
+                <nuxt-link to="/profile">
                   <div class="font-weight-bold">Thông tin cá nhân</div>
                 </nuxt-link>
                 <div class="text-muted">Cấu hình tài khoản</div>
