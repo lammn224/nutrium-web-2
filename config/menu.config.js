@@ -6,36 +6,36 @@ export default [
     icon: 'flaticon2-architecture-and-city',
     route: '/dashboard',
   },
-  {
-    title: 'Quản lý nội dung',
-    icon: 'flaticon2-digital-marketing',
-    subMenus: [
-      {
-        title: 'Bài học',
-        route: '/lesson',
-      },
-      {
-        title: 'Hội thoại',
-        route: '/conversation',
-      },
-      {
-        title: 'Bối cảnh',
-        route: '/background',
-      },
-      {
-        title: 'Nhân vật',
-        route: '/figure',
-      },
-      {
-        title: 'Phản hồi',
-        route: '/feedback',
-      },
-      {
-        title: 'Trang',
-        route: '/page',
-      },
-    ],
-  },
+  // {
+  //   title: 'Quản lý nội dung',
+  //   icon: 'flaticon2-digital-marketing',
+  //   subMenus: [
+  //     {
+  //       title: 'Bài học',
+  //       route: '/lesson',
+  //     },
+  //     {
+  //       title: 'Hội thoại',
+  //       route: '/conversation',
+  //     },
+  //     {
+  //       title: 'Bối cảnh',
+  //       route: '/background',
+  //     },
+  //     {
+  //       title: 'Nhân vật',
+  //       route: '/figure',
+  //     },
+  //     {
+  //       title: 'Phản hồi',
+  //       route: '/feedback',
+  //     },
+  //     {
+  //       title: 'Trang',
+  //       route: '/page',
+  //     },
+  //   ],
+  // },
   {
     title: 'Quản lý người dùng',
     icon: 'flaticon2-user',
