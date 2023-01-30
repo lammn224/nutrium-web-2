@@ -35,11 +35,17 @@ export default {
     /**
      * String title
      */
-    title: String,
+    title: {
+      type: String,
+      default: '',
+    },
     /**
      * Set card head size. Eg. md, lg, sm, etc.
      */
-    headSize: String,
+    headSize: {
+      type: String,
+      default: 'sm',
+    },
     /**
      * Set card to fluid
      */
@@ -55,15 +61,24 @@ export default {
     /**
      * Set extra class for main card
      */
-    cardClass: String,
+    cardClass: {
+      type: String,
+      default: '',
+    },
     /**
      * Set extra class for card head
      */
-    headClass: String,
+    headClass: {
+      type: String,
+      default: '',
+    },
     /**
      * Set extra class for card body
      */
-    bodyClass: String,
+    bodyClass: {
+      type: String,
+      default: '',
+    },
     /**
      * Set card body to fit
      */

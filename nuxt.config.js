@@ -61,7 +61,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     'bootstrap-vue/nuxt',
-    '@nuxt/components',
+    // '@nuxt/components',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
   ],
