@@ -1,17 +1,18 @@
 <template>
   <div>
-    <user-personal-information></user-personal-information>
+    <user-personal-information
+      v-if="$auth.user.role !== STUDENT()"
+    ></user-personal-information>
+    <user-student-personal-information
+      v-else
+    ></user-student-personal-information>
   </div>
 </template>
 
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import { mapGetters } from 'vuex'
-
-// const defaultForm = {
-//   fullName: '',
-//   is_public: true,
-// }
+import { STUDENT } from '~/constants/role.constant'
 
 export default {
   name: 'ProfilePage',
@@ -31,6 +32,10 @@ export default {
       school: 'school/school',
     }),
   },
-  methods: {},
+  methods: {
+    STUDENT() {
+      return STUDENT
+    },
+  },
 }
 </script>

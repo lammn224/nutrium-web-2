@@ -24,9 +24,9 @@
             <div>
               <a
                 class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
-                >{{ user.fullName }}</a
+                >{{ student.fullName }}</a
               >
-              <div class="text-muted">{{ user.role }}</div>
+              <div class="text-muted">{{ student.role }}</div>
               <div class="mt-2">
                 <a
                   class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1"
@@ -45,55 +45,28 @@
           <div class="py-9">
             <div class="d-flex align-items-center justify-content-between mb-2">
               <span class="font-weight-bold mr-2">Họ và tên:</span>
-              <a class="text-muted text-hover-primary">{{ user.fullName }}</a>
+              <a class="text-muted text-hover-primary">{{
+                student.fullName
+              }}</a>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <span class="font-weight-bold mr-2">Số điện thoại:</span>
-              <span class="text-muted">{{ user.phoneNumber }}</span>
+              <span class="font-weight-bold mr-2">Mã học sinh:</span>
+              <span class="text-muted">{{ student.studentId }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <span class="font-weight-bold mr-2">Tên trường:</span>
-              <span class="text-muted">{{ user.school.name }}</span>
+              <span class="font-weight-bold mr-2">Lớp:</span>
+              <span class="text-muted">{{ student.class.name }}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="font-weight-bold mr-2">Trường:</span>
+              <span class="text-muted">{{ student.school.name }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between">
               <span class="font-weight-bold mr-2">Mã trường:</span>
-              <span class="text-muted">{{ user.school.code }}</span>
+              <span class="text-muted">{{ student.school.code }}</span>
             </div>
           </div>
           <!--end::Contact-->
-
-          <!--begin::Student-->
-          <div v-if="$auth.user.child">
-            <a
-              class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
-            >
-              Thông tin học sinh
-            </a>
-            <div class="pt-2">
-              <div
-                class="d-flex align-items-center justify-content-between mb-2"
-              >
-                <span class="font-weight-bold mr-2">Họ và tên học sinh:</span>
-                <a class="text-muted text-hover-primary">{{
-                  user.child.fullName
-                }}</a>
-              </div>
-              <div
-                class="d-flex align-items-center justify-content-between mb-2"
-              >
-                <span class="font-weight-bold mr-2">Mã học sinh:</span>
-                <span class="text-muted">{{ user.child.studentId }}</span>
-              </div>
-              <div
-                class="d-flex align-items-center justify-content-between mb-2"
-              >
-                <span class="font-weight-bold mr-2">Lớp:</span>
-                <span class="text-muted">{{ user.child.class.name }}</span>
-              </div>
-            </div>
-          </div>
-
-          <!--end::Student-->
         </div>
       </div>
     </div>
@@ -139,7 +112,7 @@
                   class="form-control form-control-lg form-control-solid"
                   type="text"
                   placeholder="Họ tên"
-                  :value="user.fullName"
+                  :value="student.fullName"
                 />
               </div>
             </div>
@@ -153,7 +126,7 @@
                   class="form-control form-control-lg form-control-solid"
                   type="text"
                   disabled
-                  :value="user.school.name"
+                  :value="student.school.name"
                 />
               </div>
             </div>
@@ -161,6 +134,28 @@
               <label class="col-xl-3"></label>
               <div class="col-lg-9 col-xl-6">
                 <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Phụ huynh</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <div class="input-group input-group-lg input-group-solid">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="flaticon2-user"></i>
+                    </span>
+                  </div>
+                  <input
+                    ref="parents"
+                    type="text"
+                    class="form-control form-control-lg form-control-solid"
+                    placeholder="Phụ huynh"
+                    disabled
+                    :value="student.parents.fullName"
+                  />
+                </div>
               </div>
             </div>
             <div class="form-group row">
@@ -179,7 +174,8 @@
                     type="text"
                     class="form-control form-control-lg form-control-solid"
                     placeholder="Số điện thoại"
-                    :value="user.phoneNumber"
+                    disabled
+                    :value="student.parents.phoneNumber"
                   />
                 </div>
               </div>
@@ -198,19 +194,19 @@
 import cloneDeep from 'lodash/cloneDeep'
 
 export default {
-  name: 'PersonalInformation',
+  name: 'StudentPersonalInformation',
   data() {
     return {
-      default_photo: 'media/users/blank.png',
+      default_photo: 'media/students/blank.png',
       current_photo: null,
-      user: cloneDeep(this.$auth.user),
+      student: cloneDeep(this.$auth.user),
     }
   },
 
   computed: {},
 
   mounted() {
-    this.current_photo = this.user.photo
+    this.current_photo = this.student.photo
   },
 
   methods: {
@@ -231,9 +227,9 @@ export default {
       }, 2000)
     },
     cancel() {
-      this.$refs.fullName.value = this.user.fullName
-      this.$refs.school.value = this.user.school.name
-      this.$refs.phoneNumber.value = this.user.phoneNumber
+      this.$refs.fullName.value = this.student.fullName
+      this.$refs.school.value = this.student.school.name
+      this.$refs.phoneNumber.value = this.student.phoneNumber
     },
     onFileChange(e) {
       const file = e.target.files[0]
