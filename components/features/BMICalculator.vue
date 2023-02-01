@@ -1,12 +1,5 @@
 <template>
   <div class="card-body">
-    <!--    <div class="card-header py-3 bg-primary text-center">-->
-    <!--      <div class="card-title align-items-start flex-column">-->
-    <!--        <h3 class="card-label font-weight-bolder text-dark">-->
-    <!--          Thông tin cá nhân-->
-    <!--        </h3>-->
-    <!--      </div>-->
-    <!--    </div>-->
     <h3 class="bg-primary jumbotron-cus text-center text-inverse-primary">
       <span>BMI Calculator</span>
     </h3>

@@ -243,11 +243,17 @@ export default {
       this.limit = pageSize
     },
     sortChange(params) {
-      const prop = Object.keys(params)[0]
-
+      let prop, type
+      for (const key in params) {
+        if (params[key]) {
+          type = params[key]
+          prop = key
+          break
+        }
+      }
       this.sortObj = {
         sortBy: prop,
-        sortType: params[prop],
+        sortType: type,
       }
     },
     getFirstSortObj() {

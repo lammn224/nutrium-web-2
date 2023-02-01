@@ -69,13 +69,13 @@ Vue.prototype.$notifySuccess = (objectName) =>
   notify('Thông báo', objectName, 'success')
 
 Vue.prototype.$notifyAddSuccess = (objectName) =>
-  notify('Thông báo', `Thêm ${objectName} thành công!`, 'success')
+  notify('Thông báo', `Thêm ${objectName} thành công!`, 'primary')
 
 Vue.prototype.$notifyUpdateSuccess = (objectName) =>
-  notify('Thông báo', `Cập nhật ${objectName} thành công!`, 'success')
+  notify('Thông báo', `Cập nhật ${objectName} thành công!`, 'primary')
 
 Vue.prototype.$notifyDeleteSuccess = (objectName) =>
-  notify('Thông báo', `Xóa ${objectName} thành công!`, 'success')
+  notify('Thông báo', `Xóa ${objectName} thành công!`, 'primary')
 
 Vue.prototype.$notifyResetPasswordSuccess = (objectName) => {
   notify('Thông báo', `Đặt lại mật khẩu ${objectName} thành công!`, 'success')

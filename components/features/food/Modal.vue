@@ -112,14 +112,14 @@ import BaseFormModal from '~/components/base/form/Modal'
 
 const defaultForm = {
   name: '',
-  power: 0,
-  protein: 0,
-  lipid: 0,
-  glucid: 0,
-  ca: 0,
-  fe: 0,
-  zn: 0,
-  fiber: 0,
+  power: '',
+  protein: '',
+  lipid: '',
+  glucid: '',
+  ca: '',
+  fe: '',
+  zn: '',
+  fiber: '',
 }
 export default {
   name: 'FoodModal',
@@ -158,7 +158,7 @@ export default {
           this.$axios.defaults.baseURL + '/foods/' + this.form._id
         )
 
-        this.$notifyUpdateSuccess('món ')
+        this.$notifyUpdateSuccess('món ăn')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
