@@ -26,17 +26,7 @@
                 class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
                 >{{ user.fullName }}</a
               >
-              <div class="text-muted">{{ user.role }}</div>
-              <div class="mt-2">
-                <a
-                  class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1"
-                  >Chat</a
-                >
-                <a
-                  class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1"
-                  >Follow</a
-                >
-              </div>
+              <div class="text-muted">{{ ROLES.get(user.role) }}</div>
             </div>
           </div>
           <!--end::User-->
@@ -136,10 +126,10 @@
               <div class="col-lg-9 col-xl-6">
                 <input
                   ref="fullName"
+                  v-model="form.fullName"
                   class="form-control form-control-lg form-control-solid"
                   type="text"
                   placeholder="Họ tên"
-                  :value="user.fullName"
                 />
               </div>
             </div>
@@ -176,10 +166,10 @@
                   </div>
                   <input
                     ref="phoneNumber"
+                    v-model="form.phoneNumber"
                     type="text"
                     class="form-control form-control-lg form-control-solid"
                     placeholder="Số điện thoại"
-                    :value="user.phoneNumber"
                   />
                 </div>
               </div>
@@ -196,6 +186,12 @@
 <script>
 // import { mapGetters } from "vuex";
 import cloneDeep from 'lodash/cloneDeep'
+import { ROLES } from '../../../constants/role.constant'
+
+// const defaultForm = {
+//   fullName: '',
+//   phoneNumber: '',
+// }
 
 export default {
   name: 'PersonalInformation',
@@ -204,37 +200,77 @@ export default {
       default_photo: 'media/users/blank.png',
       current_photo: null,
       user: cloneDeep(this.$auth.user),
+      form: {
+        fullName: this.$auth.user.fullName,
+        phoneNumber: this.$auth.user.phoneNumber,
+      },
     }
   },
 
-  computed: {},
+  computed: {
+    ROLES() {
+      return ROLES
+    },
+  },
 
   mounted() {
     this.current_photo = this.user.photo
   },
 
   methods: {
-    save() {
-      // set spinner to submit button
+    async save() {
       const submitButton = this.$refs.kt_save_changes
-      submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
 
-      // dummy delay
-      setTimeout(() => {
-        // send update request
+      if (
+        this.form.fullName === this.user.fullName &&
+        this.form.phoneNumber === this.user.phoneNumber
+      ) {
+        return
+      }
 
+      try {
+        submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
+        const { data } = await this.$axios.post(
+          'school-users/update-info',
+          this.form
+        )
+
+        this.user.fullName = data.fullName
+        this.user.phoneNumber = data.phoneNumber
+
+        setTimeout(() => {
+          submitButton.classList.remove(
+            'spinner',
+            'spinner-light',
+            'spinner-right'
+          )
+        }, 1000)
+        this.$notifyUpdateInfoSuccess()
+      } catch (e) {
+        this.processError(e)
         submitButton.classList.remove(
           'spinner',
           'spinner-light',
           'spinner-right'
         )
-      }, 2000)
+      }
     },
+
     cancel() {
-      this.$refs.fullName.value = this.user.fullName
-      this.$refs.school.value = this.user.school.name
-      this.$refs.phoneNumber.value = this.user.phoneNumber
+      this.form.fullName = this.user.fullName
+      this.form.phoneNumber = this.user.phoneNumber
     },
+
+    processError(e) {
+      if (e.response) {
+        if (e.status !== 422) {
+          this.$notifyTryAgain()
+        }
+      } else {
+        this.$notifyTryAgain()
+      }
+    },
+
     onFileChange(e) {
       const file = e.target.files[0]
 

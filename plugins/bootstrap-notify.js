@@ -62,6 +62,9 @@ Vue.prototype.$notifyTryAgain = () =>
 Vue.prototype.$notifyNoPermission = () =>
   notify('Thông báo', 'Bạn không có quyền thực hiện hành động này!', 'danger')
 
+Vue.prototype.$notifyUpdateInfoSuccess = () =>
+  notify('Thông báo', 'Cập nhật thông tin thành công', 'primary')
+
 Vue.prototype.$notifyDanger = (objectName) =>
   notify('Thông báo', objectName, 'danger')
 

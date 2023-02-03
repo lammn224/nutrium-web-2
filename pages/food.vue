@@ -1,7 +1,11 @@
 <template>
   <content-card title="Danh sách món ăn">
     <template #toolbar>
-      <b-button variant="primary" @click="show()">
+      <b-button
+        v-if="$auth.user.role === ADMIN()"
+        variant="primary"
+        @click="show()"
+      >
         <i class="flaticon2-plus" /> Thêm mới
       </b-button>
     </template>
@@ -10,6 +14,7 @@
         ref="table"
         :columns="columns"
         remote-url="/foods"
+        :hide-action-column="$auth.user.role !== ADMIN()"
         @editRow="editFood"
         @deleteRow="deleteFood"
       />
@@ -19,6 +24,8 @@
 </template>
 
 <script>
+import { ADMIN } from '~/constants/role.constant'
+
 const columns = [
   {
     field: 'name',
@@ -98,6 +105,9 @@ export default {
     }
   },
   methods: {
+    ADMIN() {
+      return ADMIN
+    },
     show() {
       this.$refs.modal.show()
     },

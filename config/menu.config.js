@@ -1,4 +1,4 @@
-import { ADMIN, PARENTS } from '~/constants/role.constant'
+import { ADMIN, PARENTS, STUDENT } from '~/constants/role.constant'
 
 export default [
   {
@@ -44,13 +44,14 @@ export default [
   },
   {
     title: 'Quản lý lớp học',
-    icon: 'flaticon2-user',
+    icon: 'flaticon-map',
     route: '/class',
+    role: [ADMIN],
   },
   {
-    title: 'Quản lý món ăn',
-    icon: 'flaticon2-user',
+    title: 'Thông tin món ăn',
+    icon: 'flaticon2-chart2',
     route: '/food',
-    role: [ADMIN, PARENTS],
+    role: [ADMIN, PARENTS, STUDENT],
   },
 ]

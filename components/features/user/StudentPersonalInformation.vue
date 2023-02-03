@@ -3,7 +3,7 @@
   <div class="d-flex flex-row">
     <div
       id="kt_profile_aside"
-      class="flex-row-auto offcanvas-mobile w-300px w-xl-350px"
+      class="flex-row-auto offcanvas-mobile w-300px w-xl-350px h-100"
     >
       <div class="card card-custom card-stretch">
         <div class="card-body pt-4">
@@ -26,16 +26,16 @@
                 class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
                 >{{ student.fullName }}</a
               >
-              <div class="text-muted">{{ student.role }}</div>
+              <div class="text-muted">{{ ROLES.get(student.role) }}</div>
               <div class="mt-2">
-                <a
-                  class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1"
-                  >Chat</a
+                <div
+                  class="d-flex align-items-center justify-content-between mb-2"
                 >
-                <a
-                  class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1"
-                  >Follow</a
-                >
+                  <span class="font-weight-bold mr-2">Ngày sinh:</span>
+                  <span class="text-muted">{{
+                    convertTimeStamps(student.dateOfBirth)
+                  }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="flex-row-fluid ml-lg-8">
-      <div class="card card-custom">
+      <div class="card card-custom mb-5">
         <!--begin::Header-->
         <div class="card-header py-3">
           <div class="card-title align-items-start flex-column">
@@ -118,6 +118,34 @@
             </div>
             <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Ngày sinh</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Ngày sinh"
+                  :value="convertTimeStamps(student.dateOfBirth)"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Mã học sinh</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="school"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  disabled
+                  :value="student.studentId"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
                 >Tên trường</label
               >
               <div class="col-lg-9 col-xl-6">
@@ -130,12 +158,42 @@
                 />
               </div>
             </div>
-            <div class="row">
-              <label class="col-xl-3"></label>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Lớp</label
+              >
               <div class="col-lg-9 col-xl-6">
-                <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
+                <input
+                  ref="school"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  disabled
+                  :value="student.class.name"
+                />
               </div>
             </div>
+          </div>
+          <!--end::Body-->
+        </form>
+        <!--end::Form-->
+      </div>
+
+      <div class="card card-custom">
+        <!--begin::Header-->
+        <div class="card-header py-3">
+          <div class="card-title align-items-start flex-column">
+            <h3 class="card-label font-weight-bolder text-dark">
+              Thông tin liên hệ
+            </h3>
+            <span class="text-muted font-weight-bold font-size-sm mt-1">
+              Thông tin liên hệ của phụ huynh
+            </span>
+          </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Form-->
+        <form class="form">
+          <div class="card-body">
             <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right"
                 >Phụ huynh</label
@@ -181,7 +239,6 @@
               </div>
             </div>
           </div>
-          <!--end::Body-->
         </form>
         <!--end::Form-->
       </div>
@@ -192,6 +249,8 @@
 <script>
 // import { mapGetters } from "vuex";
 import cloneDeep from 'lodash/cloneDeep'
+import { ROLES } from '../../../constants/role.constant'
+import { convertTimeStamps } from '~/services/convertTimeStamps.service'
 
 export default {
   name: 'StudentPersonalInformation',
@@ -203,13 +262,18 @@ export default {
     }
   },
 
-  computed: {},
+  computed: {
+    ROLES() {
+      return ROLES
+    },
+  },
 
   mounted() {
     this.current_photo = this.student.photo
   },
 
   methods: {
+    convertTimeStamps,
     save() {
       // set spinner to submit button
       const submitButton = this.$refs.kt_save_changes

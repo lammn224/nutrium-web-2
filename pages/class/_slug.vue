@@ -17,6 +17,7 @@
 <script>
 import { VeTable } from 'vue-easytable'
 import { MALE } from '~/constants/gender.constant'
+import { convertTimeStamps } from '~/services/convertTimeStamps.service'
 
 export default {
   components: {
@@ -61,7 +62,7 @@ export default {
           field: 'studentId',
           key: 'id',
           title: 'Mã học sinh',
-          width: 200,
+          width: 100,
           align: 'left',
           sortBy: 'asc',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
@@ -85,7 +86,7 @@ export default {
           width: 200,
           align: 'left',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return row.dateOfBirth
+            return convertTimeStamps(row.dateOfBirth)
           },
         },
         {
@@ -98,16 +99,6 @@ export default {
             return row.gender === MALE ? 'Nam' : 'Nữ'
           },
         },
-        // {
-        //   field: 'member',
-        //   key: 'b',
-        //   title: 'Sĩ số',
-        //   width: 200,
-        //   align: 'left',
-        //   renderBodyCell: ({ row, column, rowIndex }, h) => {
-        //     return <span>{row.members.length}</span>
-        //   },
-        // },
       ]
     },
     queryUrl() {
@@ -170,8 +161,5 @@ export default {
       return null
     },
   },
-  // watch: {
-  //   '$route.params': '$fetch'
-  // }
 }
 </script>
