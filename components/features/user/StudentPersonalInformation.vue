@@ -33,7 +33,7 @@
                 >
                   <span class="font-weight-bold mr-2">Ngày sinh:</span>
                   <span class="text-muted">{{
-                    convertTimeStamps(student.dateOfBirth)
+                    convertTimeStampsToString(student.dateOfBirth)
                   }}</span>
                 </div>
               </div>
@@ -109,10 +109,10 @@
               <div class="col-lg-9 col-xl-6">
                 <input
                   ref="fullName"
+                  v-model="form.fullName"
                   class="form-control form-control-lg form-control-solid"
                   type="text"
                   placeholder="Họ tên"
-                  :value="student.fullName"
                 />
               </div>
             </div>
@@ -123,10 +123,10 @@
               <div class="col-lg-9 col-xl-6">
                 <input
                   ref="fullName"
+                  v-model="form.dateOfBirth"
                   class="form-control form-control-lg form-control-solid"
                   type="text"
                   placeholder="Ngày sinh"
-                  :value="convertTimeStamps(student.dateOfBirth)"
                 />
               </div>
             </div>
@@ -247,11 +247,12 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 import cloneDeep from 'lodash/cloneDeep'
 import { ROLES } from '../../../constants/role.constant'
-import { convertTimeStamps } from '~/services/convertTimeStamps.service'
-
+import {
+  convertStringToTimeStamps,
+  convertTimeStampsToString,
+} from '~/services/convertTimeStamps.service'
 export default {
   name: 'StudentPersonalInformation',
   data() {
@@ -259,6 +260,10 @@ export default {
       default_photo: 'media/students/blank.png',
       current_photo: null,
       student: cloneDeep(this.$auth.user),
+      form: {
+        fullName: this.$auth.user.fullName,
+        dateOfBirth: convertTimeStampsToString(this.$auth.user.dateOfBirth),
+      },
     }
   },
 
@@ -273,28 +278,65 @@ export default {
   },
 
   methods: {
-    convertTimeStamps,
-    save() {
+    convertTimeStampsToString,
+    async save() {
       // set spinner to submit button
       const submitButton = this.$refs.kt_save_changes
-      submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
 
-      // dummy delay
-      setTimeout(() => {
-        // send update request
+      if (
+        this.form.fullName === this.student.fullName &&
+        this.form.dateOfBirth ===
+          convertTimeStampsToString(this.student.dateOfBirth)
+      ) {
+        return
+      }
 
+      try {
+        this.form.dateOfBirth = convertStringToTimeStamps(this.form.dateOfBirth)
+        submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
+        const { data } = await this.$axios.post(
+          'students/update-info',
+          this.form
+        )
+
+        this.student.fullName = data.fullName
+        this.student.dateOfBirth = data.dateOfBirth
+        this.form.dateOfBirth = convertTimeStampsToString(data.dateOfBirth)
+
+        setTimeout(() => {
+          submitButton.classList.remove(
+            'spinner',
+            'spinner-light',
+            'spinner-right'
+          )
+        }, 1000)
+        this.$notifyUpdateInfoSuccess()
+      } catch (e) {
+        this.processError(e)
         submitButton.classList.remove(
           'spinner',
           'spinner-light',
           'spinner-right'
         )
-      }, 2000)
+      }
     },
     cancel() {
-      this.$refs.fullName.value = this.student.fullName
-      this.$refs.school.value = this.student.school.name
-      this.$refs.phoneNumber.value = this.student.phoneNumber
+      this.form.fullName = this.student.fullName
+      this.form.dateOfBirth = convertTimeStampsToString(
+        this.student.dateOfBirth
+      )
     },
+
+    processError(e) {
+      if (e.response) {
+        if (e.status !== 422) {
+          this.$notifyTryAgain()
+        }
+      } else {
+        this.$notifyTryAgain()
+      }
+    },
+
     onFileChange(e) {
       const file = e.target.files[0]
 

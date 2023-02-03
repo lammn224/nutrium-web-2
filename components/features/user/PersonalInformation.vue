@@ -184,14 +184,8 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 import cloneDeep from 'lodash/cloneDeep'
 import { ROLES } from '../../../constants/role.constant'
-
-// const defaultForm = {
-//   fullName: '',
-//   phoneNumber: '',
-// }
 
 export default {
   name: 'PersonalInformation',

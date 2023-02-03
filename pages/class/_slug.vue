@@ -17,7 +17,7 @@
 <script>
 import { VeTable } from 'vue-easytable'
 import { MALE } from '~/constants/gender.constant'
-import { convertTimeStamps } from '~/services/convertTimeStamps.service'
+import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
 
 export default {
   components: {
@@ -86,7 +86,7 @@ export default {
           width: 200,
           align: 'left',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return convertTimeStamps(row.dateOfBirth)
+            return convertTimeStampsToString(row.dateOfBirth)
           },
         },
         {
