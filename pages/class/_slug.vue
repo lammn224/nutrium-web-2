@@ -1,5 +1,5 @@
 <template>
-  <content-card title="Danh sách lớp học">
+  <content-card :title="tableTitle">
     <template #body>
       <ve-table
         :style="{ 'word-break': 'break-all' }"
@@ -25,6 +25,8 @@ export default {
   },
   data() {
     return {
+      class: null,
+      tableTitle: 'Danh sách lớp học: ',
       tableData: [],
       rowStyleOption: {
         stripe: true,
@@ -130,6 +132,8 @@ export default {
     async detailsClass() {
       const params = this.$route.params
       const { data } = await this.$axios.get(`classes/${params.slug}`)
+      this.class = data
+      this.tableTitle += data.name
       this.tableData = data.members
     },
 

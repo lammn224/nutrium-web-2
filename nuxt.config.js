@@ -43,7 +43,7 @@ export default {
     '~/components/layout',
     '~/components/layout/header',
     '~/components/layout/footer',
-    '~/components/layout/extras/',
+    '~/components/layout/extras',
     '~/components/layout/extras/dropdown',
     '~/components/layout/extras/offcanvas',
     '~/components/layout/aside',

@@ -95,7 +95,7 @@
         <div class="navi navi-spacer-x-0 p-0">
           <!--begin::Item-->
           <nuxt-link
-            to="/builder"
+            to="/profile"
             href="#"
             class="navi-item"
             @click.native="closeOffcanvas"

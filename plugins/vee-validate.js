@@ -14,6 +14,7 @@ import {
   confirmed,
   numeric,
   regex,
+  ext,
 } from 'vee-validate/dist/rules'
 
 localize('vi', vi)
@@ -25,6 +26,7 @@ extend('min', min)
 extend('confirmed', confirmed)
 extend('numeric', numeric)
 extend('regex', regex)
+extend('ext', ext)
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
