@@ -15,7 +15,7 @@
       <validation-provider
         v-slot="{ errors }"
         :vid="vid"
-        :name="$attrs.label ? $attrs.label : $attrs['label-name']"
+        name="File"
         rules="required|ext:xlsx"
       >
         <b-form-group
@@ -30,13 +30,14 @@
             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             :state="errors[0] || error !== null ? false : null"
           ></b-form-file>
-          <div class="mt-3">
-            Selected file: {{ fileExcel ? fileExcel.name : '' }}
-          </div>
 
           <b-form-invalid-feedback>
             {{ errors[0] || error }}
           </b-form-invalid-feedback>
+
+          <div class="mt-3">
+            Selected file: {{ fileExcel ? fileExcel.name : '' }}
+          </div>
         </b-form-group>
       </validation-provider>
     </validation-observer>
@@ -120,7 +121,6 @@ export default {
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
-        console.log(e)
         addBtn.classList.remove('spinner', 'spinner-light', 'spinner-right')
         addBtn.disabled = false
         cancelBtn.disabled = false

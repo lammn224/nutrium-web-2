@@ -21,86 +21,105 @@
         name="name"
         class="w-25"
       />
+      <div class="row">
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.power"
+            required
+            :error="vForm.errors.get('power')"
+            placeholder="Năng lượng"
+            label="Năng lượng"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.protein"
+            required
+            :error="vForm.errors.get('protein')"
+            placeholder="Protein"
+            label="Protein"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+      </div>
 
-      <base-form-text-input
-        v-model="form.power"
-        required
-        :error="vForm.errors.get('power')"
-        placeholder="Năng lượng"
-        label="Năng lượng"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
+      <div class="row">
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.lipid"
+            required
+            :error="vForm.errors.get('lipid')"
+            placeholder="Lipid"
+            label="Lipid"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.glucid"
+            required
+            :error="vForm.errors.get('glucid')"
+            placeholder="Glucid"
+            label="Glucid"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+      </div>
 
-      <base-form-text-input
-        v-model="form.protein"
-        required
-        :error="vForm.errors.get('protein')"
-        placeholder="Protein"
-        label="Protein"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
+      <div class="row">
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.ca"
+            required
+            :error="vForm.errors.get('ca')"
+            placeholder="Canxi"
+            label="Canxi"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.fe"
+            required
+            :error="vForm.errors.get('fe')"
+            placeholder="Sắt"
+            label="Sắt"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+      </div>
 
-      <base-form-text-input
-        v-model="form.lipid"
-        required
-        :error="vForm.errors.get('lipid')"
-        placeholder="Lipid"
-        label="Lipid"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
-
-      <base-form-text-input
-        v-model="form.glucid"
-        required
-        :error="vForm.errors.get('glucid')"
-        placeholder="Glucid"
-        label="Glucid"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
-
-      <base-form-text-input
-        v-model="form.ca"
-        required
-        :error="vForm.errors.get('ca')"
-        placeholder="Canxi"
-        label="Canxi"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
-
-      <base-form-text-input
-        v-model="form.fe"
-        required
-        :error="vForm.errors.get('fe')"
-        placeholder="Sắt"
-        label="Sắt"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
-
-      <base-form-text-input
-        v-model="form.zn"
-        required
-        :error="vForm.errors.get('zn')"
-        placeholder="Kẽm"
-        label="Kẽm"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
-
-      <base-form-text-input
-        v-model="form.fiber"
-        required
-        :error="vForm.errors.get('fiber')"
-        placeholder="Chất xơ"
-        label="Chất xơ"
-        rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-        name="name"
-      />
+      <div class="row">
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.zn"
+            required
+            :error="vForm.errors.get('zn')"
+            placeholder="Kẽm"
+            label="Kẽm"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+        <div class="col-xl-6">
+          <base-form-text-input
+            v-model="form.fiber"
+            required
+            :error="vForm.errors.get('fiber')"
+            placeholder="Chất xơ"
+            label="Chất xơ"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            name="name"
+          />
+        </div>
+      </div>
     </validation-observer>
   </b-modal>
 </template>
@@ -109,6 +128,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { Form } from 'vform'
 import BaseFormModal from '~/components/base/form/Modal'
+import BaseFormMixin from '~/components/base/form/Mixin'
 
 const defaultForm = {
   name: '',
@@ -123,7 +143,7 @@ const defaultForm = {
 }
 export default {
   name: 'FoodModal',
-  mixins: [BaseFormModal],
+  mixins: [BaseFormModal, BaseFormMixin],
   data() {
     return {
       form: cloneDeep(defaultForm),
