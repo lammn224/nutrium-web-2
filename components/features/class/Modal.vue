@@ -1,8 +1,8 @@
 <template>
   <b-modal
     ref="modal"
-    :ok-title="isEdit ? 'Cập nhật' : 'Thêm mới'"
-    :title="isEdit ? 'Cập nhật lớp học' : 'Thêm mới lớp học'"
+    :ok-title="'Thêm mới'"
+    :title="'Thêm mới lớp học'"
     cancel-title="Hủy bỏ"
     no-close-on-backdrop
     no-close-on-esc
@@ -14,15 +14,10 @@
     <validation-observer ref="observer">
       <validation-provider
         v-slot="{ errors }"
-        :vid="vid"
         name="File"
         rules="required|ext:xlsx"
       >
-        <b-form-group
-          v-bind="$attrs"
-          :label-class="required ? 'required' : null"
-          :class="formClass"
-        >
+        <b-form-group v-bind="$attrs">
           <b-form-file
             v-model="fileExcel"
             placeholder="Choose a file or drop it here..."
@@ -64,20 +59,27 @@
 
 <script>
 import BaseFormModal from '~/components/base/form/Modal'
-import BaseFormMixin from '~/components/base/form/Mixin.vue'
 
 export default {
   name: 'ClassModal',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal],
   data() {
     return {
       fileExcel: null,
+      error: null,
     }
   },
+  computed: {
+    uploadHeaders() {
+      return {
+        Authorization: this.$auth.strategy.token.get(),
+      }
+    },
+  },
+
   methods: {
     handleModalHidden(bvModalEvt) {
       this.$refs.modal.hide()
-      this.isEdit = false
       this.fileExcel = null
     },
 
@@ -124,6 +126,7 @@ export default {
         addBtn.classList.remove('spinner', 'spinner-light', 'spinner-right')
         addBtn.disabled = false
         cancelBtn.disabled = false
+        this.error = e.response.data.message
         this.processError(e)
       }
     },

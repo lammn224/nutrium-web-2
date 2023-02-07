@@ -138,18 +138,30 @@ export default {
     },
 
     sortChange(params) {
-      let prop, type
-      for (const key in params) {
-        if (params[key]) {
-          type = params[key]
-          prop = key
-          break
+      // let prop, type
+      // for (const key in params) {
+      //   if (params[key]) {
+      //     type = params[key]
+      //     prop = key
+      //     break
+      //   }
+      // }
+      // this.sortObj = {
+      //   sortBy: prop,
+      //   sortType: type,
+      // }
+      this.tableData.sort((a, b) => {
+        if (params.studentId) {
+          if (params.studentId === 'asc') {
+            return a.studentId - b.studentId
+          } else if (params.studentId === 'desc') {
+            return b.studentId - a.studentId
+          } else {
+            return 0
+          }
         }
-      }
-      this.sortObj = {
-        sortBy: prop,
-        sortType: type,
-      }
+        return 0
+      })
     },
 
     getFirstSortObj() {
