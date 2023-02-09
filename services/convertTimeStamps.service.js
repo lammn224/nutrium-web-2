@@ -19,3 +19,18 @@ export function convertStringToTimeStamps(str) {
 
   return Math.floor(date.getTime() / 1000)
 }
+
+export function dateToString(inputDate) {
+  let date, month, year
+
+  date = inputDate.getDate()
+  month = inputDate.getMonth() + 1
+  // eslint-disable-next-line prefer-const
+  year = inputDate.getFullYear()
+
+  date = date.toString().padStart(2, '0')
+
+  month = month.toString().padStart(2, '0')
+
+  return `${date}/${month}/${year}`
+}

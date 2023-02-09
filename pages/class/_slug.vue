@@ -46,6 +46,12 @@ export default {
     await this.detailsClass()
   },
 
+  head() {
+    return {
+      title: 'Class',
+    }
+  },
+
   computed: {
     tableColumns() {
       return [
