@@ -32,6 +32,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/bus',
     '~/plugins/vue-inline-svg',
     '~/plugins/vue2-perfect-scrollbar',
     '~/plugins/vee-validate',

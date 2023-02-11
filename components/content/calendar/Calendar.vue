@@ -53,7 +53,7 @@ export default {
     },
   },
   props: {
-    allEvents: {
+    allMeals: {
       type: Array,
       default() {
         return []
@@ -114,14 +114,13 @@ export default {
 
       return weeks
     },
-    events() {
-      return this.allEvents
+    meals() {
+      return this.allMeals
     },
   },
   created() {
     const me = this
     this.$root.$on(CHANGE_MONTH, function (payload) {
-      console.log('payload', payload)
       me.currentMonth = payload
     })
   },
@@ -129,9 +128,9 @@ export default {
     this.loading = false
   },
   methods: {
-    getEvents(date) {
-      return this.events.filter((event) => {
-        return date.isSame(event.date, 'day') ? event : null
+    getMeals(date) {
+      return this.meals.filter((meal) => {
+        return date.isSame(meal.date, 'day') ? meal : null
       })
     },
 
@@ -159,7 +158,7 @@ export default {
         weekDay: dayIndex,
         isWeekEnd: dayIndex === 5 || dayIndex === 6,
         date: moment(monthMomentObject),
-        events: this.getEvents(monthMomentObject),
+        meals: this.getMeals(monthMomentObject),
       }
 
       return data

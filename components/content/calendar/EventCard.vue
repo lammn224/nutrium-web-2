@@ -1,19 +1,30 @@
 <template>
-  <div class="panel no-margin" :class="[event.color]" @click="showEventDetails">
+  <div
+    class="panel no-margin bg-"
+    :class="[
+      meal.type === LAUNCH()
+        ? 'bg-secondary'
+        : meal.type === BREAKFAST()
+        ? 'bg-primary'
+        : 'bg-warning',
+    ]"
+  >
     <div
       class="panel-heading event-title"
       :class="{ 'clickable-event': isDaySelected }"
     >
-      {{ event.title }}
+      {{ meal.type }}
     </div>
   </div>
 </template>
 
 <script>
+import { BREAKFAST, LAUNCH } from '~/constants/meal-type.constant'
+
 export default {
   name: 'EventCard',
   props: {
-    event: {
+    meal: {
       type: Object,
       default: null,
     },
@@ -22,15 +33,11 @@ export default {
     },
   },
   methods: {
-    showEventDetails() {
-      if (this.isDaySelected) {
-        // TODO: implement event details presentation
-        // Show modal detail about meals
-        console.log(this.event)
-        alert(
-          this.event.title + ' is selected. Can you help implement this too?'
-        )
-      }
+    BREAKFAST() {
+      return BREAKFAST
+    },
+    LAUNCH() {
+      return LAUNCH
     },
   },
 }

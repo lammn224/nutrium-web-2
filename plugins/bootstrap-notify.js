@@ -83,3 +83,7 @@ Vue.prototype.$notifyDeleteSuccess = (objectName) =>
 Vue.prototype.$notifyResetPasswordSuccess = (objectName) => {
   notify('Thông báo', `Đặt lại mật khẩu ${objectName} thành công!`, 'success')
 }
+
+Vue.prototype.$notifyEnoughMeal = (objectName) => {
+  notify('Thông báo', `Ngày ${objectName} đã đủ bữa ăn`, 'danger')
+}

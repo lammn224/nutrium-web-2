@@ -11,18 +11,31 @@
     @hidden="handleModalHidden"
   >
     <validation-observer ref="observer">
-      <base-form-text-input
+      <validation-provider
         v-if="$auth.user.role === ADMIN()"
-        v-model="form.type"
-        required
-        disabled
-        :error="vForm.errors.get('type')"
-        placeholder="Loại bữa ăn"
-        label="Loại bữa ăn"
-        rules="required|max:100"
-        name="name"
-        class="w-25"
-      />
+        v-slot="{ errors }"
+        name="Loại bữa ăn"
+        rules="required"
+      >
+        <b-form-group
+          v-if="$auth.user.role === ADMIN()"
+          v-bind="$attrs"
+          label="Loại bữa ăn"
+        >
+          <b-form-select
+            v-model="form.type"
+            :state="errors[0] || error !== null ? false : null"
+          >
+            <b-form-select-option :value="LAUNCH()">{{
+              MEALS.get(LAUNCH())
+            }}</b-form-select-option>
+          </b-form-select>
+
+          <b-form-invalid-feedback>
+            {{ errors[0] || error }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </validation-provider>
 
       <validation-provider
         v-if="$auth.user.role === PARENTS()"
@@ -111,7 +124,7 @@
       </div>
     </validation-observer>
 
-    <food-selection v-model="foods"></food-selection>
+    <food-selection v-model="form.foods" :food-list="foods"></food-selection>
   </b-modal>
 </template>
 
@@ -127,6 +140,7 @@ import {
   LAUNCH,
   MEALS,
 } from '~/constants/meal-type.constant'
+import { convertStringToTimeStamps } from '~/services/convertTimeStamps.service'
 
 const defaultForm = {
   type: MEALS.get(LAUNCH),
@@ -151,37 +165,53 @@ export default {
       foods: [],
     }
   },
-  watch: {
-    foods(newVal) {
-      this.form.power = '0'
-      this.form.protein = '0'
-      this.form.lipid = '0'
-      this.form.glucid = '0'
-      this.form.foods = []
-      newVal.forEach((food) => {
-        this.form.power = (parseFloat(this.form.power) + parseFloat(food.power))
-          .toFixed(2)
-          .toString()
-        this.form.protein = (
-          parseFloat(this.form.protein) + parseFloat(food.protein)
-        )
-          .toFixed(2)
-          .toString()
-        this.form.lipid = (parseFloat(this.form.lipid) + parseFloat(food.lipid))
-          .toFixed(2)
-          .toString()
-        this.form.glucid = (
-          parseFloat(this.form.glucid) + parseFloat(food.glucid)
-        )
-          .toFixed(2)
-          .toString()
-
-        this.form.foods.push(food._id)
-      })
-      this.form.school = this.$auth.user.school._id
+  computed: {
+    MEALS() {
+      return MEALS
     },
   },
+  watch: {
+    'form.foods': {
+      handler(newVal, oldVal) {
+        this.form.power = '0'
+        this.form.protein = '0'
+        this.form.lipid = '0'
+        this.form.glucid = '0'
+        newVal.forEach((id) => {
+          const food = this.foods.find((item) => item._id === id)
+          this.form.power = (
+            parseFloat(this.form.power) + parseFloat(food.power)
+          )
+            .toFixed(2)
+            .toString()
+          this.form.protein = (
+            parseFloat(this.form.protein) + parseFloat(food.protein)
+          )
+            .toFixed(2)
+            .toString()
+          this.form.lipid = (
+            parseFloat(this.form.lipid) + parseFloat(food.lipid)
+          )
+            .toFixed(2)
+            .toString()
+          this.form.glucid = (
+            parseFloat(this.form.glucid) + parseFloat(food.glucid)
+          )
+            .toFixed(2)
+            .toString()
+        })
+        this.form.school = this.$auth.user.school._id
+      },
+      deep: true,
+    },
+  },
+  created() {
+    this.loadFoodData()
+  },
   methods: {
+    LAUNCH() {
+      return LAUNCH
+    },
     PARENTS() {
       return PARENTS
     },
@@ -211,36 +241,46 @@ export default {
       const form = cloneDeep(this.form)
       return form
     },
-    // eslint-disable-next-line require-await
     async addItem() {
       try {
         const form = this.processFormToSubmit()
+        form.date = convertStringToTimeStamps(form.date)
         this.vForm = new Form(form)
-        console.log(form)
-        // await this.vForm.post(this.$axios.defaults.baseURL + '/foods')
+
+        await this.vForm.post(this.$axios.defaults.baseURL + '/meals')
         this.$notifyAddSuccess('bữa ăn')
         this.$refs.modal.hide()
         this.form = cloneDeep(defaultForm)
-        this.foods = []
-        // this.onActionSuccess()
+
+        this.$bus.$emit('reloadMealData')
       } catch (e) {
+        this.$refs.modal.hide()
         this.processError(e)
       }
     },
     async updateItem() {
       try {
         const form = this.processFormToSubmit()
+        form.date = convertStringToTimeStamps(form.date)
         this.vForm = new Form(form)
-        await this.vForm.patch(
-          this.$axios.defaults.baseURL + '/foods/' + this.form._id
-        )
 
+        await this.vForm.patch(
+          this.$axios.defaults.baseURL + '/meals/' + this.form._id
+        )
         this.$notifyUpdateSuccess('bữa ăn')
         this.$refs.modal.hide()
-        this.onActionSuccess()
+
+        this.$bus.$emit('reloadMealData')
       } catch (e) {
+        this.$refs.modal.hide()
         this.processError(e)
       }
+    },
+    async loadFoodData() {
+      try {
+        const { data } = await this.$axios.get('/foods/all')
+        this.foods = data
+      } catch (e) {}
     },
   },
 }

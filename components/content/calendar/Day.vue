@@ -12,8 +12,8 @@
     <div class="row">
       <div class="col-sm-6">
         <div v-show="isDaySelected">
-          <span class="label-cus bg-primary" @click="showAddEventForm">
-            Add event</span
+          <span class="label-cus bg-primary" @click="showAddMealForm">
+            Add meal</span
           >
         </div>
       </div>
@@ -23,26 +23,26 @@
     </div>
     <div class="event-box">
       <content-calendar-event-card
-        v-for="event in day.events"
-        :key="event.id"
-        :event="event"
+        v-for="meal in day.meals"
+        :key="meal.id"
+        :meal="meal"
         :day-date="day.date"
         :is-day-selected="isDaySelected"
+        @click.native="showDetailMeal(meal)"
       >
       </content-calendar-event-card>
-      <meal-modal ref="modal" :on-action-success="reloadPage" />
+      <meal-modal ref="modal" />
     </div>
   </div>
 </template>
 <script>
 import moment from 'moment'
+import cloneDeep from 'lodash/cloneDeep'
 import {
   CHANGE_MONTH,
   DAY_SELECTED,
 } from '~/constants/calendar-actions.constant'
 import { dateToString } from '~/services/convertTimeStamps.service'
-import { ADMIN } from '~/constants/role.constant'
-import { LAUNCH, MEALS } from '~/constants/meal-type.constant'
 
 const defaultForm = {
   type: '',
@@ -68,6 +68,7 @@ export default {
   data() {
     return {
       isDaySelected: false,
+      thisDayStr: dateToString(this.day.date._d),
     }
   },
 
@@ -95,21 +96,29 @@ export default {
         this.$root.$emit(DAY_SELECTED, { dayDate: this.day.date })
       }
     },
-    showAddEventForm() {
-      if (this.day.events.length < 3) {
-        defaultForm.type =
-          this.$auth.user.role === ADMIN ? MEALS.get(LAUNCH) : ''
-        defaultForm.date = dateToString(this.day.date._d)
+    showAddMealForm() {
+      if (this.day.meals.length < 3) {
+        defaultForm.date = this.thisDayStr
         defaultForm.school = this.$auth.user.school._id
 
         this.$refs.modal.show(defaultForm)
       } else {
-        alert('full meals')
+        this.$notifyEnoughMeal(this.thisDayStr)
       }
     },
 
-    reloadPage() {
-      location.reload(true)
+    showDetailMeal(meal) {
+      const cloneMeal = cloneDeep(defaultForm)
+      cloneMeal.date = this.thisDayStr
+      cloneMeal.school = meal.school
+      cloneMeal.power = meal.power
+      cloneMeal.protein = meal.protein
+      cloneMeal.lipid = meal.lipid
+      cloneMeal.foods = meal.foods
+      cloneMeal.type = meal.type
+      cloneMeal._id = meal._id
+
+      this.$refs.modal.show(cloneMeal)
     },
   },
 }

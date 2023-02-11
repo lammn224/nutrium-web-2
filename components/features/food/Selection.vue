@@ -22,7 +22,7 @@
               :key="item._id"
               class="col-md-6 mb-1"
             >
-              <b-form-checkbox :value="item">
+              <b-form-checkbox :value="item._id">
                 {{ item.name }}
               </b-form-checkbox>
             </div>
@@ -41,10 +41,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    foodList: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
-      foodList: [],
+      // foodList: [],
       foodChecked: [],
       search: '',
     }
@@ -67,17 +71,16 @@ export default {
   created() {
     this.foodChecked = this.value
   },
-  mounted() {
-    this.loadData()
-  },
-  methods: {
-    async loadData() {
-      try {
-        const res = await this.$axios.get('/foods/all')
-        const { data } = res
-        this.foodList = data.results
-      } catch (e) {}
-    },
-  },
+  // mounted() {
+  //   this.loadData()
+  // },
+  // methods: {
+  //   async loadData() {
+  //     try {
+  //       const { data } = await this.$axios.get('/foods/all')
+  //       this.foodList = data
+  //     } catch (e) {}
+  //   },
+  // },
 }
 </script>
