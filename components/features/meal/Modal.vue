@@ -2,33 +2,39 @@
   <b-modal
     ref="modal"
     :ok-title="isEdit ? 'Cập nhật' : 'Thêm mới'"
-    :title="isEdit ? 'Cập nhật bữa ăn' : 'Thêm mới bữa ăn'"
+    :title="
+      !isEdit
+        ? 'Thêm mới bữa ăn'
+        : $auth.user._id !== form.createdBy
+        ? 'Xem bữa ăn'
+        : 'Cập nhật bữa ăn'
+    "
     cancel-title="Hủy bỏ"
     no-close-on-backdrop
     no-enforce-focus
     size="lg"
+    :hide-footer="
+      $auth.user._id !== form.createdBy ||
+      convertStringToTimeStamps(form.date) <
+        convertStringToTimeStamps(dateToString(new Date()))
+    "
     @ok="handleModalOk"
     @hidden="handleModalHidden"
   >
     <validation-observer ref="observer">
       <validation-provider
-        v-if="$auth.user.role === ADMIN()"
+        v-if="isEdit"
         v-slot="{ errors }"
         name="Loại bữa ăn"
         rules="required"
       >
-        <b-form-group
-          v-if="$auth.user.role === ADMIN()"
-          v-bind="$attrs"
-          label="Loại bữa ăn"
-        >
+        <b-form-group v-if="isEdit" v-bind="$attrs" label="Loại bữa ăn">
           <b-form-select
             v-model="form.type"
+            :options="isEditOptions"
             :state="errors[0] || error !== null ? false : null"
+            disabled
           >
-            <b-form-select-option :value="LAUNCH()">{{
-              MEALS.get(LAUNCH())
-            }}</b-form-select-option>
           </b-form-select>
 
           <b-form-invalid-feedback>
@@ -38,16 +44,12 @@
       </validation-provider>
 
       <validation-provider
-        v-if="$auth.user.role === PARENTS()"
+        v-if="!isEdit"
         v-slot="{ errors }"
         name="Loại bữa ăn"
         rules="required"
       >
-        <b-form-group
-          v-if="$auth.user.role === PARENTS()"
-          v-bind="$attrs"
-          label="Loại bữa ăn"
-        >
+        <b-form-group v-if="!isEdit" v-bind="$attrs" label="Loại bữa ăn">
           <b-form-select
             v-model="form.type"
             :options="options"
@@ -131,6 +133,7 @@
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import { Form } from 'vform'
+import { mapGetters } from 'vuex'
 import BaseFormModal from '~/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin'
 import { ADMIN, PARENTS } from '~/constants/role.constant'
@@ -140,7 +143,11 @@ import {
   LAUNCH,
   MEALS,
 } from '~/constants/meal-type.constant'
-import { convertStringToTimeStamps } from '~/services/convertTimeStamps.service'
+import {
+  convertStringToTimeStamps,
+  convertTimeStampsToString,
+  dateToString,
+} from '~/services/convertTimeStamps.service'
 
 const defaultForm = {
   type: MEALS.get(LAUNCH),
@@ -157,18 +164,27 @@ export default {
   data() {
     return {
       selected: null,
-      options: [
+      options:
+        this.$auth.user.role === PARENTS
+          ? [
+              { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+              { value: DINNER, text: MEALS.get(DINNER) },
+            ]
+          : [{ value: LAUNCH, text: MEALS.get(LAUNCH) }],
+
+      isEditOptions: [
         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+        { value: LAUNCH, text: MEALS.get(LAUNCH) },
         { value: DINNER, text: MEALS.get(DINNER) },
       ],
       form: cloneDeep(defaultForm),
-      foods: [],
+      // foods: [],
     }
   },
   computed: {
-    MEALS() {
-      return MEALS
-    },
+    ...mapGetters({
+      foods: 'food/foods',
+    }),
   },
   watch: {
     'form.foods': {
@@ -206,9 +222,12 @@ export default {
     },
   },
   created() {
-    this.loadFoodData()
+    // this.loadFoodData()
   },
   methods: {
+    dateToString,
+    convertStringToTimeStamps,
+    convertTimeStampsToString,
     LAUNCH() {
       return LAUNCH
     },
@@ -276,12 +295,12 @@ export default {
         this.processError(e)
       }
     },
-    async loadFoodData() {
-      try {
-        const { data } = await this.$axios.get('/foods/all')
-        this.foods = data
-      } catch (e) {}
-    },
+    // async loadFoodData() {
+    //   try {
+    //     const { data } = await this.$axios.get('/foods/all')
+    //     this.foods = data
+    //   } catch (e) {}
+    // },
   },
 }
 </script>

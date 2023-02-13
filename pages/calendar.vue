@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'CalendarPage',
   data() {
@@ -16,14 +18,20 @@ export default {
       meals: [],
     }
   },
+
   async mounted() {
     await this.loadMeals()
+    await this.loadFoodData()
     this.$bus.$on('reloadMealData', async () => {
       await this.loadMeals()
     })
   },
 
   methods: {
+    ...mapActions({
+      setFoods: 'food/setFoods',
+    }),
+
     async loadMeals() {
       const { data } = await this.$axios.get('meals/all')
       data.forEach((meal) => {
@@ -31,6 +39,15 @@ export default {
       })
 
       this.meals = data
+    },
+
+    async loadFoodData() {
+      try {
+        const { data } = await this.$axios.get('/foods/all')
+        this.foods = data
+
+        await this.setFoods(this.foods)
+      } catch (e) {}
     },
   },
 }

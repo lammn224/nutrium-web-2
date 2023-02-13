@@ -100,6 +100,7 @@ export default {
       if (this.day.meals.length < 3) {
         defaultForm.date = this.thisDayStr
         defaultForm.school = this.$auth.user.school._id
+        defaultForm.createdBy = this.$auth.user._id
 
         this.$refs.modal.show(defaultForm)
       } else {
@@ -117,12 +118,14 @@ export default {
       cloneMeal.foods = meal.foods
       cloneMeal.type = meal.type
       cloneMeal._id = meal._id
+      cloneMeal.createdBy = meal.createdBy
 
       this.$refs.modal.show(cloneMeal)
     },
   },
 }
 </script>
+
 <style>
 .label-cus {
   display: inline;
