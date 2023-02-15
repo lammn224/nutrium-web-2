@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     showWeekNumber() {
-      // const me = this
       this.showWeekNumberFlag = true
       this.$root.$emit(WEEK_SELECTED, { weekDate: this.week[0].date })
     },

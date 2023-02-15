@@ -37,6 +37,12 @@ export default [
   //   ],
   // },
   {
+    title: 'Lập lịch bữa ăn',
+    icon: 'flaticon-calendar-2',
+    route: '/calendar',
+    role: [ADMIN, PARENTS, STUDENT],
+  },
+  {
     title: 'Quản lý người dùng',
     icon: 'flaticon2-user',
     route: '/user',

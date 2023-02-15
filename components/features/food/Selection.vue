@@ -48,7 +48,6 @@ export default {
   },
   data() {
     return {
-      // foodList: [],
       foodChecked: [],
       search: '',
     }
@@ -71,16 +70,5 @@ export default {
   created() {
     this.foodChecked = this.value
   },
-  // mounted() {
-  //   this.loadData()
-  // },
-  // methods: {
-  //   async loadData() {
-  //     try {
-  //       const { data } = await this.$axios.get('/foods/all')
-  //       this.foodList = data
-  //     } catch (e) {}
-  //   },
-  // },
 }
 </script>

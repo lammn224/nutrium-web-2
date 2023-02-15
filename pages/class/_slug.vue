@@ -107,6 +107,28 @@ export default {
             return row.gender === MALE ? 'Nam' : 'Nữ'
           },
         },
+        {
+          field: '',
+          key: 'defaultAction',
+          title: 'Hành động',
+          width: 100,
+          align: 'center',
+          fixed: 'right',
+          renderBodyCell: ({ row, column, rowIndex }, h) => {
+            return (
+              <span>
+                <button
+                  class="btn btn-sm btn-primary"
+                  on-click={() => {
+                    this.getDetailsStudent(row._id)
+                  }}
+                >
+                  Chi tiết
+                </button>
+              </span>
+            )
+          },
+        },
       ]
     },
     queryUrl() {
@@ -144,18 +166,6 @@ export default {
     },
 
     sortChange(params) {
-      // let prop, type
-      // for (const key in params) {
-      //   if (params[key]) {
-      //     type = params[key]
-      //     prop = key
-      //     break
-      //   }
-      // }
-      // this.sortObj = {
-      //   sortBy: prop,
-      //   sortType: type,
-      // }
       this.tableData.sort((a, b) => {
         if (params.studentId) {
           if (params.studentId === 'asc') {
@@ -181,6 +191,10 @@ export default {
       }
 
       return null
+    },
+
+    getDetailsStudent(rowVal) {
+      this.$router.push({ path: `/student/${rowVal}` })
     },
   },
 }

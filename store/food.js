@@ -3,7 +3,7 @@ export const SET_FOODS = 'setFoods'
 export default {
   state() {
     return {
-      foods: null,
+      foods: [],
     }
   },
   getters: {

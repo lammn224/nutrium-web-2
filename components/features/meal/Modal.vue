@@ -178,7 +178,6 @@ export default {
         { value: DINNER, text: MEALS.get(DINNER) },
       ],
       form: cloneDeep(defaultForm),
-      // foods: [],
     }
   },
   computed: {
@@ -221,9 +220,7 @@ export default {
       deep: true,
     },
   },
-  created() {
-    // this.loadFoodData()
-  },
+
   methods: {
     dateToString,
     convertStringToTimeStamps,
@@ -295,12 +292,6 @@ export default {
         this.processError(e)
       }
     },
-    // async loadFoodData() {
-    //   try {
-    //     const { data } = await this.$axios.get('/foods/all')
-    //     this.foods = data
-    //   } catch (e) {}
-    // },
   },
 }
 </script>

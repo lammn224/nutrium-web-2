@@ -34,3 +34,17 @@ export function dateToString(inputDate) {
 
   return `${date}/${month}/${year}`
 }
+
+export function startOfWeek(ts) {
+  const date = new Date(ts * 1000)
+  const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1)
+
+  return new Date(date.setDate(diff))
+}
+
+export function endOfWeek(ts) {
+  const date = new Date(ts * 1000)
+  const lastday = date.getDate() - (date.getDay() - 1) + 6
+
+  return new Date(date.setDate(lastday))
+}

@@ -55,7 +55,9 @@
           <!--begin::Student-->
           <div v-if="$auth.user.child">
             <a
+              style="cursor: pointer"
               class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
+              @click="getDetailsStudent($auth.user.child._id)"
             >
               Thông tin học sinh
             </a>
@@ -279,6 +281,10 @@ export default {
       } else {
         alert('Sorry, FileReader API not supported')
       }
+    },
+
+    getDetailsStudent(id) {
+      this.$router.push({ path: `/student/${id}` })
     },
   },
 }

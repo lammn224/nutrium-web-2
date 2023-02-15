@@ -68,7 +68,6 @@ export default {
   data() {
     return {
       isDaySelected: false,
-      thisDayStr: dateToString(this.day.date._d),
     }
   },
 
@@ -86,7 +85,6 @@ export default {
   },
   methods: {
     showDayOptions() {
-      // const me = this
       const startOfToday = moment().startOf('day')
       if (
         this.day.date.isAfter(startOfToday) ||
@@ -98,19 +96,19 @@ export default {
     },
     showAddMealForm() {
       if (this.day.meals.length < 3) {
-        defaultForm.date = this.thisDayStr
+        defaultForm.date = dateToString(this.day.date._d)
         defaultForm.school = this.$auth.user.school._id
         defaultForm.createdBy = this.$auth.user._id
 
         this.$refs.modal.show(defaultForm)
       } else {
-        this.$notifyEnoughMeal(this.thisDayStr)
+        this.$notifyEnoughMeal(dateToString(this.day.date._d))
       }
     },
 
     showDetailMeal(meal) {
       const cloneMeal = cloneDeep(defaultForm)
-      cloneMeal.date = this.thisDayStr
+      cloneMeal.date = dateToString(this.day.date._d)
       cloneMeal.school = meal.school
       cloneMeal.power = meal.power
       cloneMeal.protein = meal.protein

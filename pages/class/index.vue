@@ -6,15 +6,18 @@
       </b-button>
     </template>
     <template #body>
-      <ve-table
-        :style="{ 'word-break': 'break-all' }"
-        :columns="tableColumns"
-        :sort-option="sortOption"
-        :table-data="tableData"
-        :row-style-option="rowStyleOption"
-        :max-height="650"
-        border-y
-      />
+      <div ref="datatable">
+        <ve-table
+          :style="{ 'word-break': 'break-all' }"
+          :columns="tableColumns"
+          :sort-option="sortOption"
+          :table-data="tableData"
+          :row-style-option="rowStyleOption"
+          :max-height="650"
+          border-y
+        />
+      </div>
+
       <class-modal ref="modal" :on-action-success="reloadData" />
     </template>
   </content-card>
