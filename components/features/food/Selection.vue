@@ -23,7 +23,7 @@
               class="col-md-6 mb-1"
             >
               <b-form-checkbox :value="item._id">
-                {{ item.name }}
+                {{ item.name }} - {{ item.power }} (kcal)
               </b-form-checkbox>
             </div>
           </div>

@@ -63,7 +63,7 @@
             >
               {{ $auth.user.fullName }}
             </a>
-            <div class="text-muted mt-1">{{ $auth.user.role }}</div>
+            <div class="text-muted mt-1">{{ ROLES.get($auth.user.role) }}</div>
             <div class="navi mt-2">
               <a href="#" class="navi-item">
                 <span class="navi-link p-0 pb-2">
@@ -122,6 +122,36 @@
               </div>
             </div>
           </nuxt-link>
+
+          <nuxt-link
+            v-if="$auth.user.child"
+            :to="`/student/${$auth.user.child._id}`"
+            href="#"
+            class="navi-item"
+            @click.native="closeOffcanvas"
+          >
+            <div class="navi-link">
+              <div class="symbol symbol-40 bg-light mr-3">
+                <div class="symbol-label">
+                  <span class="svg-icon svg-icon-md svg-icon-success">
+                    <!--begin::Svg Icon-->
+                    <inline-svg
+                      :src="
+                        require('~/assets/media/svg/icons/General/User.svg')
+                      "
+                    />
+                    <!--end::Svg Icon-->
+                  </span>
+                </div>
+              </div>
+              <div v-if="$auth.user.child" class="navi-text">
+                <nuxt-link :to="`/student/${$auth.user.child._id}`">
+                  <div class="font-weight-bold">Thông tin học sinh</div>
+                </nuxt-link>
+                <div class="text-muted">Quản lý học sinh</div>
+              </div>
+            </div>
+          </nuxt-link>
           <!--end:Item-->
         </div>
         <!--end::Nav-->
@@ -132,11 +162,17 @@
 </template>
 
 <script>
+import { ROLES } from '../../../../constants/role.constant'
 import KTLayoutQuickUser from '@/assets/js/layout/extended/quick-user.js'
 import KTOffcanvas from '@/assets/js/components/offcanvas.js'
 
 export default {
   name: 'KTQuickUser',
+  computed: {
+    ROLES() {
+      return ROLES
+    },
+  },
   mounted() {
     KTLayoutQuickUser.init(this.$refs.kt_quick_user)
   },

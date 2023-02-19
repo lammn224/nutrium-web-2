@@ -19,6 +19,12 @@ export default {
     }
   },
 
+  head() {
+    return {
+      title: 'Calendar',
+    }
+  },
+
   async mounted() {
     await this.loadMeals()
     await this.loadFoodData()

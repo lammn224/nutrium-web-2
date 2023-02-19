@@ -132,6 +132,34 @@
             </div>
             <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Chiều cao (cm)</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  v-model="form.height"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Chiều cao"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Cân nặng (kg)</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  v-model="form.weight"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Cân nặng"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
                 >Mã học sinh</label
               >
               <div class="col-lg-9 col-xl-6">
@@ -263,6 +291,8 @@ export default {
       form: {
         fullName: this.$auth.user.fullName,
         dateOfBirth: convertTimeStampsToString(this.$auth.user.dateOfBirth),
+        weight: this.$auth.user.weight,
+        height: this.$auth.user.height,
       },
     }
   },
@@ -286,7 +316,9 @@ export default {
       if (
         this.form.fullName === this.student.fullName &&
         this.form.dateOfBirth ===
-          convertTimeStampsToString(this.student.dateOfBirth)
+          convertTimeStampsToString(this.student.dateOfBirth) &&
+        this.form.weight === this.student.weight &&
+        this.form.height === this.student.height
       ) {
         return
       }
@@ -325,6 +357,8 @@ export default {
       this.form.dateOfBirth = convertTimeStampsToString(
         this.student.dateOfBirth
       )
+      this.form.weight = this.student.weight
+      this.form.height = this.student.height
     },
 
     processError(e) {
