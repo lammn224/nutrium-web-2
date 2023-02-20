@@ -158,6 +158,56 @@
                 />
               </div>
             </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                Giới tính
+              </label>
+              <div class="col-lg-9 col-xl-6">
+                <b-form-group v-slot="{ ariaDescribedby }" label="">
+                  <b-form-radio-group
+                    id="radio-group-1"
+                    v-model="form.gender"
+                    :options="genderOptions"
+                    :aria-describedby="ariaDescribedby"
+                    name="radio-options"
+                  ></b-form-radio-group>
+                </b-form-group>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                Hoạt động thể lực
+              </label>
+              <div class="col-lg-9 col-xl-6">
+                <b-form-group v-slot="{ ariaDescribedby2 }" label="">
+                  <b-form-radio-group
+                    id="radio-group-2"
+                    v-model="form.activityType"
+                    :options="activityTypeOptions"
+                    :aria-describedby="ariaDescribedby2"
+                    name="radio-options2"
+                  ></b-form-radio-group>
+                </b-form-group>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >KNNL (kcal)</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="school"
+                  v-model="form.rcmCalories"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  disabled
+                />
+              </div>
+            </div>
+
             <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right"
                 >Mã học sinh</label
@@ -281,6 +331,8 @@ import {
   convertStringToTimeStamps,
   convertTimeStampsToString,
 } from '~/services/convertTimeStamps.service'
+import { FEMALE, MALE } from '~/constants/gender.constant'
+import { ACTIVITY_TYPE } from '~/constants/activity-type.constant'
 export default {
   name: 'StudentPersonalInformation',
   data() {
@@ -293,13 +345,67 @@ export default {
         dateOfBirth: convertTimeStampsToString(this.$auth.user.dateOfBirth),
         weight: this.$auth.user.weight,
         height: this.$auth.user.height,
+        gender: this.$auth.user.gender,
+        activityType: this.$auth.user.activityType,
+        rcmCalories: this.$auth.user.rcmCalories,
       },
+      selectedGender: this.$auth.user.gender,
+      genderOptions: [
+        { text: 'Nam', value: 'male' },
+        { text: 'Nữ', value: 'female' },
+      ],
+      selectedActivityType: this.$auth.user.activityType,
+      activityTypeOptions: [
+        { text: 'Không', value: 'none' },
+        { text: 'Nhẹ', value: 'light' },
+        { text: 'Trung bình', value: 'moderate' },
+        { text: 'Nặng', value: 'heavy' },
+      ],
     }
   },
 
   computed: {
     ROLES() {
       return ROLES
+    },
+  },
+
+  watch: {
+    'form.dateOfBirth': {
+      handler(newVal, oldVal) {
+        if (typeof newVal === 'string') {
+          this.form.rcmCalories = this.calculateRcmCalories()
+        }
+      },
+      deep: true,
+    },
+
+    'form.weight': {
+      handler(newVal, oldVal) {
+        this.form.rcmCalories = this.calculateRcmCalories()
+      },
+      deep: true,
+    },
+
+    'form.height': {
+      handler(newVal, oldVal) {
+        this.form.rcmCalories = this.calculateRcmCalories()
+      },
+      deep: true,
+    },
+
+    'form.gender': {
+      handler(newVal, oldVal) {
+        this.form.rcmCalories = this.calculateRcmCalories()
+      },
+      deep: true,
+    },
+
+    'form.activityType': {
+      handler(newVal, oldVal) {
+        this.form.rcmCalories = this.calculateRcmCalories()
+      },
+      deep: true,
     },
   },
 
@@ -318,7 +424,9 @@ export default {
         this.form.dateOfBirth ===
           convertTimeStampsToString(this.student.dateOfBirth) &&
         this.form.weight === this.student.weight &&
-        this.form.height === this.student.height
+        this.form.height === this.student.height &&
+        this.form.gender === this.student.gender &&
+        this.form.activityType === this.student.activityType
       ) {
         return
       }
@@ -359,6 +467,8 @@ export default {
       )
       this.form.weight = this.student.weight
       this.form.height = this.student.height
+      this.form.gender = this.student.gender
+      this.form.activityType = this.student.activityType
     },
 
     processError(e) {
@@ -384,6 +494,45 @@ export default {
         reader.readAsDataURL(file)
       } else {
         alert('Sorry, FileReader API not supported')
+      }
+    },
+
+    calculateRcmCalories() {
+      const gender = this.form.gender
+
+      switch (gender) {
+        case MALE:
+          return Math.floor(
+            (66.47 +
+              13.75 * this.form.weight +
+              5.003 * this.form.height -
+              6.755 *
+                parseInt(
+                  new Date().getFullYear() -
+                    new Date(
+                      convertStringToTimeStamps(this.form.dateOfBirth) * 1000
+                    ).getFullYear()
+                )) *
+              ACTIVITY_TYPE.get(this.form.activityType)
+          )
+
+        case FEMALE:
+          return Math.floor(
+            (655.1 +
+              9.563 * this.form.weight +
+              1.85 * this.form.height -
+              4.676 *
+                parseInt(
+                  new Date().getFullYear() -
+                    new Date(
+                      convertStringToTimeStamps(this.form.dateOfBirth) * 1000
+                    ).getFullYear()
+                )) *
+              ACTIVITY_TYPE.get(this.form.activityType)
+          )
+
+        default:
+          break
       }
     },
   },
