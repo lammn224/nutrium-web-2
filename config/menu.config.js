@@ -4,7 +4,7 @@ export default [
   {
     title: 'Dashboard',
     icon: 'flaticon2-architecture-and-city',
-    route: '/dashboard',
+    route: '/',
   },
   // {
   //   title: 'Quản lý nội dung',

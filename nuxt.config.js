@@ -38,6 +38,7 @@ export default {
     '~/plugins/vee-validate',
     '~/plugins/bootstrap-notify',
     '~/plugins/axios',
+    '~/plugins/chart',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -61,7 +62,7 @@ export default {
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
+    // '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

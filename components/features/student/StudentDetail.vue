@@ -236,22 +236,7 @@
       </div>
       <div class="card card-custom mb-5">
         <!--begin::Header-->
-        <div class="card-header py-3">
-          <div class="card-title align-items-start flex-column">
-            <h3 class="card-label font-weight-bolder text-dark">
-              Thông tin liên hệ
-            </h3>
-            <span class="text-muted font-weight-bold font-size-sm mt-1">
-              Thông tin liên hệ của phụ huynh
-            </span>
-          </div>
-        </div>
-        <!--end::Header-->
-      </div>
-
-      <div class="card card-custom mb-5">
-        <!--begin::Header-->
-        <div class="card-header py-5">
+        <div class="card-header py-5" style="display: block">
           <div class="row">
             <div class="col-sm-6">
               <div class="btn-group">
@@ -343,7 +328,7 @@ export default {
       default_photo: 'media/students/blank.png',
       current_photo: null,
       meals: [],
-      remoteUrl: '/meals/by-week',
+      remoteUrl: '/meals/by-week-per-student',
       loadingInstance: null,
       loading: true,
       firstLoading: false,
@@ -370,10 +355,6 @@ export default {
   },
 
   computed: {
-    // ...mapGetters({
-    //   foods: 'food/foods',
-    // }),
-
     ROLES() {
       return ROLES
     },
