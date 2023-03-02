@@ -11,7 +11,7 @@
   >
     <div class="row">
       <div class="col-sm-6">
-        <div v-show="isDaySelected">
+        <div v-show="isDaySelected" v-if="$auth.user.role !== STUDENT()">
           <span class="label-cus bg-primary" @click="showAddMealForm">
             Add meal</span
           >
@@ -43,6 +43,7 @@ import {
   DAY_SELECTED,
 } from '~/constants/calendar-actions.constant'
 import { dateToString } from '~/services/convertTimeStamps.service'
+import { STUDENT } from '~/constants/role.constant'
 
 const defaultForm = {
   type: '',
@@ -84,6 +85,9 @@ export default {
     })
   },
   methods: {
+    STUDENT() {
+      return STUDENT
+    },
     showDayOptions() {
       const startOfToday = moment().startOf('day')
       if (

@@ -67,6 +67,35 @@
             </div>
           </div>
           <!--end::Contact-->
+
+          <!--begin::Parents-->
+          <div>
+            <a
+              style="cursor: pointer"
+              class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
+            >
+              Thông tin liên hệ
+            </a>
+            <div class="pt-2">
+              <div
+                class="d-flex align-items-center justify-content-between mb-2"
+              >
+                <span class="font-weight-bold mr-2">Phụ huynh:</span>
+                <a class="text-muted text-hover-primary">{{
+                  student.parents.fullName
+                }}</a>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between mb-2"
+              >
+                <span class="font-weight-bold mr-2">Số điện thoại:</span>
+                <span class="text-muted">{{
+                  student.parents.phoneNumber
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <!--end::Parents-->
         </div>
       </div>
     </div>
@@ -256,70 +285,70 @@
         <!--end::Form-->
       </div>
 
-      <div class="card card-custom">
-        <!--begin::Header-->
-        <div class="card-header py-3">
-          <div class="card-title align-items-start flex-column">
-            <h3 class="card-label font-weight-bolder text-dark">
-              Thông tin liên hệ
-            </h3>
-            <span class="text-muted font-weight-bold font-size-sm mt-1">
-              Thông tin liên hệ của phụ huynh
-            </span>
-          </div>
-        </div>
-        <!--end::Header-->
-        <!--begin::Form-->
-        <form class="form">
-          <div class="card-body">
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Phụ huynh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <div class="input-group input-group-lg input-group-solid">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="flaticon2-user"></i>
-                    </span>
-                  </div>
-                  <input
-                    ref="parents"
-                    type="text"
-                    class="form-control form-control-lg form-control-solid"
-                    placeholder="Phụ huynh"
-                    disabled
-                    :value="student.parents.fullName"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Số điện thoại</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <div class="input-group input-group-lg input-group-solid">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="flaticon2-phone"></i>
-                    </span>
-                  </div>
-                  <input
-                    ref="phoneNumber"
-                    type="text"
-                    class="form-control form-control-lg form-control-solid"
-                    placeholder="Số điện thoại"
-                    disabled
-                    :value="student.parents.phoneNumber"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-        <!--end::Form-->
-      </div>
+      <!--      <div class="card card-custom">-->
+      <!--        &lt;!&ndash;begin::Header&ndash;&gt;-->
+      <!--        <div class="card-header py-3">-->
+      <!--          <div class="card-title align-items-start flex-column">-->
+      <!--            <h3 class="card-label font-weight-bolder text-dark">-->
+      <!--              Thông tin liên hệ-->
+      <!--            </h3>-->
+      <!--            <span class="text-muted font-weight-bold font-size-sm mt-1">-->
+      <!--              Thông tin liên hệ của phụ huynh-->
+      <!--            </span>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        &lt;!&ndash;end::Header&ndash;&gt;-->
+      <!--        &lt;!&ndash;begin::Form&ndash;&gt;-->
+      <!--        <form class="form">-->
+      <!--          <div class="card-body">-->
+      <!--            <div class="form-group row">-->
+      <!--              <label class="col-xl-3 col-lg-3 col-form-label text-right"-->
+      <!--                >Phụ huynh</label-->
+      <!--              >-->
+      <!--              <div class="col-lg-9 col-xl-6">-->
+      <!--                <div class="input-group input-group-lg input-group-solid">-->
+      <!--                  <div class="input-group-prepend">-->
+      <!--                    <span class="input-group-text">-->
+      <!--                      <i class="flaticon2-user"></i>-->
+      <!--                    </span>-->
+      <!--                  </div>-->
+      <!--                  <input-->
+      <!--                    ref="parents"-->
+      <!--                    type="text"-->
+      <!--                    class="form-control form-control-lg form-control-solid"-->
+      <!--                    placeholder="Phụ huynh"-->
+      <!--                    disabled-->
+      <!--                    :value="student.parents.fullName"-->
+      <!--                  />-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--            <div class="form-group row">-->
+      <!--              <label class="col-xl-3 col-lg-3 col-form-label text-right"-->
+      <!--                >Số điện thoại</label-->
+      <!--              >-->
+      <!--              <div class="col-lg-9 col-xl-6">-->
+      <!--                <div class="input-group input-group-lg input-group-solid">-->
+      <!--                  <div class="input-group-prepend">-->
+      <!--                    <span class="input-group-text">-->
+      <!--                      <i class="flaticon2-phone"></i>-->
+      <!--                    </span>-->
+      <!--                  </div>-->
+      <!--                  <input-->
+      <!--                    ref="phoneNumber"-->
+      <!--                    type="text"-->
+      <!--                    class="form-control form-control-lg form-control-solid"-->
+      <!--                    placeholder="Số điện thoại"-->
+      <!--                    disabled-->
+      <!--                    :value="student.parents.phoneNumber"-->
+      <!--                  />-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--        </form>-->
+      <!--        &lt;!&ndash;end::Form&ndash;&gt;-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -423,9 +452,12 @@ export default {
         this.form.fullName === this.student.fullName &&
         this.form.dateOfBirth ===
           convertTimeStampsToString(this.student.dateOfBirth) &&
-        this.form.weight === this.student.weight &&
-        this.form.height === this.student.height &&
-        this.form.gender === this.student.gender &&
+        // eslint-disable-next-line eqeqeq
+        this.form.weight == this.student.weight &&
+        // eslint-disable-next-line eqeqeq
+        this.form.height == this.student.height &&
+        // eslint-disable-next-line eqeqeq
+        this.form.gender == this.student.gender &&
         this.form.activityType === this.student.activityType
       ) {
         return
@@ -441,6 +473,10 @@ export default {
 
         this.student.fullName = data.fullName
         this.student.dateOfBirth = data.dateOfBirth
+        this.student.weight = data.weight
+        this.student.height = data.height
+        this.student.gender = data.gender
+        this.student.activityType = data.activityType
         this.form.dateOfBirth = convertTimeStampsToString(data.dateOfBirth)
 
         setTimeout(() => {

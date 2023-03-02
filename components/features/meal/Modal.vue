@@ -74,6 +74,38 @@
         class="w-25"
       />
 
+      <div v-if="$auth.user.child" class="row">
+        <div class="col-xl-4">
+          <base-form-text-input
+            :value="`${$auth.user.child.rcmCalories} kcal`"
+            disabled
+            placeholder="KNNL"
+            label="Năng lượng khuyến nghị"
+            name="name"
+          />
+        </div>
+
+        <div class="col-xl-4">
+          <base-form-text-input
+            :value="`45% ~ ${$auth.user.child.maxBreakfastCalories} kcal`"
+            disabled
+            placeholder="KNNL"
+            label="% Năng lượng khuyến nghị bữa sáng"
+            name="name"
+          />
+        </div>
+
+        <div class="col-xl-4">
+          <base-form-text-input
+            :value="`20% ~ ${$auth.user.child.maxDinnerCalories} kcal`"
+            disabled
+            placeholder="KNNL"
+            label="% Năng lượng khuyến nghị bữa tối"
+            name="name"
+          />
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-xl-3">
           <base-form-text-input
@@ -270,8 +302,8 @@ export default {
 
         this.$bus.$emit('reloadMealData')
       } catch (e) {
-        this.$refs.modal.hide()
-        this.processError(e)
+        // this.$refs.modal.hide()
+        this.$notifyErrMsg(e.response.data.message)
       }
     },
     async updateItem() {
@@ -288,8 +320,8 @@ export default {
 
         this.$bus.$emit('reloadMealData')
       } catch (e) {
-        this.$refs.modal.hide()
-        this.processError(e)
+        // this.$refs.modal.hide()
+        this.$notifyErrMsg(e.response.data.message)
       }
     },
   },

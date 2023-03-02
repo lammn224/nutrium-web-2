@@ -67,11 +67,173 @@
             </div>
           </div>
           <!--end::Contact-->
+
+          <!--begin::Parents-->
+          <div>
+            <a
+              style="cursor: pointer"
+              class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
+            >
+              Thông tin liên hệ
+            </a>
+            <div class="pt-2">
+              <div
+                class="d-flex align-items-center justify-content-between mb-2"
+              >
+                <span class="font-weight-bold mr-2">Phụ huynh:</span>
+                <a class="text-muted text-hover-primary">{{
+                  student.parents.fullName
+                }}</a>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between mb-2"
+              >
+                <span class="font-weight-bold mr-2">Số điện thoại:</span>
+                <span class="text-muted">{{
+                  student.parents.phoneNumber
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <!--end::Parents-->
         </div>
       </div>
     </div>
 
     <div class="flex-row-fluid ml-lg-8">
+      <div class="card card-custom mb-5">
+        <!--begin::Header-->
+        <div class="card-header py-3">
+          <div class="card-title align-items-start flex-column">
+            <h3 class="card-label font-weight-bolder text-dark">
+              Thông tin cá nhân
+            </h3>
+            <span class="text-muted font-weight-bold font-size-sm mt-1"
+              >Thông tin cá nhân học sinh</span
+            >
+          </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Form-->
+        <form class="form">
+          <!--begin::Body-->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Họ tên</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  disabled
+                  :value="student.fullName"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Họ tên"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Ngày sinh</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  disabled
+                  :value="convertTimeStampsToString(student.dateOfBirth)"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Ngày sinh"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Chiều cao (cm)</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  disabled
+                  :value="student.height"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Chiều cao"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Cân nặng (kg)</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="fullName"
+                  disabled
+                  :value="student.weight"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Cân nặng"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                Giới tính
+              </label>
+              <div class="col-lg-9 col-xl-6">
+                <b-form-group v-slot="{ ariaDescribedby }" label="">
+                  <b-form-radio-group
+                    id="radio-group-1"
+                    v-model="selectedGender"
+                    disabled
+                    :options="genderOptions"
+                    :aria-describedby="ariaDescribedby"
+                    name="radio-options"
+                  ></b-form-radio-group>
+                </b-form-group>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                Hoạt động thể lực
+              </label>
+              <div class="col-lg-9 col-xl-6">
+                <b-form-group v-slot="{ ariaDescribedby2 }" label="">
+                  <b-form-radio-group
+                    id="radio-group-2"
+                    v-model="selectedActivityType"
+                    disabled
+                    :options="activityTypeOptions"
+                    :aria-describedby="ariaDescribedby2"
+                    name="radio-options2"
+                  ></b-form-radio-group>
+                </b-form-group>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >KNNL (kcal)</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="school"
+                  disabled
+                  :value="student.rcmCalories"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+          <!--end::Body-->
+        </form>
+        <!--end::Form-->
+      </div>
       <div class="card card-custom mb-5">
         <!--begin::Header-->
         <div class="card-header py-3">
@@ -85,56 +247,6 @@
           </div>
         </div>
         <!--end::Header-->
-        <!--begin::Form-->
-        <form class="form">
-          <div class="card-body">
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Phụ huynh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <div class="input-group input-group-lg input-group-solid">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="flaticon2-user"></i>
-                    </span>
-                  </div>
-                  <input
-                    ref="parents"
-                    type="text"
-                    class="form-control form-control-lg form-control-solid"
-                    placeholder="Phụ huynh"
-                    disabled
-                    :value="student.parents.fullName"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Số điện thoại</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <div class="input-group input-group-lg input-group-solid">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="flaticon2-phone"></i>
-                    </span>
-                  </div>
-                  <input
-                    ref="phoneNumber"
-                    type="text"
-                    class="form-control form-control-lg form-control-solid"
-                    placeholder="Số điện thoại"
-                    disabled
-                    :value="student.parents.phoneNumber"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-        <!--end::Form-->
       </div>
 
       <div class="card card-custom mb-5">
@@ -242,6 +354,18 @@ export default {
       tableData: [],
       timestamp: Math.floor(Date.now() / 1000),
       foods: [],
+      selectedGender: this.student.gender,
+      genderOptions: [
+        { text: 'Nam', value: 'male' },
+        { text: 'Nữ', value: 'female' },
+      ],
+      selectedActivityType: this.student.activityType,
+      activityTypeOptions: [
+        { text: 'Không', value: 'none' },
+        { text: 'Nhẹ', value: 'light' },
+        { text: 'Trung bình', value: 'moderate' },
+        { text: 'Nặng', value: 'heavy' },
+      ],
     }
   },
 

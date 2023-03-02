@@ -13,13 +13,13 @@
       class="panel-heading event-title"
       :class="{ 'clickable-event': isDaySelected }"
     >
-      {{ meal.type }}
+      {{ MEALS.get(meal.type) }}
     </div>
   </div>
 </template>
 
 <script>
-import { BREAKFAST, LAUNCH } from '~/constants/meal-type.constant'
+import { BREAKFAST, LAUNCH, MEALS } from '~/constants/meal-type.constant'
 
 export default {
   name: 'EventCard',
@@ -30,6 +30,11 @@ export default {
     },
     isDaySelected: {
       type: Boolean,
+    },
+  },
+  computed: {
+    MEALS() {
+      return MEALS
     },
   },
   methods: {

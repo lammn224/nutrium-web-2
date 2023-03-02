@@ -87,3 +87,5 @@ Vue.prototype.$notifyResetPasswordSuccess = (objectName) => {
 Vue.prototype.$notifyEnoughMeal = (objectName) => {
   notify('Thông báo', `Ngày ${objectName} đã đủ bữa ăn`, 'danger')
 }
+
+Vue.prototype.$notifyErrMsg = (msg) => notify('Thông báo', `${msg}`, 'danger')
