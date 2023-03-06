@@ -19,6 +19,7 @@
       >
         <b-form-group v-bind="$attrs">
           <b-form-file
+            ref="fileInput"
             v-model="fileExcel"
             placeholder="Choose a file or drop it here..."
             drop-placeholder="Drop file here..."
@@ -33,6 +34,20 @@
           <div class="mt-3">
             Selected file: {{ fileExcel ? fileExcel.name : '' }}
           </div>
+        </b-form-group>
+      </validation-provider>
+
+      <validation-provider v-slot="{ errors }" name="Khối lớp" rules="required">
+        <b-form-group v-if="!isEdit" v-bind="$attrs" label="Khối lớp">
+          <b-form-select
+            v-model="grade"
+            :options="gradeOption"
+            :state="errors[0] || error !== null ? false : null"
+          ></b-form-select>
+
+          <b-form-invalid-feedback>
+            {{ errors[0] || error }}
+          </b-form-invalid-feedback>
         </b-form-group>
       </validation-provider>
     </validation-observer>
@@ -67,6 +82,8 @@ export default {
     return {
       fileExcel: null,
       error: null,
+      grade: '',
+      gradeOption: [],
     }
   },
   computed: {
@@ -77,10 +94,25 @@ export default {
     },
   },
 
+  mounted() {
+    this.loadGradeOption()
+  },
+
   methods: {
+    async loadGradeOption() {
+      const { data } = await this.$axios.get('/grade')
+
+      const grades = data.results
+
+      grades.forEach((grade) => {
+        this.gradeOption.push({ value: grade._id, text: grade.name })
+      })
+    },
+
     handleModalHidden(bvModalEvt) {
       this.$refs.modal.hide()
       this.fileExcel = null
+      this.grade = ''
     },
 
     async handleModalOk(bvModalEvt) {
@@ -99,13 +131,16 @@ export default {
     async addItem() {
       const addBtn = this.$refs.addClassBtn
       const cancelBtn = this.$refs.cancelClassBtn
+      const fileInput = this.$refs.fileInput
       addBtn.disabled = true
       cancelBtn.disabled = true
+      fileInput.disabled = true
 
       try {
         addBtn.classList.add('spinner', 'spinner-light', 'spinner-right')
         const formData = new FormData()
         formData.append('file', this.fileExcel)
+        formData.append('grade', this.grade)
 
         await this.$axios.post('files/upload-excel', formData, {
           headers: {

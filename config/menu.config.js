@@ -49,6 +49,12 @@ export default [
     role: [ADMIN],
   },
   {
+    title: 'Quản lý khối lớp',
+    icon: 'flaticon-map',
+    route: '/grade',
+    role: [ADMIN],
+  },
+  {
     title: 'Quản lý lớp học',
     icon: 'flaticon-map',
     route: '/class',
