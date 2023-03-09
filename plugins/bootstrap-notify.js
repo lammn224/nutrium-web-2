@@ -41,7 +41,7 @@ const notify = (title, message, type = 'danger', icon = null) => {
         exit: 'animated fadeOutDown',
       },
       template:
-        '<div data-notify="container" class="alert alert-{0}" role="alert">' +
+        '<div data-notify="container" class="alert alert-{0}" role="alert" style="font-size: 15px">' +
         '<button type="button" aria-hidden="true" class="close" data-notify="dismiss"></button>' +
         '<span data-notify="icon"></span> ' +
         '<span data-notify="title">{1}</span> ' +

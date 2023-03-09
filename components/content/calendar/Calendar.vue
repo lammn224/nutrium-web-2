@@ -5,7 +5,7 @@
     <div v-if="error" class="error"></div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><h2>Calendar</h2></div>
+      <div class="panel-heading"><h2>Lập lịch bữa ăn</h2></div>
 
       <div class="panel-body">
         <div class="row">
@@ -74,7 +74,7 @@ export default {
       loading: true,
       error: null,
       currentMonth: moment().startOf('month'),
-      appLocale: 'en',
+      appLocale: 'vi',
     }
   },
   computed: {
@@ -137,7 +137,7 @@ export default {
     getMonthViewStartDate(date, firstDay) {
       firstDay = parseInt(firstDay)
 
-      const start = moment(date).locale('en')
+      const start = moment(date).locale('vi')
       const startOfMonth = moment(start.startOf('month'))
 
       start.subtract(startOfMonth.day(), 'days')

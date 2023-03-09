@@ -39,6 +39,7 @@ export default {
     '~/plugins/bootstrap-notify',
     '~/plugins/axios',
     '~/plugins/chart',
+    '~/plugins/firebase',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

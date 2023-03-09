@@ -42,7 +42,7 @@ export default {
           field: '',
           key: 'defaultAction',
           title: 'Hành động',
-          width: 100,
+          width: 150,
           align: 'center',
           fixed: 'right',
           renderBodyCell: ({ row, column, rowIndex }, h) => {

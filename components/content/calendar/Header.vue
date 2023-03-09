@@ -44,12 +44,12 @@ export default {
     },
     locale: {
       type: String,
-      default: '',
+      default: 'vi',
     },
   },
   data() {
     return {
-      localeSelect: 'en',
+      localeSelect: 'vi',
     }
   },
   computed: {
