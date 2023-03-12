@@ -303,7 +303,7 @@ export default {
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        this.$notifyErrMsg(e.response.data.message)
+        this.$notifyErrMsg()
       }
     },
     async updateItem() {
@@ -321,7 +321,7 @@ export default {
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        this.$notifyErrMsg(e.response.data.message)
+        this.$notifyErrMsg()
       }
     },
   },

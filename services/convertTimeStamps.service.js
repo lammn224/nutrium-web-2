@@ -44,7 +44,12 @@ export function startOfWeek(ts) {
 
 export function endOfWeek(ts) {
   const date = new Date(ts * 1000)
-  const lastday = date.getDate() - (date.getDay() - 1) + 6
+  let lastday
+  if (date.getDay()) {
+    lastday = date.getDate() - (date.getDay() - 1) + 6
+  } else {
+    lastday = date.getDate()
+  }
 
   return new Date(date.setDate(lastday))
 }

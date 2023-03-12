@@ -56,7 +56,6 @@ export default {
       try {
         const form = this.processFormToSubmit()
         this.vForm = new Form(form)
-        console.log(this.vForm)
         await this.vForm.post(this.$axios.defaults.baseURL + '/grade')
         this.$notifyAddSuccess('khối lớp')
         this.$refs.modal.hide()

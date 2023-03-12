@@ -7,23 +7,23 @@
     <form role="form">
       <div id="metric">
         <div class="form-group">
-          <label for="weight_kg">Weight (kg):</label>
+          <label for="weight_kg">Cân nặng (kg):</label>
           <input
             id="weight_kg"
             v-model="weightKg"
             type="number"
-            placeholder="weight in kg"
+            placeholder="Cân nặng (kg)"
             class="form-control"
           />
         </div>
 
         <div class="form-group">
-          <label for="height_cm">Height (cm):</label>
+          <label for="height_cm">Chiều cao (cm):</label>
           <input
             id="height_cm"
             v-model="heightCm"
             type="number"
-            placeholder="height in cm"
+            placeholder="Chiều cao (cm)"
             class="form-control"
           />
         </div>
@@ -32,7 +32,7 @@
 
     <!-- Calculated BMI is shown here -->
     <div class="well text-center">
-      <h3 class="text-muted">Calculated BMI</h3>
+      <h3 class="text-muted">Chỉ số BMI</h3>
       <h2>
         <span
           class="label-cus"
@@ -55,7 +55,7 @@ export default {
       heightCm: null,
       bmi: Number(0).toPrecision(2),
       catClass: 'secondary',
-      catTitle: 'Unknown',
+      catTitle: 'Không xác định',
     }
   },
 
@@ -86,20 +86,20 @@ export default {
       if (newVal) {
         if (newVal <= 24 && newVal >= 19) {
           this.catClass = 'primary'
-          this.catTitle = 'Normal'
+          this.catTitle = 'Bình thường'
         } else if (newVal < 19 && newVal > 0) {
           this.catClass = 'danger'
-          this.catTitle = 'Underweight'
+          this.catTitle = 'Thiếu cân'
         } else if (newVal > 24) {
           this.catClass = 'danger'
-          this.catTitle = 'Overweight'
+          this.catTitle = 'Thừa cân'
         } else {
           this.catClass = 'secondary'
-          this.catTitle = 'Unknown'
+          this.catTitle = 'Không xác định'
         }
       } else {
         this.catClass = 'secondary'
-        this.catTitle = 'Unknown'
+        this.catTitle = 'Không xác định'
       }
     },
   },

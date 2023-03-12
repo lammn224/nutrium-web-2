@@ -245,21 +245,21 @@
                   form=""
                   @click.stop="goPrev"
                 >
-                  <i class="flaticon2-back"></i> Previous
+                  <i class="flaticon2-back"></i> Tuần trước
                 </button>
                 <button
                   class="btn btn-outline btn-default today-button"
                   form=""
                   @click.stop="goToday"
                 >
-                  <i class="flaticon2-down"></i> Today
+                  <i class="flaticon2-down"></i> Hiện tại
                 </button>
                 <button
                   class="btn btn-outline btn-primary"
                   form=""
                   @click.stop="goNext"
                 >
-                  Next <i class="flaticon2-next"></i>
+                  Tuần sau <i class="flaticon2-next"></i>
                 </button>
               </div>
             </div>
@@ -363,7 +363,7 @@ export default {
         {
           field: 'mon',
           key: 'mon',
-          title: 'Mon',
+          title: 'T2',
           width: 100,
           align: 'center',
           fixed: 'left',
@@ -415,7 +415,7 @@ export default {
         {
           field: 'tue',
           key: 'tue',
-          title: 'Tue',
+          title: 'T3',
           width: 100,
           align: 'center',
           fixed: 'left',
@@ -467,7 +467,7 @@ export default {
         {
           field: 'wed',
           key: 'wed',
-          title: 'Wed',
+          title: 'T4',
           width: 100,
           align: 'center',
           fixed: 'left',
@@ -519,7 +519,7 @@ export default {
         {
           field: 'thu',
           key: 'thu',
-          title: 'Thu',
+          title: 'T5',
           width: 100,
           align: 'center',
           fixed: 'left',
@@ -571,7 +571,7 @@ export default {
         {
           field: 'fri',
           key: 'fri',
-          title: 'Fri',
+          title: 'T6',
           width: 100,
           align: 'center',
           fixed: 'left',
@@ -623,7 +623,7 @@ export default {
         {
           field: 'sat',
           key: 'sat',
-          title: 'Sat',
+          title: 'T7',
           width: 100,
           align: 'center',
           fixed: 'left',

@@ -7,21 +7,21 @@
           form=""
           @click.stop="goPrev"
         >
-          &lArr; Previous
+          <i class="flaticon2-back"></i> Tháng trước
         </button>
         <button
           class="btn btn-outline btn-default today-button"
           form=""
           @click.stop="goToday"
         >
-          &dArr; Today
+          <i class="flaticon2-down"></i> Hiện tại
         </button>
         <button
           class="btn btn-outline btn-primary"
           form=""
           @click.stop="goNext"
         >
-          Next &rArr;
+          Tháng sau <i class="flaticon2-next"></i>
         </button>
       </div>
     </div>
