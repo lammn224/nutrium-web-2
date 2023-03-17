@@ -54,7 +54,10 @@ export const ERROR_CODES = new Map([
 
   [FOOD_NOT_EXIST, 'Food is not exist'],
 
-  [UPLOAD_FAILED, 'Upload fail, please check data again'],
+  [
+    UPLOAD_FAILED,
+    'Tải file không thành công, có thể trùng lặp dữ liệu, hãy kiểm tra lại',
+  ],
 
   [MEAL_EXISTED, 'Bữa ăn đã tồn tại trong ngày'],
   [MEAL_NOT_EXISTED, 'Meal is not existed'],

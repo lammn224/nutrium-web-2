@@ -74,6 +74,7 @@
 
 <script>
 import BaseFormModal from '~/components/base/form/Modal'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 
 export default {
   name: 'ClassModal',
@@ -161,8 +162,7 @@ export default {
         addBtn.classList.remove('spinner', 'spinner-light', 'spinner-right')
         addBtn.disabled = false
         cancelBtn.disabled = false
-        this.error = e.response.data.message
-        this.processError(e)
+        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
       }
     },
   },
