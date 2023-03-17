@@ -6,7 +6,6 @@
       <!--          <b-m-i-calculator></b-m-i-calculator>-->
       <!--        </div>-->
       <!--      </div>-->
-
       <student-body-index-by-grade
         v-if="$auth.user.role === ADMIN()"
       ></student-body-index-by-grade>

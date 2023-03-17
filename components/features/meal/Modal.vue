@@ -180,6 +180,7 @@ import {
   convertTimeStampsToString,
   dateToString,
 } from '~/services/convertTimeStamps.service'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 
 const defaultForm = {
   type: MEALS.get(LAUNCH),
@@ -303,7 +304,7 @@ export default {
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        this.$notifyErrMsg()
+        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
       }
     },
     async updateItem() {
@@ -321,7 +322,7 @@ export default {
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        this.$notifyErrMsg()
+        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
       }
     },
   },

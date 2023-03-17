@@ -8,12 +8,39 @@ export function convertTimeStampsToString(ts) {
   return `${day}/${month}/${year}`
 }
 
+export function convertTimeStampsToDatePickerString(ts) {
+  const date = new Date(ts * 1000)
+
+  let formattedString = date.getFullYear() + '-'
+
+  if (date.getMonth() < 9) {
+    formattedString += '0'
+  }
+  formattedString += date.getMonth() + 1
+  formattedString += '-'
+
+  if (date.getDate() < 10) {
+    formattedString += '0'
+  }
+  formattedString += date.getDate()
+
+  return formattedString
+}
+
 function padTo2Digits(num) {
   return num.toString().padStart(2, '0')
 }
 
 export function convertStringToTimeStamps(str) {
   const [day, month, year] = str.split('/')
+
+  const date = new Date(+year, +month - 1, +day)
+
+  return Math.floor(date.getTime() / 1000)
+}
+
+export function convertStringDatePickerToTimeStamps(str) {
+  const [year, month, day] = str.split('-')
 
   const date = new Date(+year, +month - 1, +day)
 

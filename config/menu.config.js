@@ -6,36 +6,6 @@ export default [
     icon: 'flaticon2-architecture-and-city',
     route: '/',
   },
-  // {
-  //   title: 'Quản lý nội dung',
-  //   icon: 'flaticon2-digital-marketing',
-  //   subMenus: [
-  //     {
-  //       title: 'Bài học',
-  //       route: '/lesson',
-  //     },
-  //     {
-  //       title: 'Hội thoại',
-  //       route: '/conversation',
-  //     },
-  //     {
-  //       title: 'Bối cảnh',
-  //       route: '/background',
-  //     },
-  //     {
-  //       title: 'Nhân vật',
-  //       route: '/figure',
-  //     },
-  //     {
-  //       title: 'Phản hồi',
-  //       route: '/feedback',
-  //     },
-  //     {
-  //       title: 'Trang',
-  //       route: '/page',
-  //     },
-  //   ],
-  // },
   {
     title: 'Lập lịch bữa ăn',
     icon: 'flaticon-calendar-2',
@@ -45,8 +15,21 @@ export default [
   {
     title: 'Quản lý người dùng',
     icon: 'flaticon2-user',
-    route: '/user',
     role: [ADMIN],
+    subMenus: [
+      {
+        title: 'Tài khoản Học sinh',
+        route: '/student',
+        icon: 'flaticon2-user',
+        role: [ADMIN],
+      },
+      {
+        title: 'Tài khoản phụ huynh',
+        route: '/school-user',
+        icon: 'flaticon2-user',
+        role: [ADMIN],
+      },
+    ],
   },
   {
     title: 'Quản lý khối lớp',

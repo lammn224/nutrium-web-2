@@ -88,5 +88,4 @@ Vue.prototype.$notifyEnoughMeal = (objectName) => {
   notify('Thông báo', `Ngày ${objectName} đã đủ bữa ăn`, 'danger')
 }
 
-Vue.prototype.$notifyErrMsg = () =>
-  notify('Thông báo', 'Bữa ăn vượt quá lượng calo cho phép', 'danger')
+Vue.prototype.$notifyErrMsg = (msg) => notify('Thông báo', `${msg}`, 'danger')

@@ -40,6 +40,7 @@ export default {
     '~/plugins/axios',
     '~/plugins/chart',
     '~/plugins/firebase',
+    '~/plugins/date-picker',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

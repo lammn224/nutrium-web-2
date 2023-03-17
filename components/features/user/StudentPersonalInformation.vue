@@ -150,13 +150,23 @@
                 >Ngày sinh</label
               >
               <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
+                <!--                <input-->
+                <!--                  ref="fullName"-->
+                <!--                  v-model="form.dateOfBirth"-->
+                <!--                  class="form-control form-control-lg form-control-solid"-->
+                <!--                  type="text"-->
+                <!--                  placeholder="Ngày sinh"-->
+                <!--                />-->
+
+                <b-form-datepicker
                   v-model="form.dateOfBirth"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Ngày sinh"
-                />
+                  :date-format-options="{
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                  }"
+                  locale="vi"
+                ></b-form-datepicker>
               </div>
             </div>
             <div class="form-group row">
@@ -284,71 +294,6 @@
         </form>
         <!--end::Form-->
       </div>
-
-      <!--      <div class="card card-custom">-->
-      <!--        &lt;!&ndash;begin::Header&ndash;&gt;-->
-      <!--        <div class="card-header py-3">-->
-      <!--          <div class="card-title align-items-start flex-column">-->
-      <!--            <h3 class="card-label font-weight-bolder text-dark">-->
-      <!--              Thông tin liên hệ-->
-      <!--            </h3>-->
-      <!--            <span class="text-muted font-weight-bold font-size-sm mt-1">-->
-      <!--              Thông tin liên hệ của phụ huynh-->
-      <!--            </span>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--        &lt;!&ndash;end::Header&ndash;&gt;-->
-      <!--        &lt;!&ndash;begin::Form&ndash;&gt;-->
-      <!--        <form class="form">-->
-      <!--          <div class="card-body">-->
-      <!--            <div class="form-group row">-->
-      <!--              <label class="col-xl-3 col-lg-3 col-form-label text-right"-->
-      <!--                >Phụ huynh</label-->
-      <!--              >-->
-      <!--              <div class="col-lg-9 col-xl-6">-->
-      <!--                <div class="input-group input-group-lg input-group-solid">-->
-      <!--                  <div class="input-group-prepend">-->
-      <!--                    <span class="input-group-text">-->
-      <!--                      <i class="flaticon2-user"></i>-->
-      <!--                    </span>-->
-      <!--                  </div>-->
-      <!--                  <input-->
-      <!--                    ref="parents"-->
-      <!--                    type="text"-->
-      <!--                    class="form-control form-control-lg form-control-solid"-->
-      <!--                    placeholder="Phụ huynh"-->
-      <!--                    disabled-->
-      <!--                    :value="student.parents.fullName"-->
-      <!--                  />-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--            <div class="form-group row">-->
-      <!--              <label class="col-xl-3 col-lg-3 col-form-label text-right"-->
-      <!--                >Số điện thoại</label-->
-      <!--              >-->
-      <!--              <div class="col-lg-9 col-xl-6">-->
-      <!--                <div class="input-group input-group-lg input-group-solid">-->
-      <!--                  <div class="input-group-prepend">-->
-      <!--                    <span class="input-group-text">-->
-      <!--                      <i class="flaticon2-phone"></i>-->
-      <!--                    </span>-->
-      <!--                  </div>-->
-      <!--                  <input-->
-      <!--                    ref="phoneNumber"-->
-      <!--                    type="text"-->
-      <!--                    class="form-control form-control-lg form-control-solid"-->
-      <!--                    placeholder="Số điện thoại"-->
-      <!--                    disabled-->
-      <!--                    :value="student.parents.phoneNumber"-->
-      <!--                  />-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </form>-->
-      <!--        &lt;!&ndash;end::Form&ndash;&gt;-->
-      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -357,7 +302,8 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { ROLES } from '../../../constants/role.constant'
 import {
-  convertStringToTimeStamps,
+  convertStringDatePickerToTimeStamps,
+  convertTimeStampsToDatePickerString,
   convertTimeStampsToString,
 } from '~/services/convertTimeStamps.service'
 import { FEMALE, MALE } from '~/constants/gender.constant'
@@ -371,7 +317,9 @@ export default {
       student: cloneDeep(this.$auth.user),
       form: {
         fullName: this.$auth.user.fullName,
-        dateOfBirth: convertTimeStampsToString(this.$auth.user.dateOfBirth),
+        dateOfBirth: convertTimeStampsToDatePickerString(
+          this.$auth.user.dateOfBirth
+        ),
         weight: this.$auth.user.weight,
         height: this.$auth.user.height,
         gender: this.$auth.user.gender,
@@ -464,7 +412,7 @@ export default {
       }
 
       try {
-        this.form.dateOfBirth = convertStringToTimeStamps(this.form.dateOfBirth)
+        this.form.dateOfBirth = new Date(this.form.dateOfBirth).getTime() / 1000
         submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
         const { data } = await this.$axios.post(
           'students/update-info',
@@ -477,7 +425,9 @@ export default {
         this.student.height = data.height
         this.student.gender = data.gender
         this.student.activityType = data.activityType
-        this.form.dateOfBirth = convertTimeStampsToString(data.dateOfBirth)
+        this.form.dateOfBirth = convertTimeStampsToDatePickerString(
+          data.dateOfBirth
+        )
 
         setTimeout(() => {
           submitButton.classList.remove(
@@ -498,7 +448,7 @@ export default {
     },
     cancel() {
       this.form.fullName = this.student.fullName
-      this.form.dateOfBirth = convertTimeStampsToString(
+      this.form.dateOfBirth = convertTimeStampsToDatePickerString(
         this.student.dateOfBirth
       )
       this.form.weight = this.student.weight
@@ -546,7 +496,9 @@ export default {
                 parseInt(
                   new Date().getFullYear() -
                     new Date(
-                      convertStringToTimeStamps(this.form.dateOfBirth) * 1000
+                      convertStringDatePickerToTimeStamps(
+                        this.form.dateOfBirth
+                      ) * 1000
                     ).getFullYear()
                 )) *
               ACTIVITY_TYPE.get(this.form.activityType)
@@ -561,7 +513,9 @@ export default {
                 parseInt(
                   new Date().getFullYear() -
                     new Date(
-                      convertStringToTimeStamps(this.form.dateOfBirth) * 1000
+                      convertStringDatePickerToTimeStamps(
+                        this.form.dateOfBirth
+                      ) * 1000
                     ).getFullYear()
                 )) *
               ACTIVITY_TYPE.get(this.form.activityType)
