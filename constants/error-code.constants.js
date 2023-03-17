@@ -4,6 +4,8 @@ export const DATA_REFERENCE = 'DATA_REFERENCE'
 // USER
 export const BLACKLIST_TOKEN = 'BLACKLIST_TOKEN'
 export const USER_NOT_EXIST = 'USER_NOT_EXIST'
+export const PARENTS_ACCOUNT_NOT_FOUND = 'PARENTS_ACCOUNT_NOT_FOUND'
+export const PARENTS_ACCOUNT_EXISTED = 'PARENTS_ACCOUNT_EXISTED'
 export const STUDENT_ID_ALREADY_EXISTED = 'STUDENT_ID_ALREADY_EXISTED'
 export const WRONG_USER_OR_PASSWORD = 'WRONG_USER_OR_PASSWORD'
 export const INACTIVE = 'INACTIVE'
@@ -72,4 +74,7 @@ export const ERROR_CODES = new Map([
   ],
   [GRADE_EXISTED, 'Khối lớp đã tồn tại'],
   [GRADE_NOT_EXISTED, 'Khối lớp không tồn tại'],
+
+  [PARENTS_ACCOUNT_NOT_FOUND, 'Không tìm thấy tài khoản phụ huynh'],
+  [PARENTS_ACCOUNT_EXISTED, 'Tài khoản phụ huynh đã tồn tại số điện thoại'],
 ])

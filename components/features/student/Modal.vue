@@ -74,7 +74,13 @@
         </b-form-group>
       </validation-provider>
 
+      <base-form-switch
+        v-model="form.isExistedParentAcc"
+        label="Đã có tài khoản phụ huynh"
+      />
+
       <base-form-text-input
+        v-if="!form.isExistedParentAcc"
         v-model="form.parentsFullName"
         required
         :error="vForm.errors.get('parentsFullName')"
@@ -125,8 +131,9 @@ const defaultForm = {
   gender: '',
   dateOfBirth: '',
   class: '',
-  parentsFullName: '',
+  parentsFullName: null,
   parentsPhoneNumber: '',
+  isExistedParentAcc: false,
 }
 
 export default {

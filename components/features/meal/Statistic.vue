@@ -115,24 +115,24 @@ export default {
           this.$auth.user.role === ADMIN
             ? [
                 {
-                  label: 'Bữa trưa',
+                  label: 'Bữa trưa (kcal)',
                   backgroundColor: '#459b7c',
                   data: this.calcData[0],
                 },
               ]
             : [
                 {
-                  label: 'Bữa trưa',
+                  label: 'Bữa trưa (kcal)',
                   backgroundColor: '#459b7c',
                   data: this.calcData[0],
                 },
                 {
-                  label: 'Bữa sáng',
+                  label: 'Bữa sáng (kcal)',
                   backgroundColor: '#94c9a2',
                   data: this.calcData[1],
                 },
                 {
-                  label: 'Bữa tối',
+                  label: 'Bữa tối (kcal)',
                   backgroundColor: '#b8dc7c',
                   data: this.calcData[2],
                 },
