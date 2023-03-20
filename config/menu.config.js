@@ -14,7 +14,7 @@ export default [
   },
   {
     title: 'Quản lý người dùng',
-    icon: 'flaticon2-user',
+    icon: 'flaticon-users',
     role: [ADMIN],
     subMenus: [
       {
@@ -45,13 +45,13 @@ export default [
   },
   {
     title: 'Quản lý lớp học',
-    icon: 'flaticon-map',
+    icon: 'flaticon-layers',
     route: '/class',
     role: [ADMIN],
   },
   {
     title: 'Thông tin món ăn',
-    icon: 'flaticon2-chart2',
+    icon: 'flaticon-pie-chart',
     route: '/food',
     role: [ADMIN, PARENTS, STUDENT],
   },

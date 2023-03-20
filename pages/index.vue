@@ -9,10 +9,16 @@
 
       <meal-statistic
         v-for="(child, idx) in $auth.user.child"
-        v-else
+        v-else-if="$auth.user.child"
         :key="idx"
         :student="child"
-        :class-name="$auth.user.child.length === 1 ? 'col-lg-6' : 'col-lg-6'"
+        :class-name="$auth.user.child?.length === 1 ? 'col-lg-6' : 'col-lg-6'"
+      ></meal-statistic>
+
+      <meal-statistic
+        v-else
+        :student="$auth.user"
+        :class-name="'col-lg-6'"
       ></meal-statistic>
     </div>
 

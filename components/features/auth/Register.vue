@@ -159,6 +159,8 @@
 </template>
 
 <script>
+import { ERROR_CODES } from '~/constants/error-code.constants'
+
 export default {
   name: 'AuthRegister',
   data() {
@@ -189,6 +191,7 @@ export default {
         await this.$router.push('/')
       } catch (e) {
         this.error = e
+        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
       } finally {
         this.isLoading = false
       }

@@ -190,7 +190,7 @@ import { Form } from 'vform'
 import { mapGetters } from 'vuex'
 import BaseFormModal from '~/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin'
-import { ADMIN, PARENTS } from '~/constants/role.constant'
+import { ADMIN, PARENTS, STUDENT } from '~/constants/role.constant'
 import {
   BREAKFAST,
   DINNER,
@@ -279,9 +279,17 @@ export default {
     },
     'form.student': {
       handler(newVal, oldVal) {
-        this.selectedStudent = this.$auth.user.child.find(
-          (item) => item._id === newVal
-        )
+        if (this.$auth.user.role === PARENTS) {
+          this.selectedStudent = this.$auth.user.child.find(
+            (item) => item._id === newVal
+          )
+        }
+
+        if (this.$auth.user.role === STUDENT) {
+          this.selectedStudent = this.$auth.user.parents.child.find(
+            (item) => item._id === newVal
+          )
+        }
       },
       deep: true,
     },
