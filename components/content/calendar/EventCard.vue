@@ -10,6 +10,19 @@
     ]"
   >
     <div
+      v-if="meal.type !== LAUNCH()"
+      class="panel-heading event-title"
+      :class="{ 'clickable-event': isDaySelected }"
+    >
+      {{ MEALS.get(meal.type) }} -
+      {{
+        meal.student.fullName.split(' ')[
+          meal.student.fullName.split(' ').length - 1
+        ]
+      }}
+    </div>
+    <div
+      v-else
       class="panel-heading event-title"
       :class="{ 'clickable-event': isDaySelected }"
     >

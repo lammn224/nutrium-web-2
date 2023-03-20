@@ -25,7 +25,13 @@ export default [
       },
       {
         title: 'Tài khoản phụ huynh',
-        route: '/school-user',
+        route: '/school-user/parents',
+        icon: 'flaticon2-user',
+        role: [ADMIN],
+      },
+      {
+        title: 'Tài khoản quản trị viên',
+        route: '/school-user/admin',
         icon: 'flaticon2-user',
         role: [ADMIN],
       },

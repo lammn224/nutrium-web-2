@@ -1,5 +1,5 @@
 <template>
-  <content-card title="Danh sách tài khoản học sinh">
+  <content-card title="Danh sách tài khoản quản trị viên">
     <template #toolbar>
       <b-button
         v-if="$auth.user.role === ADMIN()"
@@ -13,13 +13,13 @@
       <base-table
         ref="table"
         :columns="columns"
-        remote-url="/students"
+        remote-url="/school-users/admin"
         hide-action-column
       />
 
-      <student-modal ref="modal" :on-action-success="reloadData" />
+      <user-modal ref="modal" :on-action-success="reloadData" />
 
-      <student-reset-password-modal
+      <user-reset-password-modal
         ref="resetPasswordModal"
         :on-action-success="reloadData"
       />
@@ -29,22 +29,13 @@
 
 <script>
 import { ADMIN } from '~/constants/role.constant'
-import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
 
 export default {
-  name: 'StudentPage',
-  pageTitle: 'Quản lý tài khoản học sinh',
+  name: 'SchoolUser',
+  pageTitle: 'Quản lý tài khoản quản trị viên',
   data() {
     return {
       columns: [
-        {
-          field: 'studentId',
-          key: 'mhs',
-          title: 'Mã học sinh',
-          width: 100,
-          align: 'left',
-          sortBy: 'asc',
-        },
         {
           field: 'fullName',
           key: 'a',
@@ -54,30 +45,17 @@ export default {
           sortBy: 'asc',
         },
         {
-          field: 'dateOfBirth',
+          field: 'phoneNumber',
           key: 'b',
-          title: 'Ngày sinh',
+          title: 'Số điện thoại',
           width: 200,
           align: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return convertTimeStampsToString(row.dateOfBirth)
-          },
-        },
-        {
-          field: 'class',
-          key: 'c',
-          title: 'Lớp',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column }, h) => {
-            return <span>{row.class.name}</span>
-          },
         },
         {
           field: '',
           key: 'action',
           title: 'Hành động',
-          width: 250,
+          width: 100,
           align: 'center',
           fixed: 'right',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
@@ -89,15 +67,6 @@ export default {
                 >
                   Đổi mật khẩu
                 </button>
-                &nbsp;
-                <button
-                  class="btn btn-sm btn-primary"
-                  on-click={() => {
-                    this.getDetailsStudent(row._id)
-                  }}
-                >
-                  Chi tiết
-                </button>
               </span>
             )
           },
@@ -107,7 +76,7 @@ export default {
   },
   head() {
     return {
-      title: 'Student',
+      title: 'School User',
     }
   },
 
@@ -126,10 +95,6 @@ export default {
 
     resetPassword(user) {
       this.$refs.resetPasswordModal.show(user)
-    },
-
-    getDetailsStudent(rowVal) {
-      this.$router.push({ path: `/student/${rowVal}` })
     },
   },
 }

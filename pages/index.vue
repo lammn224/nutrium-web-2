@@ -1,21 +1,29 @@
 <template>
   <div>
     <div class="d-flex mb-5">
-      <!--      <div class="flex-row-auto offcanvas-mobile col-lg-6">-->
-      <!--        <div class="card card-custom">-->
-      <!--          <b-m-i-calculator></b-m-i-calculator>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <student-body-index-by-grade
+      <meal-statistic
         v-if="$auth.user.role === ADMIN()"
-      ></student-body-index-by-grade>
+        :student="null"
+        :class-name="'col-lg-12'"
+      ></meal-statistic>
 
-      <meal-statistic></meal-statistic>
+      <meal-statistic
+        v-for="(child, idx) in $auth.user.child"
+        v-else
+        :key="idx"
+        :student="child"
+        :class-name="$auth.user.child.length === 1 ? 'col-lg-6' : 'col-lg-6'"
+      ></meal-statistic>
     </div>
+
     <div class="d-flex">
       <student-body-index-by-class
         v-if="$auth.user.role === ADMIN()"
       ></student-body-index-by-class>
+
+      <student-body-index-by-grade
+        v-if="$auth.user.role === ADMIN()"
+      ></student-body-index-by-grade>
     </div>
   </div>
 </template>

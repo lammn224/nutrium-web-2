@@ -125,7 +125,7 @@
 
           <nuxt-link
             v-if="$auth.user.child"
-            :to="`/student/${$auth.user.child._id}`"
+            :to="'#'"
             href="#"
             class="navi-item"
             @click.native="closeOffcanvas"
@@ -144,10 +144,35 @@
                   </span>
                 </div>
               </div>
-              <div v-if="$auth.user.child" class="navi-text">
-                <nuxt-link :to="`/student/${$auth.user.child._id}`">
-                  <div class="font-weight-bold">Thông tin học sinh</div>
-                </nuxt-link>
+              <div class="navi-item">
+                <b-dropdown size="sm" variant="link" no-caret left no-flip>
+                  <template #button-content>
+                    <div>
+                      <span class="font-weight-bold font-size-base"
+                        >Thông tin học sinh</span
+                      >
+                      <i class="ki ki-bold-more-ver"></i>
+                    </div>
+                  </template>
+                  <!--begin::Navigation-->
+                  <div class="navi navi-hover min-w-md-250px">
+                    <b-dropdown-text
+                      v-for="(child, idx) in $auth.user.child"
+                      :key="idx"
+                      tag="div"
+                      class="navi-item"
+                      @click="$router.push(`/student/${child._id}`)"
+                    >
+                      <a href="#" class="navi-link p-5">
+                        <span class="navi-icon">
+                          <i class="navi-icon flaticon2-user"></i>
+                        </span>
+                        <span class="navi-text">{{ child.fullName }}</span>
+                      </a>
+                    </b-dropdown-text>
+                  </div>
+                  <!--end::Navigation-->
+                </b-dropdown>
                 <div class="text-muted">Quản lý học sinh</div>
               </div>
             </div>

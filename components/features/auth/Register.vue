@@ -116,7 +116,7 @@
         <ValidationProvider
           v-slot="{ errors }"
           name="Xác nhận mật khẩu"
-          rules="required|max:100|min:8|confirmed:password"
+          rules="required|max:100|confirmed:password"
         >
           <div class="form-group">
             <input

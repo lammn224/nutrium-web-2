@@ -5,7 +5,7 @@
       <base-table
         ref="table"
         :columns="columns"
-        remote-url="/school-users"
+        remote-url="/school-users/parents"
         hide-action-column
       />
 

@@ -74,10 +74,32 @@
         class="w-25"
       />
 
-      <div v-if="$auth.user.child" class="row">
+      <validation-provider
+        v-if="form.createdBy === $auth.user._id"
+        v-slot="{ errors }"
+        name="Học sinh"
+        rules="required"
+      >
+        <b-form-group v-bind="$attrs" label="Chọn học sinh">
+          <b-form-select
+            v-model="form.student"
+            :options="studentOption"
+            :state="errors[0] || error !== null ? false : null"
+          ></b-form-select>
+
+          <b-form-invalid-feedback>
+            {{ errors[0] || error }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </validation-provider>
+
+      <div
+        v-if="(selectedStudent || form.student) && $auth.user.child"
+        class="row"
+      >
         <div class="col-xl-4">
           <base-form-text-input
-            :value="`${$auth.user.child.rcmCalories} kcal`"
+            :value="`${selectedStudent.rcmCalories} kcal`"
             disabled
             placeholder="KNNL"
             label="Năng lượng khuyến nghị"
@@ -87,7 +109,7 @@
 
         <div class="col-xl-4">
           <base-form-text-input
-            :value="`45% ~ ${$auth.user.child.maxBreakfastCalories} kcal`"
+            :value="`45% ~ ${selectedStudent.maxBreakfastCalories} kcal`"
             disabled
             placeholder="KNNL"
             label="% Năng lượng khuyến nghị bữa sáng"
@@ -97,7 +119,7 @@
 
         <div class="col-xl-4">
           <base-form-text-input
-            :value="`20% ~ ${$auth.user.child.maxDinnerCalories} kcal`"
+            :value="`20% ~ ${selectedStudent.maxDinnerCalories} kcal`"
             disabled
             placeholder="KNNL"
             label="% Năng lượng khuyến nghị bữa tối"
@@ -189,6 +211,7 @@ const defaultForm = {
   protein: '0',
   lipid: '0',
   glucid: '0',
+  student: null,
   foods: [],
 }
 export default {
@@ -211,6 +234,8 @@ export default {
         { value: DINNER, text: MEALS.get(DINNER) },
       ],
       form: cloneDeep(defaultForm),
+      studentOption: [],
+      selectedStudent: null,
     }
   },
   computed: {
@@ -252,6 +277,25 @@ export default {
       },
       deep: true,
     },
+    'form.student': {
+      handler(newVal, oldVal) {
+        this.selectedStudent = this.$auth.user.child.find(
+          (item) => item._id === newVal
+        )
+      },
+      deep: true,
+    },
+  },
+
+  mounted() {
+    if (this.$auth.user.role === PARENTS) {
+      this.$auth.user.child.forEach((student) => {
+        this.studentOption.push({
+          value: student._id,
+          text: student.fullName,
+        })
+      })
+    }
   },
 
   methods: {

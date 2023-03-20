@@ -52,6 +52,7 @@ const defaultForm = {
   protein: '0',
   lipid: '0',
   glucid: '0',
+  student: null,
   foods: [],
 }
 export default {
@@ -99,15 +100,15 @@ export default {
       }
     },
     showAddMealForm() {
-      if (this.day.meals.length < 3) {
-        defaultForm.date = dateToString(this.day.date._d)
-        defaultForm.school = this.$auth.user.school._id
-        defaultForm.createdBy = this.$auth.user._id
+      // if (this.day.meals.length < 3) {
+      defaultForm.date = dateToString(this.day.date._d)
+      defaultForm.school = this.$auth.user.school._id
+      defaultForm.createdBy = this.$auth.user._id
 
-        this.$refs.modal.show(defaultForm)
-      } else {
-        this.$notifyEnoughMeal(dateToString(this.day.date._d))
-      }
+      this.$refs.modal.show(defaultForm)
+      // } else {
+      //   this.$notifyEnoughMeal(dateToString(this.day.date._d))
+      // }
     },
 
     showDetailMeal(meal) {
@@ -120,6 +121,7 @@ export default {
       cloneMeal.foods = meal.foods
       cloneMeal.type = meal.type
       cloneMeal._id = meal._id
+      cloneMeal.student = meal.student
       cloneMeal.createdBy = meal.createdBy
 
       this.$refs.modal.show(cloneMeal)

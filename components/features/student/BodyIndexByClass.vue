@@ -139,6 +139,8 @@ export default {
       grades.forEach((grade) => {
         this.gradeOption.push({ value: grade._id, text: grade.name })
       })
+
+      this.grade = this.gradeOption[0].value
     },
   },
 }

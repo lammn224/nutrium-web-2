@@ -1,30 +1,30 @@
 <template>
-  <div class="flex-row-fluid col-lg-6">
+  <div class="flex-row-fluid" :class="className">
     <div class="card card-custom card-stretch mb-5">
       <div class="card-header pt-5" style="display: block">
-        <div class="row justify-content-between">
-          <div class="col-lg-auto">
-            <div class="btn-group">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-auto h-100">
+            <div class="btn-group font-size-sm">
               <button
-                class="btn btn-outline btn-primary"
+                class="btn btn-outline btn-primary font-size-sm line-height-sm"
                 form=""
                 @click.stop="goPrev"
               >
-                <i class="flaticon2-back"></i> Tuần trước
+                <i class="flaticon2-back icon-sm"></i> Tuần trước
               </button>
               <button
-                class="btn btn-outline btn-default today-button"
+                class="btn btn-outline btn-default today-button font-size-sm line-height-sm"
                 form=""
                 @click.stop="goToday"
               >
-                <i class="flaticon2-down"></i> Hiện tại
+                <i class="flaticon2-down icon-sm"></i> Hiện tại
               </button>
               <button
-                class="btn btn-outline btn-primary"
+                class="btn btn-outline btn-primary font-size-sm line-height-sm"
                 form=""
                 @click.stop="goNext"
               >
-                Tuần sau <i class="flaticon2-next"></i>
+                Tuần sau <i class="flaticon2-next icon-sm"></i>
               </button>
             </div>
           </div>
@@ -41,10 +41,16 @@
         </div>
       </div>
       <div class="card-body">
+        <div
+          v-if="student"
+          class="text-center card-label font-weight-bolder text-dark"
+        >
+          {{ student.fullName }}
+        </div>
         <BarChart
           :chart-data="barChartData"
           :chart-options="barChartOptions"
-          :height="60"
+          :height="$auth.user.role === ADMIN() ? 40 : 60"
           :width="100"
         />
       </div>
@@ -64,10 +70,20 @@ import { BREAKFAST, DINNER, LAUNCH } from '~/constants/meal-type.constant'
 
 export default {
   name: 'MealStatistic',
+  props: {
+    student: {
+      type: Object,
+      default: () => {},
+    },
+    className: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       barChartOptions: {
-        responsive: true,
+        // responsive: true,
         scales: {
           x: {
             stacked: true,
@@ -80,7 +96,7 @@ export default {
       timestamp: Math.floor(Date.now() / 1000),
       loadingInstance: null,
       loading: true,
-      remoteUrl: '/meals/by-week',
+      remoteUrl: '/meals/by-week-per-student-chart',
       dataForChart: [],
       calcData: [[], [], []],
     }
@@ -98,9 +114,14 @@ export default {
     queryUrl() {
       let url = this.remoteUrl
 
-      const params = new URLSearchParams({
-        ts: this.timestamp,
-      })
+      const params = new URLSearchParams(
+        this.$auth.user.role === ADMIN
+          ? { ts: this.timestamp }
+          : {
+              ts: this.timestamp,
+              studentId: this.student._id,
+            }
+      )
 
       const paramsStr = params.toString()
       url += '?' + paramsStr
@@ -166,6 +187,9 @@ export default {
   },
 
   methods: {
+    ADMIN() {
+      return ADMIN
+    },
     goPrev() {
       this.timestamp -= 604800
     },
@@ -256,3 +280,11 @@ export default {
   },
 }
 </script>
+
+<style>
+.chart-wrapper {
+  border: 1px solid blue;
+  height: 300px;
+  width: 600px;
+}
+</style>

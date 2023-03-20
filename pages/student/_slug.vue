@@ -31,6 +31,10 @@ export default {
     }),
   },
 
+  watch: {
+    '$route.query': '$fetch',
+  },
+
   methods: {
     async detailsStudent() {
       const params = this.$route.params
