@@ -43,7 +43,7 @@ import {
   DAY_SELECTED,
 } from '~/constants/calendar-actions.constant'
 import { dateToString } from '~/services/convertTimeStamps.service'
-import { STUDENT } from '~/constants/role.constant'
+import { ADMIN, STUDENT } from '~/constants/role.constant'
 
 const defaultForm = {
   type: '',
@@ -54,6 +54,7 @@ const defaultForm = {
   glucid: '0',
   student: null,
   foods: [],
+  isCreatedByAdmin: false,
 }
 export default {
   name: 'DayCalendar',
@@ -105,6 +106,12 @@ export default {
       defaultForm.school = this.$auth.user.school._id
       defaultForm.createdBy = this.$auth.user._id
 
+      if (this.$auth.user.role === ADMIN) {
+        defaultForm.isCreatedByAdmin = true
+      } else {
+        defaultForm.isCreatedByAdmin = false
+      }
+
       this.$refs.modal.show(defaultForm)
       // } else {
       //   this.$notifyEnoughMeal(dateToString(this.day.date._d))
@@ -121,7 +128,9 @@ export default {
       cloneMeal.foods = meal.foods
       cloneMeal.type = meal.type
       cloneMeal._id = meal._id
-      cloneMeal.student = meal.student
+      if (!meal.isCreatedByAdmin) {
+        cloneMeal.student = meal.student._id
+      }
       cloneMeal.createdBy = meal.createdBy
 
       this.$refs.modal.show(cloneMeal)

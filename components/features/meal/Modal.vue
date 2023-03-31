@@ -75,15 +75,20 @@
       />
 
       <validation-provider
-        v-if="form.createdBy === $auth.user._id"
+        v-if="form.createdBy === $auth.user._id && $auth.user.role !== ADMIN()"
         v-slot="{ errors }"
         name="Học sinh"
         rules="required"
       >
-        <b-form-group v-bind="$attrs" label="Chọn học sinh">
+        <b-form-group
+          v-if="$auth.user.role !== ADMIN()"
+          v-bind="$attrs"
+          label="Chọn học sinh"
+        >
           <b-form-select
             v-model="form.student"
             :options="studentOption"
+            :disabled="isEdit"
             :state="errors[0] || error !== null ? false : null"
           ></b-form-select>
 
@@ -94,7 +99,10 @@
       </validation-provider>
 
       <div
-        v-if="(selectedStudent || form.student) && $auth.user.child"
+        v-if="
+          ((selectedStudent || form.student) && $auth.user.child) ||
+          selectedStudent
+        "
         class="row"
       >
         <div class="col-xl-4">
@@ -213,6 +221,7 @@ const defaultForm = {
   glucid: '0',
   student: null,
   foods: [],
+  isCreatedByAdmin: null,
 }
 export default {
   name: 'MealModal',
@@ -303,6 +312,10 @@ export default {
           text: student.fullName,
         })
       })
+    }
+
+    if (this.$auth.user.role === STUDENT) {
+      this.selectedStudent = this.$auth.user
     }
   },
 
