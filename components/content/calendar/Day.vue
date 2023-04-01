@@ -93,6 +93,7 @@ export default {
     showDayOptions() {
       const startOfToday = moment().startOf('day')
       if (
+        // this.day.date.isBefore(startOfToday) ||
         this.day.date.isAfter(startOfToday) ||
         this.day.date.isSame(startOfToday)
       ) {
@@ -128,6 +129,7 @@ export default {
       cloneMeal.foods = meal.foods
       cloneMeal.type = meal.type
       cloneMeal._id = meal._id
+      cloneMeal.isCreatedByAdmin = meal.isCreatedByAdmin
       if (!meal.isCreatedByAdmin) {
         cloneMeal.student = meal.student._id
       }

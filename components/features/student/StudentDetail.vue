@@ -180,6 +180,48 @@
             </div>
 
             <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Chỉ số BMI</label
+              >
+              <div class="col-lg-4 col-xl-2">
+                <input
+                  ref="bmi"
+                  disabled
+                  :value="student.bmi"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Cân nặng"
+                />
+              </div>
+              <div class="col-lg-4 col-xl-4">
+                <input
+                  ref="bmiResult"
+                  disabled
+                  :value="bmiResult"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Không xác định"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Nguy cơ phát triển bệnh</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="diseaseRisk"
+                  disabled
+                  :value="diseaseRisk"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Không xác định"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right">
                 Giới tính
               </label>
@@ -351,6 +393,8 @@ export default {
         { text: 'Trung bình', value: 'moderate' },
         { text: 'Nặng', value: 'heavy' },
       ],
+      bmiResult: '',
+      diseaseRisk: '',
     }
   },
 
@@ -720,6 +764,34 @@ export default {
       target: this.$refs.datatable,
       name: null,
     })
+
+    if (this.student.bmi) {
+      if (this.student.bmi <= 24.9 && this.student.bmi >= 18.5) {
+        this.bmiResult = 'Bình thường'
+        this.diseaseRisk = 'Trung bình'
+      } else if (this.student.bmi < 18.5 && this.student.bmi > 0) {
+        this.bmiResult = 'Gầy'
+        this.diseaseRisk = 'Thấp'
+      } else if (this.student.bmi >= 25 && this.student.bmi <= 29.9) {
+        this.bmiResult = 'Hơi béo'
+        this.diseaseRisk = 'Cao'
+      } else if (this.student.bmi >= 30 && this.student.bmi <= 34.9) {
+        this.bmiResult = 'Béo phì cấp độ 1'
+        this.diseaseRisk = 'Cao'
+      } else if (this.student.bmi >= 35 && this.student.bmi <= 39.9) {
+        this.bmiResult = 'Béo phì cấp độ 2'
+        this.diseaseRisk = 'Rất cao'
+      } else if (this.student.bmi >= 40) {
+        this.bmiResult = 'Béo phì cấp độ 3'
+        this.diseaseRisk = 'Nguy hiểm'
+      } else {
+        this.bmiResult = 'Không xác định'
+        this.diseaseRisk = 'Không xác định'
+      }
+    } else {
+      this.bmiResult = 'Không xác định'
+      this.diseaseRisk = 'Không xác định'
+    }
 
     await this.loadMealsData()
   },

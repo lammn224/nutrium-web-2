@@ -199,6 +199,48 @@
             </div>
 
             <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Chỉ số BMI</label
+              >
+              <div class="col-lg-4 col-xl-2">
+                <input
+                  ref="fullName"
+                  disabled
+                  :value="form.bmi"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Cân nặng"
+                />
+              </div>
+              <div class="col-lg-4 col-xl-4">
+                <input
+                  ref="fullName"
+                  disabled
+                  :value="bmiResult"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Cân nặng"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                >Nguy cơ phát triển bệnh</label
+              >
+              <div class="col-lg-9 col-xl-6">
+                <input
+                  ref="diseaseRisk"
+                  disabled
+                  :value="diseaseRisk"
+                  class="form-control form-control-lg form-control-solid"
+                  type="text"
+                  placeholder="Không xác định"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right">
                 Giới tính
               </label>
@@ -325,6 +367,7 @@ export default {
         gender: this.$auth.user.gender,
         activityType: this.$auth.user.activityType,
         rcmCalories: this.$auth.user.rcmCalories,
+        bmi: this.$auth.user.bmi,
       },
       selectedGender: this.$auth.user.gender,
       genderOptions: [
@@ -338,6 +381,8 @@ export default {
         { text: 'Trung bình', value: 'moderate' },
         { text: 'Nặng', value: 'heavy' },
       ],
+      bmiResult: '',
+      diseaseRisk: '',
     }
   },
 
@@ -360,6 +405,8 @@ export default {
     'form.weight': {
       handler(newVal, oldVal) {
         this.form.rcmCalories = this.calculateRcmCalories()
+        this.form.bmi = this.calculateBMI()
+        this.calculateBMIResult()
       },
       deep: true,
     },
@@ -367,6 +414,8 @@ export default {
     'form.height': {
       handler(newVal, oldVal) {
         this.form.rcmCalories = this.calculateRcmCalories()
+        this.form.bmi = this.calculateBMI()
+        this.calculateBMIResult()
       },
       deep: true,
     },
@@ -388,6 +437,7 @@ export default {
 
   mounted() {
     this.current_photo = this.student.photo
+    this.calculateBMIResult()
   },
 
   methods: {
@@ -399,7 +449,7 @@ export default {
       if (
         this.form.fullName === this.student.fullName &&
         this.form.dateOfBirth ===
-          convertTimeStampsToString(this.student.dateOfBirth) &&
+          convertTimeStampsToDatePickerString(this.student.dateOfBirth) &&
         // eslint-disable-next-line eqeqeq
         this.form.weight == this.student.weight &&
         // eslint-disable-next-line eqeqeq
@@ -480,6 +530,46 @@ export default {
         reader.readAsDataURL(file)
       } else {
         alert('Sorry, FileReader API not supported')
+      }
+    },
+
+    calculateBMI() {
+      return this.form.height && this.form.weight
+        ? Math.round(
+            ((this.form.weight * 10000) /
+              (this.form.height * this.form.height)) *
+              10
+          ) / 10
+        : Number(0).toPrecision(2)
+    },
+
+    calculateBMIResult() {
+      if (this.form.bmi) {
+        if (this.form.bmi <= 24.9 && this.form.bmi >= 18.5) {
+          this.bmiResult = 'Bình thường'
+          this.diseaseRisk = 'Trung bình'
+        } else if (this.form.bmi < 18.5 && this.form.bmi > 0) {
+          this.bmiResult = 'Gầy'
+          this.diseaseRisk = 'Thấp'
+        } else if (this.form.bmi >= 25 && this.form.bmi <= 29.9) {
+          this.bmiResult = 'Hơi béo'
+          this.diseaseRisk = 'Cao'
+        } else if (this.form.bmi >= 30 && this.form.bmi <= 34.9) {
+          this.bmiResult = 'Béo phì cấp độ 1'
+          this.diseaseRisk = 'Cao'
+        } else if (this.form.bmi >= 35 && this.form.bmi <= 39.9) {
+          this.bmiResult = 'Béo phì cấp độ 2'
+          this.diseaseRisk = 'Rất cao'
+        } else if (this.form.bmi >= 40) {
+          this.bmiResult = 'Béo phì cấp độ 3'
+          this.diseaseRisk = 'Nguy hiểm'
+        } else {
+          this.bmiResult = 'Không xác định'
+          this.diseaseRisk = 'Không xác định'
+        }
+      } else {
+        this.bmiResult = 'Không xác định'
+        this.diseaseRisk = 'Không xác định'
       }
     },
 
