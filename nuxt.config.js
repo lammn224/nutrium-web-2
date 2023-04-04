@@ -45,6 +45,7 @@ export default {
     '~/plugins/chart',
     '~/plugins/firebase',
     '~/plugins/date-picker',
+    '~/plugins/grafana-faro',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
