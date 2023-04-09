@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Bar, Line, Doughnut, Pie } from 'vue-chartjs/legacy'
+import { Bar, Line, Doughnut, Pie } from 'vue-chartjs'
 import {
   Chart as ChartJS,
   Title,
@@ -12,6 +12,7 @@ import {
   PointElement,
   ArcElement,
 } from 'chart.js'
+import annotationPlugin from 'chartjs-plugin-annotation'
 
 ChartJS.register(
   Title,
@@ -22,7 +23,8 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   LineElement,
-  ArcElement
+  ArcElement,
+  annotationPlugin
 )
 
 Vue.component('LineChart', {

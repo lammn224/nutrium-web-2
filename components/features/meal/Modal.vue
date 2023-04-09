@@ -105,6 +105,27 @@
         "
         class="row"
       >
+        <!--        <div class="col-xl-12">-->
+        <!--          <validation-provider-->
+        <!--            v-slot="{ errors }"-->
+        <!--            name="Năng lượng khuyến nghị"-->
+        <!--            rules="required"-->
+        <!--          >-->
+        <!--            <b-form-group v-bind="$attrs" label="Năng lượng khuyến nghị">-->
+        <!--              <b-form-input-->
+        <!--                class="border border-2 border-primary"-->
+        <!--                :value="`${selectedStudent.rcmCalories} kcal`"-->
+        <!--                disabled-->
+        <!--                placeholder="KNNL"-->
+        <!--              ></b-form-input>-->
+
+        <!--              <b-form-invalid-feedback>-->
+        <!--                {{ errors[0] || error }}-->
+        <!--              </b-form-invalid-feedback>-->
+        <!--            </b-form-group>-->
+        <!--          </validation-provider>-->
+        <!--        </div>-->
+
         <div class="col-xl-4">
           <base-form-text-input
             :value="`${selectedStudent.rcmCalories} kcal`"
@@ -138,52 +159,128 @@
 
       <div class="row">
         <div class="col-xl-3">
-          <base-form-text-input
-            v-model="form.power"
-            required
-            disabled
-            :error="vForm.errors.get('power')"
-            placeholder="Năng lượng"
-            label="Năng lượng"
+          <validation-provider
+            v-slot="{ errors }"
+            name="Năng lượng"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-            name="name"
-          />
+          >
+            <b-form-group v-bind="$attrs" label="Năng lượng">
+              <b-form-input
+                v-model="form.power"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Năng lượng"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+
+          <!--          <base-form-text-input-->
+          <!--            v-model="form.power"-->
+          <!--            required-->
+          <!--            disabled-->
+          <!--            :error="vForm.errors.get('power')"-->
+          <!--            placeholder="Năng lượng"-->
+          <!--            label="Năng lượng"-->
+          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
+          <!--            name="name"-->
+          <!--          />-->
         </div>
         <div class="col-xl-3">
-          <base-form-text-input
-            v-model="form.protein"
-            required
-            disabled
-            :error="vForm.errors.get('protein')"
-            placeholder="Protein"
-            label="Protein"
+          <validation-provider
+            v-slot="{ errors }"
+            name="Protein"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-            name="name"
-          />
+          >
+            <b-form-group v-bind="$attrs" label="Protein">
+              <b-form-input
+                v-model="form.protein"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Protein"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+
+          <!--          <base-form-text-input-->
+          <!--            v-model="form.protein"-->
+          <!--            required-->
+          <!--            disabled-->
+          <!--            :error="vForm.errors.get('protein')"-->
+          <!--            placeholder="Protein"-->
+          <!--            label="Protein"-->
+          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
+          <!--            name="name"-->
+          <!--          />-->
         </div>
         <div class="col-xl-3">
-          <base-form-text-input
-            v-model="form.lipid"
-            required
-            disabled
-            :error="vForm.errors.get('lipid')"
-            placeholder="Lipid"
-            label="Lipid"
+          <validation-provider
+            v-slot="{ errors }"
+            name="Lipid"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-            name="name"
-          />
+          >
+            <b-form-group v-bind="$attrs" label="Lipid">
+              <b-form-input
+                v-model="form.lipid"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Lipid"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+
+          <!--          <base-form-text-input-->
+          <!--            v-model="form.lipid"-->
+          <!--            required-->
+          <!--            disabled-->
+          <!--            :error="vForm.errors.get('lipid')"-->
+          <!--            placeholder="Lipid"-->
+          <!--            label="Lipid"-->
+          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
+          <!--            name="name"-->
+          <!--          />-->
         </div>
         <div class="col-xl-3">
-          <base-form-text-input
-            v-model="form.glucid"
-            required
-            disabled
-            :error="vForm.errors.get('glucid')"
-            placeholder="Glucid"
-            label="Glucid"
+          <validation-provider
+            v-slot="{ errors }"
+            name="Glucid"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
-            name="name"
-          />
+          >
+            <b-form-group v-bind="$attrs" label="Glucid">
+              <b-form-input
+                v-model="form.glucid"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Glucid"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+
+          <!--          <base-form-text-input-->
+          <!--            v-model="form.glucid"-->
+          <!--            required-->
+          <!--            disabled-->
+          <!--            :error="vForm.errors.get('glucid')"-->
+          <!--            placeholder="Glucid"-->
+          <!--            label="Glucid"-->
+          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
+          <!--            name="name"-->
+          <!--          />-->
         </div>
       </div>
     </validation-observer>
@@ -350,6 +447,7 @@ export default {
     handleModalHidden(bvModalEvt) {
       this.form = cloneDeep(defaultForm)
       this.isEdit = false
+      this.error = null
     },
     processFormToSubmit() {
       const form = cloneDeep(this.form)

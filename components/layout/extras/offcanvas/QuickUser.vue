@@ -51,7 +51,7 @@
           <div class="symbol symbol-100 mr-5">
             <img
               class="symbol-label"
-              src="~/assets/media/users/300_21.jpg"
+              src="~/assets/media/users/blank.png"
               alt=""
             />
             <i class="symbol-badge bg-success"></i>

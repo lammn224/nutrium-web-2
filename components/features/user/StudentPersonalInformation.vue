@@ -15,7 +15,7 @@
               <div class="symbol-label">
                 <img
                   class="symbol-label"
-                  src="~/assets/media/users/300_21.jpg"
+                  src="~/assets/media/users/blank.png"
                   alt=""
                 />
               </div>

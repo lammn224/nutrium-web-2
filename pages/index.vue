@@ -1,25 +1,32 @@
 <template>
   <div>
-    <div class="d-flex mb-5">
+    <div class="mb-5">
       <meal-statistic
         v-if="$auth.user.role === ADMIN()"
         :student="null"
         :class-name="'col-lg-12'"
       ></meal-statistic>
 
-      <meal-statistic
+      <div
         v-for="(child, idx) in $auth.user.child"
         v-else-if="$auth.user.child"
         :key="idx"
-        :student="child"
-        :class-name="$auth.user.child?.length === 1 ? 'col-lg-6' : 'col-lg-6'"
-      ></meal-statistic>
+        class="d-flex flex-row-fluid mb-5"
+      >
+        <student-info-card :student="child"></student-info-card>
+        <meal-statistic
+          :student="child"
+          :class-name="$auth.user.child?.length === 1 ? 'ml-lg-8' : 'ml-lg-8'"
+        ></meal-statistic>
+      </div>
 
-      <meal-statistic
-        v-else
-        :student="$auth.user"
-        :class-name="'col-lg-6'"
-      ></meal-statistic>
+      <div v-else class="d-flex flex-row-fluid mb-5">
+        <student-info-card :student="$auth.user"></student-info-card>
+        <meal-statistic
+          :student="$auth.user"
+          :class-name="'ml-lg-8'"
+        ></meal-statistic>
+      </div>
     </div>
 
     <div class="d-flex">

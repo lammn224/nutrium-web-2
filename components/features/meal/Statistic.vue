@@ -84,6 +84,29 @@ export default {
     return {
       barChartOptions: {
         // responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              line1: {
+                type: 'line',
+                label: {
+                  display: !!this.student,
+                  content: 'KNNL',
+                  position: '100%',
+                  backgroundColor: 'rgb(255, 99, 132)',
+                  xAdjust: 6,
+                  z: 100,
+                },
+                // yMin: this.student ? this.student.rcmCalories : 0,
+                // yMax: this.student ? this.student.rcmCalories : 0,
+                scaleID: 'y',
+                value: this.student ? this.student.rcmCalories : 0,
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: this.student ? 2 : 0,
+              },
+            },
+          },
+        },
         scales: {
           x: {
             stacked: true,
@@ -137,14 +160,14 @@ export default {
             ? [
                 {
                   label: 'Bữa trưa (kcal)',
-                  backgroundColor: '#459b7c',
+                  backgroundColor: '#eeda53',
                   data: this.calcData[0],
                 },
               ]
             : [
                 {
                   label: 'Bữa trưa (kcal)',
-                  backgroundColor: '#459b7c',
+                  backgroundColor: '#eeda53',
                   data: this.calcData[0],
                 },
                 {
@@ -154,7 +177,7 @@ export default {
                 },
                 {
                   label: 'Bữa tối (kcal)',
-                  backgroundColor: '#b8dc7c',
+                  backgroundColor: '#5c9aea',
                   data: this.calcData[2],
                 },
               ],

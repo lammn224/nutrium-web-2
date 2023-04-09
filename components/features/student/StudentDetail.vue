@@ -15,7 +15,7 @@
               <div class="symbol-label">
                 <img
                   class="symbol-label"
-                  src="~/assets/media/users/300_21.jpg"
+                  src="~/assets/media/users/blank.png"
                   alt=""
                 />
               </div>
@@ -668,6 +668,58 @@ export default {
           field: 'sat',
           key: 'sat',
           title: 'T7',
+          width: 100,
+          align: 'center',
+          fixed: 'left',
+          renderBodyCell: ({ row, column, rowIndex }, h) => {
+            if (row.sat.length) {
+              return (
+                <div class="mt-2">
+                  {row.sat.map((meal, id) => {
+                    return meal.type === LAUNCH ? (
+                      <div
+                        style="cursor: pointer;"
+                        class="panel no-margin bg-secondary panel-heading event-title"
+                        key={id}
+                        on-click={() => {
+                          this.$refs.modal.show(meal)
+                        }}
+                      >
+                        {MEALS.get(meal.type)}
+                      </div>
+                    ) : meal.type === DINNER ? (
+                      <div
+                        style="cursor: pointer;"
+                        class="panel no-margin bg-warning panel-heading event-title"
+                        key={id}
+                        on-click={() => {
+                          this.$refs.modal.show(meal)
+                        }}
+                      >
+                        {MEALS.get(meal.type)}
+                      </div>
+                    ) : (
+                      <div
+                        style="cursor: pointer;"
+                        class="panel no-margin bg-primary panel-heading event-title"
+                        key={id}
+                        on-click={() => {
+                          this.$refs.modal.show(meal)
+                        }}
+                      >
+                        {MEALS.get(meal.type)}
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            } else return <div>Không có dữ liệu!</div>
+          },
+        },
+        {
+          field: 'sun',
+          key: 'sun',
+          title: 'CN',
           width: 100,
           align: 'center',
           fixed: 'left',
