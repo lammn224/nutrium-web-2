@@ -160,24 +160,56 @@ export default {
             ? [
                 {
                   label: 'Bữa trưa (kcal)',
-                  backgroundColor: '#eeda53',
+                  backgroundColor: [
+                    '#eeda53',
+                    '#eeda53',
+                    '#eeda53',
+                    '#ee53ca',
+                    '#eeda53',
+                    '#EE53CAFF',
+                    '#EE53CAFF',
+                  ],
                   data: this.calcData[0],
                 },
               ]
             : [
                 {
                   label: 'Bữa trưa (kcal)',
-                  backgroundColor: '#eeda53',
+                  backgroundColor: [
+                    '#eeda53',
+                    '#eeda53',
+                    '#eeda53',
+                    '#ee53ca',
+                    '#eeda53',
+                    '#EE53CAFF',
+                    '#EE53CAFF',
+                  ],
                   data: this.calcData[0],
                 },
                 {
                   label: 'Bữa sáng (kcal)',
-                  backgroundColor: '#94c9a2',
+                  backgroundColor: [
+                    '#94c9a2',
+                    '#94c9a2',
+                    '#94c9a2',
+                    '#94a0c9',
+                    '#94c9a2',
+                    '#94A0C9FF',
+                    '#94A0C9FF',
+                  ],
                   data: this.calcData[1],
                 },
                 {
                   label: 'Bữa tối (kcal)',
-                  backgroundColor: '#5c9aea',
+                  backgroundColor: [
+                    '#5c9aea',
+                    '#5c9aea',
+                    '#5c9aea',
+                    '#ea5ca3',
+                    '#5c9aea',
+                    '#EA5CA3FF',
+                    '#EA5CA3FF',
+                  ],
                   data: this.calcData[2],
                 },
               ],
@@ -236,56 +268,115 @@ export default {
           if (this.dataForChart[key].length) {
             const day = this.dataForChart[key]
 
-            if (day.length === 1) {
-              if (day[0].type === LAUNCH) {
-                this.calcData[1].push(0)
-                this.calcData[2].push(0)
+            const isWeekend = new Date(day[0].date * 1000).toLocaleString(
+              'en-US',
+              { weekday: 'short' }
+            )
 
-                this.calcData[0].push(day[0].power)
+            if (isWeekend === 'Sun' || isWeekend === 'Sat') {
+              if (day.length === 1) {
+                if (day[0].type === LAUNCH) {
+                  this.calcData[1].push(0)
+                  this.calcData[2].push(0)
+
+                  this.calcData[0].push(day[0].power)
+                }
+
+                if (day[0].type === BREAKFAST) {
+                  this.calcData[0].push(0)
+                  this.calcData[2].push(0)
+
+                  this.calcData[1].push(day[0].power)
+                }
+
+                if (day[0].type === DINNER) {
+                  this.calcData[0].push(0)
+                  this.calcData[1].push(0)
+
+                  this.calcData[2].push(day[0].power)
+                }
               }
 
-              if (day[0].type === BREAKFAST) {
-                this.calcData[0].push(0)
-                this.calcData[2].push(0)
+              if (day.length === 2) {
+                if (day[0].type === BREAKFAST && day[1].type === LAUNCH) {
+                  this.calcData[2].push(0)
 
-                this.calcData[1].push(day[0].power)
+                  this.calcData[0].push(day[1].power)
+                  this.calcData[1].push(day[0].power)
+                }
+
+                if (day[0].type === BREAKFAST && day[1].type === DINNER) {
+                  this.calcData[0].push(0)
+
+                  this.calcData[1].push(day[0].power)
+                  this.calcData[2].push(day[1].power)
+                }
+
+                if (day[0].type === DINNER && day[1].type === LAUNCH) {
+                  this.calcData[1].push(0)
+
+                  this.calcData[0].push(day[1].power)
+                  this.calcData[2].push(day[0].power)
+                }
               }
 
-              if (day[0].type === DINNER) {
-                this.calcData[0].push(0)
-                this.calcData[1].push(0)
-
-                this.calcData[2].push(day[0].power)
-              }
-            }
-
-            if (day.length === 2) {
-              if (day[0].type === LAUNCH && day[1].type === BREAKFAST) {
-                this.calcData[2].push(0)
-
+              if (day.length === 3) {
                 this.calcData[0].push(day[0].power)
                 this.calcData[1].push(day[1].power)
+                this.calcData[2].push(day[2].power)
+              }
+            } else {
+              if (day.length === 1) {
+                if (day[0].type === LAUNCH) {
+                  this.calcData[1].push(0)
+                  this.calcData[2].push(0)
+
+                  this.calcData[0].push(day[0].power)
+                }
+
+                if (day[0].type === BREAKFAST) {
+                  this.calcData[0].push(0)
+                  this.calcData[2].push(0)
+
+                  this.calcData[1].push(day[0].power)
+                }
+
+                if (day[0].type === DINNER) {
+                  this.calcData[0].push(0)
+                  this.calcData[1].push(0)
+
+                  this.calcData[2].push(day[0].power)
+                }
               }
 
-              if (day[0].type === BREAKFAST && day[1].type === DINNER) {
-                this.calcData[0].push(0)
+              if (day.length === 2) {
+                if (day[0].type === LAUNCH && day[1].type === BREAKFAST) {
+                  this.calcData[2].push(0)
 
-                this.calcData[1].push(day[0].power)
-                this.calcData[2].push(day[1].power)
+                  this.calcData[0].push(day[0].power)
+                  this.calcData[1].push(day[1].power)
+                }
+
+                if (day[0].type === BREAKFAST && day[1].type === DINNER) {
+                  this.calcData[0].push(0)
+
+                  this.calcData[1].push(day[0].power)
+                  this.calcData[2].push(day[1].power)
+                }
+
+                if (day[0].type === LAUNCH && day[1].type === DINNER) {
+                  this.calcData[1].push(0)
+
+                  this.calcData[0].push(day[0].power)
+                  this.calcData[2].push(day[0].power)
+                }
               }
 
-              if (day[0].type === LAUNCH && day[1].type === DINNER) {
-                this.calcData[1].push(0)
-
+              if (day.length === 3) {
                 this.calcData[0].push(day[0].power)
-                this.calcData[2].push(day[0].power)
+                this.calcData[1].push(day[1].power)
+                this.calcData[2].push(day[2].power)
               }
-            }
-
-            if (day.length === 3) {
-              this.calcData[0].push(day[0].power)
-              this.calcData[1].push(day[1].power)
-              this.calcData[2].push(day[2].power)
             }
           } else {
             this.calcData[0].push(0)

@@ -31,7 +31,7 @@
         @click.native="showDetailMeal(meal)"
       >
       </content-calendar-event-card>
-      <meal-modal ref="modal" />
+      <meal-modal ref="modal" :moment-day="day" />
     </div>
   </div>
 </template>
@@ -99,6 +99,12 @@ export default {
       ) {
         this.isDaySelected = true
         this.$root.$emit(DAY_SELECTED, { dayDate: this.day.date })
+      }
+
+      if (this.$auth.user.role === ADMIN) {
+        if (this.day.date.weekday() === 6 || this.day.date.weekday() === 5) {
+          this.isDaySelected = false
+        }
       }
     },
     showAddMealForm() {

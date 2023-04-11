@@ -724,10 +724,10 @@ export default {
           align: 'center',
           fixed: 'left',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
-            if (row.sat.length) {
+            if (row.sun.length) {
               return (
                 <div class="mt-2">
-                  {row.sat.map((meal, id) => {
+                  {row.sun.map((meal, id) => {
                     return meal.type === LAUNCH ? (
                       <div
                         style="cursor: pointer;"

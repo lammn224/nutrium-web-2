@@ -323,16 +323,35 @@ const defaultForm = {
 export default {
   name: 'MealModal',
   mixins: [BaseFormModal, BaseFormMixin],
+  props: {
+    momentDay: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       selected: null,
-      options:
-        this.$auth.user.role === PARENTS
-          ? [
-              { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
-              { value: DINNER, text: MEALS.get(DINNER) },
-            ]
-          : [{ value: LAUNCH, text: MEALS.get(LAUNCH) }],
+      // options:
+      //   // this.$auth.user.role === PARENTS
+      //   //   ? [
+      //   //       { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+      //   //       { value: DINNER, text: MEALS.get(DINNER) },
+      //   //     ]
+      //   //   : [{ value: LAUNCH, text: MEALS.get(LAUNCH) }],
+      //
+      //   this.$auth.user.role === ADMIN
+      //     ? [{ value: LAUNCH, text: MEALS.get(LAUNCH) }]
+      //     : this.momentDay.date.locale('en').format('ddd') === 'Sun' || this.momentDay.date.locale('en').format('ddd') === 'Sat'
+      //     ? [
+      //         { value: LAUNCH, text: MEALS.get(LAUNCH) },
+      //         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+      //         { value: DINNER, text: MEALS.get(DINNER) },
+      //       ]
+      //     : [
+      //         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+      //         { value: DINNER, text: MEALS.get(DINNER) },
+      //       ],
 
       isEditOptions: [
         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
@@ -348,6 +367,29 @@ export default {
     ...mapGetters({
       foods: 'food/foods',
     }),
+
+    options() {
+      // this.$auth.user.role === PARENTS
+      //   ? [
+      //       { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+      //       { value: DINNER, text: MEALS.get(DINNER) },
+      //     ]
+      //   : [{ value: LAUNCH, text: MEALS.get(LAUNCH) }],
+
+      return this.$auth.user.role === ADMIN
+        ? [{ value: LAUNCH, text: MEALS.get(LAUNCH) }]
+        : this.momentDay.date.locale('en').format('ddd') === 'Sun' ||
+          this.momentDay.date.locale('en').format('ddd') === 'Sat'
+        ? [
+            { value: LAUNCH, text: MEALS.get(LAUNCH) },
+            { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+            { value: DINNER, text: MEALS.get(DINNER) },
+          ]
+        : [
+            { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
+            { value: DINNER, text: MEALS.get(DINNER) },
+          ]
+    },
   },
   watch: {
     'form.foods': {
