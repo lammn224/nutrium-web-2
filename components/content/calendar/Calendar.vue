@@ -5,7 +5,7 @@
     <div v-if="error" class="error"></div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><h2>Lập lịch bữa ăn</h2></div>
+      <div class="panel-heading rounded"><h2>Lập lịch bữa ăn</h2></div>
 
       <div class="panel-body">
         <div class="row">
