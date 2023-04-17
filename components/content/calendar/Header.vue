@@ -28,12 +28,26 @@
     <div class="col-sm-4">
       <div class="title">{{ title }}</div>
     </div>
+    <div class="col-sm-4">
+      <b-button
+        v-if="$auth.user.role === ADMIN()"
+        class="float-right"
+        variant="primary"
+        @click="showCloneMealsModal"
+        >Sao chép bữa ăn tuần trước</b-button
+      >
+    </div>
+    <meal-clone-meal-modal
+      v-if="$auth.user.role === ADMIN()"
+      ref="modal"
+    ></meal-clone-meal-modal>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import { CHANGE_MONTH } from '~/constants/calendar-actions.constant'
+import { ADMIN } from '~/constants/role.constant'
 
 export default {
   name: 'HeaderCalendar',
@@ -59,6 +73,9 @@ export default {
     },
   },
   methods: {
+    ADMIN() {
+      return ADMIN
+    },
     goPrev() {
       const payload = moment(this.currentMonth)
         .subtract(1, 'months')
@@ -73,6 +90,10 @@ export default {
     },
     goToday() {
       this.$root.$emit(CHANGE_MONTH, moment())
+    },
+
+    showCloneMealsModal() {
+      this.$refs.modal.show()
     },
   },
 }
