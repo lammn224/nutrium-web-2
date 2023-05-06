@@ -195,6 +195,7 @@ export default {
           },
         })
 
+        await this.$auth.fetchUser()
         await this.$router.push('/')
       } catch (e) {
         this.error = e

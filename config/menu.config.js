@@ -15,7 +15,7 @@ export default [
   {
     title: 'Quản lý người dùng',
     icon: 'flaticon-users',
-    role: [ADMIN],
+    // role: [ADMIN],
     subMenus: [
       {
         title: 'Tài khoản Học sinh',

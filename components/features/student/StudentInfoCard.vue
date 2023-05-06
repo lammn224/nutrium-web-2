@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import { ROLES } from '../../../constants/role.constant'
-import { convertTimeStampsToString } from '../../../services/convertTimeStamps.service'
+import { ROLES } from '~/constants/role.constant'
+import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
 
 export default {
   name: 'StudentInfoCard',
