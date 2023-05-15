@@ -43,6 +43,7 @@ export default {
     '~/plugins/bootstrap-notify',
     '~/plugins/axios',
     '~/plugins/chart',
+    '~/plugins/element-ui',
     '~/plugins/firebase',
     '~/plugins/date-picker',
   ],

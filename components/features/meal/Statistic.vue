@@ -83,7 +83,8 @@ export default {
   data() {
     return {
       barChartOptions: {
-        // responsive: true,
+        responsive: true,
+        aspectRatio: 3,
         plugins: {
           annotation: {
             annotations: {
