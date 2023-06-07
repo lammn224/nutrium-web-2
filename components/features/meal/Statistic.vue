@@ -87,16 +87,27 @@ export default {
         aspectRatio: 3,
         plugins: {
           annotation: {
+            clip: false,
             annotations: {
               line1: {
                 type: 'line',
                 label: {
                   display: !!this.student,
                   content: 'KNNL',
-                  position: '100%',
+                  position: 'end',
                   backgroundColor: 'rgb(255, 99, 132)',
-                  xAdjust: 6,
-                  z: 100,
+                  borderWidth: 1,
+                  xAdjust: -50,
+                  yAdjust: -55,
+                  // xAdjust: 6,
+                  // z: 100,
+                  callout: {
+                    display: true,
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderDash: [6, 6],
+                    borderWidth: 2,
+                    margin: -2,
+                  },
                 },
                 // yMin: this.student ? this.student.rcmCalories : 0,
                 // yMax: this.student ? this.student.rcmCalories : 0,
@@ -104,6 +115,8 @@ export default {
                 value: this.student ? this.student.rcmCalories : 0,
                 borderColor: 'rgb(255, 99, 132)',
                 borderWidth: this.student ? 2 : 0,
+                borderDash: [6, 6],
+                borderDashOffset: 0,
               },
             },
           },
@@ -111,9 +124,18 @@ export default {
         scales: {
           x: {
             stacked: true,
+            title: {
+              display: true,
+              text: 'Date',
+            },
           },
           y: {
             stacked: true,
+            max: 3000,
+            title: {
+              display: true,
+              text: 'kcal',
+            },
           },
         },
       },

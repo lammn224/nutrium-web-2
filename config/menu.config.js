@@ -55,4 +55,10 @@ export default [
     route: '/food',
     role: [ADMIN, PARENTS, STUDENT],
   },
+  {
+    title: 'Luyện tập',
+    icon: 'flaticon-pie-chart',
+    route: '/physical-exercise',
+    role: [ADMIN, PARENTS, STUDENT],
+  },
 ]

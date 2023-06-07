@@ -167,7 +167,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .panel-default > .panel-heading {
   padding: 10px 15px;
   color: #333;

@@ -69,7 +69,7 @@ export default {
   computed: {
     title() {
       if (!this.currentMonth) return
-      return this.currentMonth.locale(this.locale).format('MMMM YYYY')
+      return this.currentMonth.locale(this.locale).format('MMM YYYY')
     },
   },
   methods: {

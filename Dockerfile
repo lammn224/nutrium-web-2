@@ -4,10 +4,12 @@ FROM node:16.16.0-alpine
 RUN mkdir -p /usr/src/nuxt-app
 WORKDIR /usr/src/nuxt-app
 
+COPY package.json /usr/src/nuxt-app
+RUN yarn install
+
 # copy the app, note .dockerignore
 COPY . /usr/src/nuxt-app/
 RUN cp .env.production .env
-RUN yarn install
 
 # build necessary, even if no static files are needed,
 # since it builds the server as well
