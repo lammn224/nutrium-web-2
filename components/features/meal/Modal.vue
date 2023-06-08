@@ -105,27 +105,6 @@
         "
         class="row"
       >
-        <!--        <div class="col-xl-12">-->
-        <!--          <validation-provider-->
-        <!--            v-slot="{ errors }"-->
-        <!--            name="Năng lượng khuyến nghị"-->
-        <!--            rules="required"-->
-        <!--          >-->
-        <!--            <b-form-group v-bind="$attrs" label="Năng lượng khuyến nghị">-->
-        <!--              <b-form-input-->
-        <!--                class="border border-2 border-primary"-->
-        <!--                :value="`${selectedStudent.rcmCalories} kcal`"-->
-        <!--                disabled-->
-        <!--                placeholder="KNNL"-->
-        <!--              ></b-form-input>-->
-
-        <!--              <b-form-invalid-feedback>-->
-        <!--                {{ errors[0] || error }}-->
-        <!--              </b-form-invalid-feedback>-->
-        <!--            </b-form-group>-->
-        <!--          </validation-provider>-->
-        <!--        </div>-->
-
         <div class="col-xl-4">
           <base-form-text-input
             :value="`${selectedStudent.rcmCalories} kcal`"
@@ -177,17 +156,6 @@
               </b-form-invalid-feedback>
             </b-form-group>
           </validation-provider>
-
-          <!--          <base-form-text-input-->
-          <!--            v-model="form.power"-->
-          <!--            required-->
-          <!--            disabled-->
-          <!--            :error="vForm.errors.get('power')"-->
-          <!--            placeholder="Năng lượng"-->
-          <!--            label="Năng lượng"-->
-          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
-          <!--            name="name"-->
-          <!--          />-->
         </div>
         <div class="col-xl-3">
           <validation-provider
@@ -239,17 +207,6 @@
               </b-form-invalid-feedback>
             </b-form-group>
           </validation-provider>
-
-          <!--          <base-form-text-input-->
-          <!--            v-model="form.lipid"-->
-          <!--            required-->
-          <!--            disabled-->
-          <!--            :error="vForm.errors.get('lipid')"-->
-          <!--            placeholder="Lipid"-->
-          <!--            label="Lipid"-->
-          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
-          <!--            name="name"-->
-          <!--          />-->
         </div>
         <div class="col-xl-3">
           <validation-provider
@@ -270,17 +227,6 @@
               </b-form-invalid-feedback>
             </b-form-group>
           </validation-provider>
-
-          <!--          <base-form-text-input-->
-          <!--            v-model="form.glucid"-->
-          <!--            required-->
-          <!--            disabled-->
-          <!--            :error="vForm.errors.get('glucid')"-->
-          <!--            placeholder="Glucid"-->
-          <!--            label="Glucid"-->
-          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
-          <!--            name="name"-->
-          <!--          />-->
         </div>
       </div>
     </validation-observer>

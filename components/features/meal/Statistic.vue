@@ -93,12 +93,12 @@ export default {
                 type: 'line',
                 label: {
                   display: !!this.student,
-                  content: 'KNNL',
+                  content: `KNNL: ${this.student?.rcmCalories} kcal`,
                   position: 'end',
                   backgroundColor: 'rgb(255, 99, 132)',
                   borderWidth: 1,
-                  xAdjust: -50,
-                  yAdjust: -55,
+                  xAdjust: 5,
+                  yAdjust: -25,
                   // xAdjust: 6,
                   // z: 100,
                   callout: {
@@ -131,7 +131,7 @@ export default {
           },
           y: {
             stacked: true,
-            max: 3000,
+            // max: 3000,
             title: {
               display: true,
               text: 'kcal',

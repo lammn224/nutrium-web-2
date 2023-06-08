@@ -39,20 +39,21 @@ export default {
     }),
 
     async loadMeals() {
-      const { data } = await this.$axios.get('meals/all')
-      data.forEach((meal) => {
-        meal.date = new Date(meal.date * 1000)
-      })
+      try {
+        const { data } = await this.$axios.get('meals/all')
+        data.forEach((meal) => {
+          meal.date = new Date(meal.date * 1000)
+        })
 
-      this.meals = data
+        this.meals = data
+      } catch (e) {}
     },
 
     async loadFoodData() {
       try {
         const { data } = await this.$axios.get('/foods/all')
-        this.foods = data
 
-        await this.setFoods(this.foods)
+        await this.setFoods(data)
       } catch (e) {}
     },
   },

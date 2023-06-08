@@ -342,7 +342,7 @@
 
 <script>
 import cloneDeep from 'lodash/cloneDeep'
-import { ROLES } from '../../../constants/role.constant'
+import { ROLES } from '~/constants/role.constant'
 import {
   convertStringDatePickerToTimeStamps,
   convertTimeStampsToDatePickerString,

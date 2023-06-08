@@ -1,20 +1,10 @@
 <template>
-  <div
-    class="panel no-margin bg-"
-    :class="[
-      meal.type === LAUNCH()
-        ? 'bg-secondary'
-        : meal.type === BREAKFAST()
-        ? 'bg-primary'
-        : 'bg-warning',
-    ]"
-  >
+  <div class="panel no-margin bg-secondary">
     <div
-      v-if="meal.type !== LAUNCH()"
       class="panel-heading event-title"
       :class="{ 'clickable-event': isDaySelected }"
     >
-      {{ MEALS.get(meal.type) }} -
+      exercise -
       {{
         meal.student.fullName.split(' ')[
           meal.student.fullName.split(' ').length - 2
@@ -26,13 +16,6 @@
         ]
       }}
     </div>
-    <div
-      v-else
-      class="panel-heading event-title"
-      :class="{ 'clickable-event': isDaySelected }"
-    >
-      {{ MEALS.get(meal.type) }}
-    </div>
   </div>
 </template>
 
@@ -40,7 +23,7 @@
 import { BREAKFAST, LAUNCH, MEALS } from '~/constants/meal-type.constant'
 
 export default {
-  name: 'EventCard',
+  name: 'ExerciseEventCard',
   props: {
     meal: {
       type: Object,

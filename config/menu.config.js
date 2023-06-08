@@ -50,6 +50,12 @@ export default [
     role: [ADMIN],
   },
   {
+    title: 'Danh sách bài tập',
+    icon: 'flaticon-layers',
+    route: '/activity',
+    role: [ADMIN],
+  },
+  {
     title: 'Thông tin món ăn',
     icon: 'flaticon-pie-chart',
     route: '/food',
@@ -57,8 +63,8 @@ export default [
   },
   {
     title: 'Luyện tập',
-    icon: 'flaticon-pie-chart',
-    route: '/physical-exercise',
-    role: [ADMIN, PARENTS, STUDENT],
+    icon: 'flaticon2-heart-rate-monitor',
+    route: '/schedule-exercise',
+    role: [PARENTS, STUDENT],
   },
 ]
