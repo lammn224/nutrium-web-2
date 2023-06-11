@@ -33,7 +33,7 @@
               <h3 class="card-label font-weight-bolder text-dark">
                 Thông tin calo (kcal)
               </h3>
-              <span class="text-muted font-weight-bold font-size-sm mt-1">
+              <span class="text-dark font-weight-bold font-size-sm mt-1">
                 {{ `Ngày ${startWeekStr} - ${endWeekStr}` }}
               </span>
             </div>

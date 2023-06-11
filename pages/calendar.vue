@@ -51,7 +51,12 @@ export default {
 
     async loadFoodData() {
       try {
-        const { data } = await this.$axios.get('/foods/all')
+        let { data } = await this.$axios.get('/foods/all')
+
+        data = data.map((item) => {
+          item.name = `${item.name} (${item.power} kcal/100g)`
+          return { ...item }
+        })
 
         await this.setFoods(data)
       } catch (e) {}

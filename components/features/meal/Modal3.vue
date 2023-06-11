@@ -241,8 +241,8 @@
               v-model="inputValues[index]"
               required
               :disabled="selectValues[index] === ''"
-              placeholder="Giá trị (gam)"
-              label="Giá trị (gam)"
+              placeholder="Khối lượng (gam)"
+              label="Khối lượng (gam)"
               rules="required|max:100"
               name="name"
               class="w-25"

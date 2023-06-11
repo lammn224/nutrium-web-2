@@ -42,7 +42,7 @@ import {
   CHANGE_MONTH,
   DAY_SELECTED,
 } from '~/constants/calendar-actions.constant'
-import { ADMIN } from '~/constants/role.constant'
+import { ADMIN, STUDENT } from '~/constants/role.constant'
 import { dateToString } from '~/services/convertTimeStamps.service'
 
 const defaultForm = {
@@ -99,6 +99,9 @@ export default {
     showAddExerciseForm() {
       defaultForm.date = dateToString(this.day.date._d)
       defaultForm.school = this.$auth.user.school._id
+      if (this.$auth.user.role === STUDENT) {
+        defaultForm.student = this.$auth.user._id
+      }
 
       this.$refs.modal.show(defaultForm)
     },

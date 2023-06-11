@@ -123,13 +123,7 @@
             </div>
           </nuxt-link>
 
-          <nuxt-link
-            v-if="$auth.user.child"
-            :to="'#'"
-            href="#"
-            class="navi-item"
-            @click.native="closeOffcanvas"
-          >
+          <div v-if="$auth.user.child" class="navi-item">
             <div class="navi-link">
               <div class="symbol symbol-40 bg-light mr-3">
                 <div class="symbol-label">
@@ -161,14 +155,14 @@
                       :key="idx"
                       tag="div"
                       class="navi-item"
-                      @click="$router.push(`/student/${child._id}`)"
+                      @click="childDetail(child._id)"
                     >
-                      <a href="#" class="navi-link p-5">
+                      <div class="navi-link p-5">
                         <span class="navi-icon">
                           <i class="navi-icon flaticon2-user"></i>
                         </span>
                         <span class="navi-text">{{ child.fullName }}</span>
-                      </a>
+                      </div>
                     </b-dropdown-text>
                   </div>
                   <!--end::Navigation-->
@@ -176,7 +170,7 @@
                 <div class="text-muted">Quản lý học sinh</div>
               </div>
             </div>
-          </nuxt-link>
+          </div>
           <!--end:Item-->
         </div>
         <!--end::Nav-->
@@ -208,6 +202,10 @@ export default {
     },
     closeOffcanvas() {
       new KTOffcanvas(KTLayoutQuickUser.getElement()).hide()
+    },
+    childDetail(childId) {
+      this.closeOffcanvas()
+      this.$router.push(`/student/${childId}`)
     },
   },
 }
