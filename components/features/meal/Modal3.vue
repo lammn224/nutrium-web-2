@@ -176,17 +176,6 @@
               </b-form-invalid-feedback>
             </b-form-group>
           </validation-provider>
-
-          <!--          <base-form-text-input-->
-          <!--            v-model="form.protein"-->
-          <!--            required-->
-          <!--            disabled-->
-          <!--            :error="vForm.errors.get('protein')"-->
-          <!--            placeholder="Protein"-->
-          <!--            label="Protein"-->
-          <!--            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"-->
-          <!--            name="name"-->
-          <!--          />-->
         </div>
         <div class="col-xl-3">
           <validation-provider
@@ -229,9 +218,43 @@
           </validation-provider>
         </div>
       </div>
-    </validation-observer>
 
-    <food-selection v-model="form.foods" :food-list="foods"></food-selection>
+      <div>
+        <div
+          v-for="(selectValue, index) in selectValues"
+          :key="index"
+          class="row"
+        >
+          <div class="col-xl-8">
+            <food-select
+              v-model="selectValues[index]"
+              required
+              placeholder="Món ăn"
+              label="Món ăn"
+              rules="required"
+              name="food"
+              @input="onSelectChange(index)"
+            />
+          </div>
+          <div class="col-xl-2">
+            <base-form-text-input
+              v-model="inputValues[index]"
+              required
+              :disabled="selectValues[index] === ''"
+              placeholder="Giá trị (gam)"
+              label="Giá trị (gam)"
+              rules="required|max:100"
+              name="name"
+              class="w-25"
+            />
+          </div>
+          <div class="col-xl-2 pt-9">
+            <b-button @click="removeSelect(index)">Xoá</b-button>
+          </div>
+        </div>
+        <b-button @click="addSelect">Thêm món ăn</b-button>
+      </div>
+    </validation-observer>
   </b-modal>
 </template>
 
@@ -268,7 +291,7 @@ const defaultForm = {
   isCreatedByAdmin: null,
 }
 export default {
-  name: 'MealModal',
+  name: 'MealModalThird',
   mixins: [BaseFormModal, BaseFormMixin],
   props: {
     momentDay: {
@@ -278,27 +301,10 @@ export default {
   },
   data() {
     return {
+      selectValues: [],
+      inputValues: [],
+      canAddSelect: true,
       selected: null,
-      // options:
-      //   // this.$auth.user.role === PARENTS
-      //   //   ? [
-      //   //       { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
-      //   //       { value: DINNER, text: MEALS.get(DINNER) },
-      //   //     ]
-      //   //   : [{ value: LAUNCH, text: MEALS.get(LAUNCH) }],
-      //
-      //   this.$auth.user.role === ADMIN
-      //     ? [{ value: LAUNCH, text: MEALS.get(LAUNCH) }]
-      //     : this.momentDay.date.locale('en').format('ddd') === 'Sun' || this.momentDay.date.locale('en').format('ddd') === 'Sat'
-      //     ? [
-      //         { value: LAUNCH, text: MEALS.get(LAUNCH) },
-      //         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
-      //         { value: DINNER, text: MEALS.get(DINNER) },
-      //       ]
-      //     : [
-      //         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
-      //         { value: DINNER, text: MEALS.get(DINNER) },
-      //       ],
 
       isEditOptions: [
         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
@@ -316,13 +322,6 @@ export default {
     }),
 
     options() {
-      // this.$auth.user.role === PARENTS
-      //   ? [
-      //       { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
-      //       { value: DINNER, text: MEALS.get(DINNER) },
-      //     ]
-      //   : [{ value: LAUNCH, text: MEALS.get(LAUNCH) }],
-
       return this.$auth.user.role === ADMIN
         ? [{ value: LAUNCH, text: MEALS.get(LAUNCH) }]
         : this.momentDay.date.locale('en').format('ddd') === 'Sun' ||
@@ -339,39 +338,6 @@ export default {
     },
   },
   watch: {
-    'form.foods': {
-      handler(newVal, oldVal) {
-        this.form.power = '0'
-        this.form.protein = '0'
-        this.form.lipid = '0'
-        this.form.glucid = '0'
-        newVal.forEach((id) => {
-          const food = this.foods.find((item) => item._id === id)
-          this.form.power = (
-            parseFloat(this.form.power) + parseFloat(food.power)
-          )
-            .toFixed(2)
-            .toString()
-          this.form.protein = (
-            parseFloat(this.form.protein) + parseFloat(food.protein)
-          )
-            .toFixed(2)
-            .toString()
-          this.form.lipid = (
-            parseFloat(this.form.lipid) + parseFloat(food.lipid)
-          )
-            .toFixed(2)
-            .toString()
-          this.form.glucid = (
-            parseFloat(this.form.glucid) + parseFloat(food.glucid)
-          )
-            .toFixed(2)
-            .toString()
-        })
-        this.form.school = this.$auth.user.school._id
-      },
-      deep: true,
-    },
     'form.student': {
       handler(newVal, oldVal) {
         if (this.$auth.user.role === PARENTS) {
@@ -387,6 +353,58 @@ export default {
         }
       },
       deep: true,
+    },
+
+    inputValues: {
+      handler(newVal, oldVal) {
+        if (newVal) {
+          this.form.power = '0'
+          this.form.protein = '0'
+          this.form.lipid = '0'
+          this.form.glucid = '0'
+          if (newVal && newVal.length && newVal[0] !== '') {
+            let sumPower = 0
+            let sumProtein = 0
+            let sumLipid = 0
+            let sumGlucid = 0
+            for (let i = 0; i < newVal.length; i++) {
+              if (this.selectValues[i] && this.selectValues[i] !== '') {
+                sumPower = (
+                  parseFloat(sumPower) +
+                  (parseFloat(this.selectValues[i].power) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+                sumProtein = (
+                  parseFloat(sumProtein) +
+                  (parseFloat(this.selectValues[i].protein) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+                sumLipid = (
+                  parseFloat(sumLipid) +
+                  (parseFloat(this.selectValues[i].lipid) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+                sumGlucid = (
+                  parseFloat(sumGlucid) +
+                  (parseFloat(this.selectValues[i].glucid) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+              }
+            }
+            this.form.power = sumPower.toString()
+            this.form.protein = sumProtein.toString()
+            this.form.lipid = sumLipid.toString()
+            this.form.glucid = sumGlucid.toString()
+          }
+
+          this.form.foods = this.selectValues.map((item) => item._id)
+          this.form.values = this.inputValues
+        }
+      },
     },
   },
 
@@ -422,10 +440,14 @@ export default {
       if (item) {
         this.isEdit = true
         this.form = cloneDeep(item)
+        this.selectValues = this.form.foods
+        this.inputValues = this.form.values
       }
 
       if (item.date && item.power === '0') {
         this.isEdit = false
+        this.selectValues = []
+        this.inputValues = []
         this.form = cloneDeep(item)
       }
 
@@ -435,6 +457,8 @@ export default {
     },
     handleModalHidden(bvModalEvt) {
       this.form = cloneDeep(defaultForm)
+      this.selectValues = []
+      this.inputValues = []
       this.isEdit = false
       this.error = null
     },
@@ -476,6 +500,18 @@ export default {
         // this.$refs.modal.hide()
         this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
       }
+    },
+    onSelectChange(index) {
+      this.canAddSelect = this.selectValues[index] !== ''
+    },
+    removeSelect(index) {
+      this.selectValues.splice(index, 1)
+      this.inputValues.splice(index, 1)
+    },
+    addSelect() {
+      this.selectValues.push('')
+      this.inputValues.push('0')
+      this.canAddSelect = true
     },
   },
 }

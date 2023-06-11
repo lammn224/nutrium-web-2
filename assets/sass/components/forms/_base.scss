@@ -20,6 +20,11 @@
     font-size: $form-text-font-size;
     font-weight: $form-text-font-weight;
   }
+  //
+  //legend.required:after {
+  //  content: '*';
+  //  color: theme-color('danger');
+  //}
 }
 
 // Form control

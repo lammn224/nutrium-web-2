@@ -88,18 +88,12 @@ export default {
     showDayOptions() {
       const startOfToday = moment().startOf('day')
       if (
-        // this.day.date.isBefore(startOfToday) ||
+        this.day.date.isBefore(startOfToday) ||
         this.day.date.isAfter(startOfToday) ||
         this.day.date.isSame(startOfToday)
       ) {
         this.isDaySelected = true
         this.$root.$emit(DAY_SELECTED, { dayDate: this.day.date })
-      }
-
-      if (this.$auth.user.role === ADMIN) {
-        if (this.day.date.weekday() === 6 || this.day.date.weekday() === 5) {
-          this.isDaySelected = false
-        }
       }
     },
     showAddExerciseForm() {

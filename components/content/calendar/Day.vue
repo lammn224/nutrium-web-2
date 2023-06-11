@@ -31,7 +31,7 @@
         @click.native="showDetailMeal(meal)"
       >
       </content-calendar-event-card>
-      <meal-modal ref="modal" :moment-day="day" />
+      <meal-modal3 ref="modal" :moment-day="day" />
     </div>
   </div>
 </template>
@@ -54,6 +54,7 @@ const defaultForm = {
   glucid: '0',
   student: null,
   foods: [],
+  values: [],
   isCreatedByAdmin: false,
 }
 export default {
@@ -132,7 +133,9 @@ export default {
       cloneMeal.power = meal.power
       cloneMeal.protein = meal.protein
       cloneMeal.lipid = meal.lipid
+      cloneMeal.glucid = meal.glucid
       cloneMeal.foods = meal.foods
+      cloneMeal.values = meal.values
       cloneMeal.type = meal.type
       cloneMeal._id = meal._id
       cloneMeal.isCreatedByAdmin = meal.isCreatedByAdmin
