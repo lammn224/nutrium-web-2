@@ -14,11 +14,19 @@ import menus from '~/config/menu.config'
 
 export default {
   name: 'LeftMenu',
-  computed: {
-    menuToDisplay() {
-      return this.getDisplayMenus(menus)
-    },
+  data() {
+    return {
+      menuToDisplay: null,
+    }
   },
+  mounted() {
+    this.menuToDisplay = this.getDisplayMenus(menus)
+  },
+  // computed: {
+  //   menuToDisplay() {
+  //     return this.getDisplayMenus(menus)
+  //   },
+  // },
   methods: {
     getDisplayMenus(menus) {
       return menus.filter((item) => {

@@ -5,7 +5,7 @@
     :error="error"
     :multiple="multiple"
     v-bind="$attrs"
-    :options="foods"
+    :options="filteredFoods"
     placeholder="Chọn một món ăn..."
     id-field="_id"
     text-field="name"
@@ -20,6 +20,10 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FoodSelect',
   props: {
+    filteredFoods: {
+      type: Array,
+      default: () => [],
+    },
     error: {
       type: String,
       default: '',

@@ -13,7 +13,7 @@
                 <i class="flaticon2-back icon-sm"></i> Tuần trước
               </button>
               <button
-                class="btn btn-outline btn-default today-button font-size-sm line-height-sm"
+                class="btn btn-outline btn-primary today-button font-size-sm line-height-sm"
                 form=""
                 @click.stop="goToday"
               >
@@ -142,7 +142,7 @@ export default {
       timestamp: Math.floor(Date.now() / 1000),
       loadingInstance: null,
       loading: true,
-      remoteUrl: '/meals/by-week-per-student-chart',
+      remoteUrl: '/meals/by-week-chart',
       dataForChart: [],
       calcData: [[], [], []],
     }

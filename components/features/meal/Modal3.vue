@@ -74,14 +74,23 @@
         class="w-25"
       />
 
+      <!--      <base-form-text-input-->
+      <!--        v-model="form.topic"-->
+      <!--        :error="vForm.errors.get('topic')"-->
+      <!--        placeholder="Chủ đề"-->
+      <!--        label="Chủ đề"-->
+      <!--        name="topic"-->
+      <!--        class="w-25"-->
+      <!--      />-->
+
       <validation-provider
-        v-if="form.createdBy === $auth.user._id && $auth.user.role !== ADMIN()"
+        v-if="form.createdBy === $auth.user._id && $auth.user.role !== ADMIN"
         v-slot="{ errors }"
         name="Học sinh"
         rules="required"
       >
         <b-form-group
-          v-if="$auth.user.role !== ADMIN()"
+          v-if="$auth.user.role !== ADMIN"
           v-bind="$attrs"
           label="Chọn học sinh"
         >
@@ -229,10 +238,19 @@
             <food-select
               v-model="selectValues[index]"
               required
+              :filtered-foods="filteredFoods"
               placeholder="Món ăn"
               label="Món ăn"
               rules="required"
               name="food"
+              :class="
+                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+                  ? 'font-weight-bold text-dark'
+                  : ''
+              "
+              :disabled="
+                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+              "
               @input="onSelectChange(index)"
             />
           </div>
@@ -240,7 +258,11 @@
             <base-form-text-input
               v-model="inputValues[index]"
               required
-              :disabled="selectValues[index] === ''"
+              :disabled="
+                selectValues[index] === '' ||
+                $auth.user.role === STUDENT ||
+                $auth.user._id !== form.createdBy
+              "
               placeholder="Khối lượng (gam)"
               label="Khối lượng (gam)"
               rules="required|max:100"
@@ -249,10 +271,22 @@
             />
           </div>
           <div class="col-xl-2 pt-9">
-            <b-button @click="removeSelect(index)">Xoá</b-button>
+            <b-button
+              :disabled="
+                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+              "
+              @click="removeSelect(index)"
+              >Xoá</b-button
+            >
           </div>
         </div>
-        <b-button @click="addSelect">Thêm món ăn</b-button>
+        <b-button
+          :disabled="
+            $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+          "
+          @click="addSelect"
+          >Thêm món ăn</b-button
+        >
       </div>
     </validation-observer>
   </b-modal>
@@ -289,6 +323,7 @@ const defaultForm = {
   foods: [],
   values: [],
   isCreatedByAdmin: null,
+  // topic: '',
 }
 export default {
   name: 'MealModalThird',
@@ -305,6 +340,7 @@ export default {
       inputValues: [],
       canAddSelect: true,
       selected: null,
+      filteredFoods: null,
 
       isEditOptions: [
         { value: BREAKFAST, text: MEALS.get(BREAKFAST) },
@@ -320,6 +356,17 @@ export default {
     ...mapGetters({
       foods: 'food/foods',
     }),
+
+    STUDENT() {
+      return STUDENT
+    },
+
+    PARENTS() {
+      return PARENTS
+    },
+    ADMIN() {
+      return ADMIN
+    },
 
     options() {
       return this.$auth.user.role === ADMIN
@@ -351,6 +398,24 @@ export default {
             (item) => item._id === newVal
           )
         }
+      },
+      deep: true,
+    },
+
+    // 'form.topic': {
+    //   handler(newVal, oldVal) {
+    //     if(newVal) {
+    //       this.filteredFoods = [this.foods[0], this.foods[1], this.foods[2]]
+    //     } else {
+    //       this.filteredFoods = [...this.foods]
+    //     }
+    //   },
+    //   deep: true,
+    // },
+
+    foods: {
+      handler(newVal, oldVal) {
+        this.filteredFoods = newVal
       },
       deep: true,
     },
@@ -429,12 +494,6 @@ export default {
     convertTimeStampsToString,
     LAUNCH() {
       return LAUNCH
-    },
-    PARENTS() {
-      return PARENTS
-    },
-    ADMIN() {
-      return ADMIN
     },
     show(item) {
       if (item) {

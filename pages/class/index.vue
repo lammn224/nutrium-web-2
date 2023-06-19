@@ -83,14 +83,7 @@ export default {
           align: 'left',
           sortBy: 'asc',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span
-                style="cursor: pointer;"
-                on-click={() => this.handleClick(row._id)}
-              >
-                {row.name}
-              </span>
-            )
+            return <span>{row.name}</span>
           },
         },
         {
@@ -101,6 +94,26 @@ export default {
           align: 'left',
           renderBodyCell: ({ row, column, rowIndex }, h) => {
             return <span>{row.members.length}</span>
+          },
+        },
+        {
+          field: '',
+          key: 'action',
+          title: 'Hành động',
+          width: 50,
+          align: 'center',
+          fixed: 'right',
+          renderBodyCell: ({ row, column, rowIndex }, h) => {
+            return (
+              <span>
+                <button
+                  class="btn btn-sm btn-primary"
+                  on-click={() => this.handleClick(row._id)}
+                >
+                  Chi tiết
+                </button>
+              </span>
+            )
           },
         },
       ]

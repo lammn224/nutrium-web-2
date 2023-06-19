@@ -10,7 +10,7 @@
     data-vv-as="Hoạt động"
     id-field="_id"
     text-field="name"
-    ajax="/activities"
+    :options="activities"
     name="selection"
   />
 </template>
@@ -20,5 +20,11 @@ import BaseFormSelectMixin from '~/components/base/form/SelectMixin.vue'
 export default {
   name: 'ExerciseSelect',
   mixins: [BaseFormSelectMixin],
+  props: {
+    activities: {
+      type: Array,
+      default: () => [],
+    },
+  },
 }
 </script>

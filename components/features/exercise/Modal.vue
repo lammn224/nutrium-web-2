@@ -45,7 +45,12 @@
         name="name"
         class="w-25"
       />
-      <activity-select v-model="form.activity" required rules="required" />
+      <activity-select
+        v-model="form.activity"
+        required
+        rules="required"
+        :activities="activities"
+      />
       <div class="row">
         <div class="col-xl-6">
           <base-form-text-input
@@ -97,6 +102,7 @@ export default {
       form: cloneDeep(defaultForm),
       studentOption: [],
       selectedStudent: null,
+      activities: [],
     }
   },
   watch: {
@@ -137,7 +143,7 @@ export default {
       deep: true,
     },
   },
-  mounted() {
+  async mounted() {
     if (this.$auth.user.role === PARENTS) {
       this.$auth.user.child.forEach((student) => {
         this.studentOption.push({
@@ -149,6 +155,8 @@ export default {
     if (this.$auth.user.role === STUDENT) {
       this.selectedStudent = this.$auth.user
     }
+
+    await this.loadActivities()
   },
   methods: {
     PARENTS() {
@@ -216,6 +224,10 @@ export default {
       } catch (e) {
         this.processError(e)
       }
+    },
+    async loadActivities() {
+      const { data } = await this.$axios.get('/activities/all')
+      this.activities = data
     },
   },
 }

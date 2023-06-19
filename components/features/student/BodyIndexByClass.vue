@@ -109,24 +109,25 @@ export default {
     //   name: null,
     // })
 
-    await this.loadStudentIdxData()
     await this.loadGradeOption()
+    await this.loadStudentIdxData()
   },
 
   methods: {
     async loadStudentIdxData() {
-      // this.loadingInstance.show()
-
       try {
         const { data } = await this.$axios.get(this.queryUrl)
+        const filteredData = [[], []]
+        const labels = []
         data.forEach((d) => {
-          this.labels.push(d.class)
-          this.calcData[0].push(d.avgWeight)
-          this.calcData[1].push(d.avgHeight)
+          labels.push(d.class)
+          filteredData[0].push(d.avgWeight)
+          filteredData[1].push(d.avgHeight)
         })
+        this.calcData = filteredData
+        this.labels = labels
       } catch (e) {
       } finally {
-        // this.loadingInstance.close()
         this.firstLoading = true
       }
     },

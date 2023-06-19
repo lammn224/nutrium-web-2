@@ -290,7 +290,7 @@
                   <i class="flaticon2-back"></i> Tuần trước
                 </button>
                 <button
-                  class="btn btn-outline btn-default today-button"
+                  class="btn btn-outline btn-primary today-button"
                   form=""
                   @click.stop="goToday"
                 >

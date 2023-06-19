@@ -64,7 +64,7 @@
           </b-form-checkbox-group>
         </b-form-group>
         <b-form-invalid-feedback class="font-size-base" :state="false">
-          Thao tác này có thể xoá những bữa ăn đã thiết lập!
+          Lưu ý: Thao tác này có thể xoá những bữa ăn đã thiết lập!
         </b-form-invalid-feedback>
         <!--        </perfect-scrollbar>-->
       </validation-provider>
@@ -108,6 +108,16 @@ export default {
             return time.getTime() > Date.now() + 86400000 * 2
           } else if (new Date().getDay() === 0) {
             return time.getTime() > Date.now() + 86400000
+          } else if (new Date().getDay() === 1) {
+            return time.getTime() > Date.now() - 86400000
+          } else if (new Date().getDay() === 2) {
+            return time.getTime() > Date.now() - 86400000 * 2
+          } else if (new Date().getDay() === 3) {
+            return time.getTime() > Date.now() - 86400000 * 3
+          } else if (new Date().getDay() === 4) {
+            return time.getTime() > Date.now() - 86400000 * 4
+          } else if (new Date().getDay() === 5) {
+            return time.getTime() > Date.now() - 86400000 * 5
           } else {
             return time.getTime() > Date.now()
           }

@@ -42,35 +42,35 @@
           class="quick-search quick-search-inline ml-20 w-300px"
         >
           <!--begin::Form-->
-          <form method="get" class="quick-search-form">
-            <div class="input-group rounded bg-light">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <span class="svg-icon svg-icon-lg">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg-->
-                    <inline-svg
-                      :src="
-                        require('~/assets/media/svg/icons/General/Search.svg')
-                      "
-                    />
-                    <!--end::Svg Icon-->
-                  </span>
-                </span>
-              </div>
-              <input
-                type="text"
-                class="form-control h-45px"
-                placeholder="Search..."
-              />
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i
-                    class="quick-search-close ki ki-close icon-sm text-muted"
-                  ></i>
-                </span>
-              </div>
-            </div>
-          </form>
+          <!--          <form method="get" class="quick-search-form">-->
+          <!--            <div class="input-group rounded bg-light">-->
+          <!--              <div class="input-group-prepend">-->
+          <!--                <span class="input-group-text">-->
+          <!--                  <span class="svg-icon svg-icon-lg">-->
+          <!--                    &lt;!&ndash;begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg&ndash;&gt;-->
+          <!--                    <inline-svg-->
+          <!--                      :src="-->
+          <!--                        require('~/assets/media/svg/icons/General/Search.svg')-->
+          <!--                      "-->
+          <!--                    />-->
+          <!--                    &lt;!&ndash;end::Svg Icon&ndash;&gt;-->
+          <!--                  </span>-->
+          <!--                </span>-->
+          <!--              </div>-->
+          <!--              <input-->
+          <!--                type="text"-->
+          <!--                class="form-control h-45px"-->
+          <!--                placeholder="Search..."-->
+          <!--              />-->
+          <!--              <div class="input-group-append">-->
+          <!--                <span class="input-group-text">-->
+          <!--                  <i-->
+          <!--                    class="quick-search-close ki ki-close icon-sm text-muted"-->
+          <!--                  ></i>-->
+          <!--                </span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </form>-->
           <!--end::Form-->
           <!--begin::Search Toggle-->
           <div

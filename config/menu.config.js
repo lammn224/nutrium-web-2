@@ -7,12 +7,6 @@ export default [
     route: '/',
   },
   {
-    title: 'Lập lịch bữa ăn',
-    icon: 'flaticon-calendar-2',
-    route: '/calendar',
-    role: [ADMIN, PARENTS, STUDENT],
-  },
-  {
     title: 'Quản lý người dùng',
     icon: 'flaticon-users',
     // role: [ADMIN],
@@ -38,33 +32,53 @@ export default [
     ],
   },
   {
-    title: 'Quản lý khối lớp',
+    title: 'Quản lý khối - lớp',
     icon: 'flaticon-map',
-    route: '/grade',
-    role: [ADMIN],
+    // route: '/grade',
+    // role: [ADMIN],
+    subMenus: [
+      {
+        title: 'Quản lý khối lớp',
+        icon: 'flaticon-map',
+        route: '/grade',
+        role: [ADMIN],
+      },
+      {
+        title: 'Quản lý lớp học',
+        icon: 'flaticon-layers',
+        route: '/class',
+        role: [ADMIN],
+      },
+    ],
   },
   {
-    title: 'Quản lý lớp học',
+    title: 'Dinh dưỡng - luyện tập',
     icon: 'flaticon-layers',
-    route: '/class',
-    role: [ADMIN],
+    subMenus: [
+      {
+        title: 'Danh sách bài tập',
+        icon: 'flaticon-layers',
+        route: '/activity',
+        role: [ADMIN, PARENTS, STUDENT],
+      },
+      {
+        title: 'Danh sách món ăn',
+        icon: 'flaticon-pie-chart',
+        route: '/food',
+        role: [ADMIN, PARENTS, STUDENT],
+      },
+      {
+        title: 'Luyện tập',
+        icon: 'flaticon2-heart-rate-monitor',
+        route: '/schedule-exercise',
+        role: [PARENTS, STUDENT],
+      },
+    ],
   },
   {
-    title: 'Danh sách bài tập',
-    icon: 'flaticon-layers',
-    route: '/activity',
-    role: [ADMIN],
-  },
-  {
-    title: 'Thông tin món ăn',
-    icon: 'flaticon-pie-chart',
-    route: '/food',
+    title: 'Lập lịch bữa ăn',
+    icon: 'flaticon-calendar-2',
+    route: '/calendar',
     role: [ADMIN, PARENTS, STUDENT],
-  },
-  {
-    title: 'Luyện tập',
-    icon: 'flaticon2-heart-rate-monitor',
-    route: '/schedule-exercise',
-    role: [PARENTS, STUDENT],
   },
 ]

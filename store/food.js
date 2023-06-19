@@ -12,8 +12,8 @@ export default {
     },
   },
   actions: {
-    setFoods(state, payload) {
-      state.commit(SET_FOODS, payload)
+    async setFoods(state, payload) {
+      await state.commit(SET_FOODS, payload)
     },
   },
   mutations: {
