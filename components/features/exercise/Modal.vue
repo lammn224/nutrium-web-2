@@ -83,6 +83,7 @@
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import { Form } from 'vform'
+import { mapGetters } from 'vuex'
 import BaseFormModal from '~/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin'
 import { PARENTS, STUDENT } from '~/constants/role.constant'
@@ -102,9 +103,15 @@ export default {
       form: cloneDeep(defaultForm),
       studentOption: [],
       selectedStudent: null,
-      activities: [],
     }
   },
+
+  computed: {
+    ...mapGetters({
+      activities: 'activity/activities',
+    }),
+  },
+
   watch: {
     'form.activity': {
       handler(newVal, oldVal) {
@@ -143,7 +150,8 @@ export default {
       deep: true,
     },
   },
-  async mounted() {
+
+  mounted() {
     if (this.$auth.user.role === PARENTS) {
       this.$auth.user.child.forEach((student) => {
         this.studentOption.push({
@@ -155,9 +163,8 @@ export default {
     if (this.$auth.user.role === STUDENT) {
       this.selectedStudent = this.$auth.user
     }
-
-    await this.loadActivities()
   },
+
   methods: {
     PARENTS() {
       return PARENTS
@@ -224,10 +231,6 @@ export default {
       } catch (e) {
         this.processError(e)
       }
-    },
-    async loadActivities() {
-      const { data } = await this.$axios.get('/activities/all')
-      this.activities = data
     },
   },
 }

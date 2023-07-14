@@ -1,7 +1,7 @@
 <template>
   <div
     id="kt_profile_aside"
-    class="flex-row-auto offcanvas-mobile w-300px w-xl-350px h-auto"
+    class="flex-row-auto offcanvas-mobile w-300px w-xl-350px h-100"
   >
     <div class="card card-custom card-stretch">
       <div class="card-body pt-4">

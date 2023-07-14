@@ -14,10 +14,16 @@
         class="d-flex flex-row-fluid mb-5"
       >
         <student-info-card :student="child"></student-info-card>
-        <meal-statistic
-          :student="child"
-          :class-name="$auth.user.child?.length === 1 ? 'ml-lg-8' : 'ml-lg-8'"
-        ></meal-statistic>
+        <div class="w-100">
+          <meal-statistic
+            :student="child"
+            :class-name="$auth.user.child?.length === 1 ? 'ml-lg-8' : 'ml-lg-8'"
+          />
+          <schedule-exercise-statistic
+            :student="child"
+            :class-name="'ml-lg-8'"
+          />
+        </div>
       </div>
 
       <div v-else class="d-flex flex-row-fluid mb-5">

@@ -126,7 +126,7 @@ export default {
             stacked: true,
             title: {
               display: true,
-              text: 'Date',
+              text: 'Ngày',
             },
           },
           y: {

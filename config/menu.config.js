@@ -5,6 +5,7 @@ export default [
     title: 'Dashboard',
     icon: 'flaticon2-architecture-and-city',
     route: '/',
+    role: [ADMIN, PARENTS, STUDENT],
   },
   {
     title: 'Quản lý người dùng',
@@ -13,20 +14,20 @@ export default [
     subMenus: [
       {
         title: 'Tài khoản Học sinh',
-        route: '/student',
         icon: 'flaticon2-user',
+        route: '/student',
         role: [ADMIN],
       },
       {
         title: 'Tài khoản phụ huynh',
-        route: '/school-user/parents',
         icon: 'flaticon2-user',
+        route: '/school-user/parents',
         role: [ADMIN],
       },
       {
         title: 'Tài khoản quản trị viên',
-        route: '/school-user/admin',
         icon: 'flaticon2-user',
+        route: '/school-user/admin',
         role: [ADMIN],
       },
     ],
@@ -79,6 +80,49 @@ export default [
     title: 'Lập lịch bữa ăn',
     icon: 'flaticon-calendar-2',
     route: '/calendar',
+    role: [ADMIN, PARENTS, STUDENT],
+  },
+]
+
+export const routeMenu = [
+  {
+    route: '/calendar',
+    role: [ADMIN, PARENTS, STUDENT],
+  },
+  {
+    route: '/schedule-exercise',
+    role: [PARENTS, STUDENT],
+  },
+  {
+    route: '/food',
+    role: [ADMIN, PARENTS, STUDENT],
+  },
+  {
+    route: '/activity',
+    role: [ADMIN, PARENTS, STUDENT],
+  },
+  {
+    route: '/class',
+    role: [ADMIN],
+  },
+  {
+    route: '/grade',
+    role: [ADMIN],
+  },
+  {
+    route: '/student',
+    role: [ADMIN],
+  },
+  {
+    route: '/school-user/parents',
+    role: [ADMIN],
+  },
+  {
+    route: '/school-user/admin',
+    role: [ADMIN],
+  },
+  {
+    route: '/',
     role: [ADMIN, PARENTS, STUDENT],
   },
 ]
