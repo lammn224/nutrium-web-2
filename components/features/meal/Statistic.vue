@@ -1,60 +1,68 @@
 <template>
   <div class="flex-row-fluid" :class="className">
-    <div class="card card-custom card-stretch mb-5">
-      <div class="card-header pt-5" style="display: block">
-        <div class="row justify-content-between align-items-center">
-          <div class="col-lg-auto h-100">
-            <div class="btn-group font-size-sm">
-              <button
-                class="btn btn-outline btn-primary font-size-sm line-height-sm"
-                form=""
-                @click.stop="goPrev"
-              >
-                <i class="flaticon2-back icon-sm"></i> Tuần trước
-              </button>
-              <button
-                class="btn btn-outline btn-primary today-button font-size-sm line-height-sm"
-                form=""
-                @click.stop="goToday"
-              >
-                <i class="flaticon2-down icon-sm"></i> Hiện tại
-              </button>
-              <button
-                class="btn btn-outline btn-primary font-size-sm line-height-sm"
-                form=""
-                @click.stop="goNext"
-              >
-                Tuần sau <i class="flaticon2-next icon-sm"></i>
-              </button>
+    <b-overlay
+      :show="isLoading"
+      spinner-variant="primary"
+      spinner-type="grow"
+      spinner-small
+      rounded="sm"
+    >
+      <div class="card card-custom card-stretch mb-5">
+        <div class="card-header pt-5" style="display: block">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-lg-auto h-100">
+              <div class="btn-group font-size-sm">
+                <button
+                  class="btn btn-outline btn-primary font-size-sm line-height-sm"
+                  form=""
+                  @click.stop="goPrev"
+                >
+                  <i class="flaticon2-back icon-sm"></i> Tuần trước
+                </button>
+                <button
+                  class="btn btn-outline btn-primary today-button font-size-sm line-height-sm"
+                  form=""
+                  @click.stop="goToday"
+                >
+                  <i class="flaticon2-down icon-sm"></i> Hiện tại
+                </button>
+                <button
+                  class="btn btn-outline btn-primary font-size-sm line-height-sm"
+                  form=""
+                  @click.stop="goNext"
+                >
+                  Tuần sau <i class="flaticon2-next icon-sm"></i>
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-auto">
-            <div class="card-title align-items-start flex-column">
-              <h3 class="card-label font-weight-bolder text-dark">
-                Thông tin calo (kcal)
-              </h3>
-              <span class="text-dark font-weight-bold font-size-sm mt-1">
-                {{ `Ngày ${startWeekStr} - ${endWeekStr}` }}
-              </span>
+            <div class="col-lg-auto">
+              <div class="card-title align-items-start flex-column">
+                <h3 class="card-label font-weight-bolder text-dark">
+                  Thông tin calo (kcal)
+                </h3>
+                <span class="text-dark font-weight-bold font-size-sm mt-1">
+                  {{ `Ngày ${startWeekStr} - ${endWeekStr}` }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-body">
-        <div
-          v-if="student"
-          class="text-center card-label font-weight-bolder text-dark"
-        >
-          {{ student.fullName }}
+        <div class="card-body">
+          <div
+            v-if="student"
+            class="text-center card-label font-weight-bolder text-dark"
+          >
+            {{ student.fullName }}
+          </div>
+          <BarChart
+            :chart-data="barChartData"
+            :chart-options="barChartOptions"
+            :height="$auth.user.role === ADMIN() ? 40 : 60"
+            :width="100"
+          />
         </div>
-        <BarChart
-          :chart-data="barChartData"
-          :chart-options="barChartOptions"
-          :height="$auth.user.role === ADMIN() ? 40 : 60"
-          :width="100"
-        />
       </div>
-    </div>
+    </b-overlay>
   </div>
 </template>
 
@@ -82,6 +90,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       barChartOptions: {
         responsive: true,
         aspectRatio: 3,
@@ -260,6 +269,8 @@ export default {
     //   target: this.$refs.datatable,
     //   name: null,
     // })
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
 
     await this.loadMealsData()
   },
@@ -282,7 +293,8 @@ export default {
 
     async loadMealsData() {
       // this.loadingInstance.show()
-
+      this.isLoading = true
+      await this.delay(500)
       try {
         const { data } = await this.$axios.get(this.queryUrl)
         this.dataForChart = data
@@ -411,7 +423,8 @@ export default {
         this.totalRecord = 0
       } finally {
         // this.loadingInstance.close()
-        this.firstLoading = true
+        // this.firstLoading = true
+        this.isLoading = false
       }
     },
   },

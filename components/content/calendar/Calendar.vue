@@ -1,46 +1,59 @@
 <template>
   <div class="">
-    <div v-if="loading">Loading...</div>
+    <!--    <div v-if="loading">Loading...</div>-->
 
-    <div v-if="error" class="error"></div>
+    <!--    <div v-if="error" class="error"></div>-->
+    <b-overlay
+      :show="isLoading"
+      spinner-variant="primary"
+      spinner-type="grow"
+      spinner-small
+      rounded="sm"
+    >
+      <div class="panel panel-default">
+        <div class="panel-heading rounded"><h2>Lập lịch bữa ăn</h2></div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading rounded"><h2>Lập lịch bữa ăn</h2></div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <content-calendar-header
+                :current-month="currentMonth"
+                :first-day="firstDay"
+              ></content-calendar-header>
 
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-sm-12">
-            <content-calendar-header
-              :current-month="currentMonth"
-              :first-day="firstDay"
-            ></content-calendar-header>
+              <div class="full-calendar-body">
+                <div class="weeks">
+                  <strong
+                    v-for="(dayIndex, idx) in 7"
+                    :key="idx"
+                    class="week"
+                    >{{
+                      (dayIndex - 1) | weekDayName(firstDay, appLocale)
+                    }}</strong
+                  >
+                </div>
 
-            <div class="full-calendar-body">
-              <div class="weeks">
-                <strong v-for="(dayIndex, idx) in 7" :key="idx" class="week">{{
-                  (dayIndex - 1) | weekDayName(firstDay, appLocale)
-                }}</strong>
-              </div>
-
-              <div ref="dates" class="dates">
-                <content-calendar-week
-                  v-for="(week, index) in Weeks"
-                  :key="index"
-                  :first-day="firstDay"
-                  :week="week"
-                >
-                </content-calendar-week>
+                <div ref="dates" class="dates">
+                  <content-calendar-week
+                    v-for="(week, index) in Weeks"
+                    :key="index"
+                    :first-day="firstDay"
+                    :week="week"
+                  >
+                  </content-calendar-week>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </b-overlay>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import { mapActions } from 'vuex'
 import { CHANGE_MONTH } from '~/constants/calendar-actions.constant'
 
 export default {
@@ -71,10 +84,13 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      meals: [],
+      isLoading: false,
       error: null,
       currentMonth: moment().startOf('month'),
       appLocale: 'vi',
+      startMonth: moment().startOf('month').unix(),
+      endMonth: moment().endOf('month').unix(),
     }
   },
   computed: {
@@ -114,20 +130,70 @@ export default {
 
       return weeks
     },
-    meals() {
-      return this.allMeals
-    },
   },
   created() {
     const me = this
-    this.$root.$on(CHANGE_MONTH, function (payload) {
+    this.$root.$on(CHANGE_MONTH, async (payload) => {
       me.currentMonth = payload
+      this.startMonth = moment(payload).startOf('month').unix()
+      this.endMonth = moment(payload).endOf('month').unix()
+      await this.loadMeals()
+      await this.loadFoodData()
+    })
+    this.$bus.$on('reloadMealData', async () => {
+      await this.loadMeals()
+      await this.loadFoodData()
     })
   },
-  mounted() {
-    this.loading = false
+  async mounted() {
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    await this.loadMeals()
+    await this.loadFoodData()
   },
   methods: {
+    ...mapActions({
+      setFoods: 'food/setFoods',
+    }),
+
+    async loadMeals() {
+      const params = `startMonth=${this.startMonth}&endMonth=${this.endMonth}`
+      this.isLoading = true
+      await this.delay(500)
+
+      try {
+        const { data } = await this.$axios.get(`meals/all?${params}`)
+        data.forEach((meal) => {
+          meal.date = new Date(meal.date * 1000)
+        })
+
+        this.meals = data
+      } catch (e) {
+        this.meals = []
+      } finally {
+        this.isLoading = false
+      }
+    },
+
+    async loadFoodData() {
+      this.isLoading = true
+      await this.delay(500)
+      try {
+        let { data } = await this.$axios.get('/foods/all')
+
+        data = data.map((item) => {
+          item.name = `${item.name} (${item.power} kcal/100g)`
+          return { ...item }
+        })
+
+        await this.setFoods(data)
+      } catch (e) {
+      } finally {
+        this.isLoading = false
+      }
+    },
+
     getMeals(date) {
       return this.meals.filter((meal) => {
         return date.isSame(meal.date, 'day') ? meal : null

@@ -89,7 +89,7 @@ export default {
       this.$root.$emit(CHANGE_MONTH, payload)
     },
     goToday() {
-      this.$root.$emit(CHANGE_MONTH, moment())
+      this.$root.$emit(CHANGE_MONTH, moment().startOf('month'))
     },
 
     showCloneMealsModal() {

@@ -139,12 +139,24 @@ export default {
           this.selectedStudent = this.$auth.user.child.find(
             (item) => item._id === newVal
           )
+          this.form.calo =
+            (this.form.timeDur *
+              (this.form.activity?.metIdx *
+                3.5 *
+                this.selectedStudent?.weight)) /
+            200
         }
 
         if (this.$auth.user.role === STUDENT) {
           this.selectedStudent = this.$auth.user.parents.child.find(
             (item) => item._id === newVal
           )
+          this.form.calo =
+            (this.form.timeDur *
+              (this.form.activity?.metIdx *
+                3.5 *
+                this.selectedStudent?.weight)) /
+            200
         }
       },
       deep: true,

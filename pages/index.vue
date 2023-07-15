@@ -28,10 +28,16 @@
 
       <div v-else class="d-flex flex-row-fluid mb-5">
         <student-info-card :student="$auth.user"></student-info-card>
-        <meal-statistic
-          :student="$auth.user"
-          :class-name="'ml-lg-8'"
-        ></meal-statistic>
+        <div class="w-100">
+          <meal-statistic
+            :student="$auth.user"
+            :class-name="'ml-lg-8'"
+          ></meal-statistic>
+          <schedule-exercise-statistic
+            :student="$auth.user"
+            :class-name="'ml-lg-8'"
+          />
+        </div>
       </div>
     </div>
 

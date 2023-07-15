@@ -234,7 +234,7 @@
           :key="index"
           class="row"
         >
-          <div class="col-xl-8">
+          <div class="col-xl-7">
             <food-select
               v-model="selectValues[index]"
               required
@@ -254,7 +254,7 @@
               @input="onSelectChange(index)"
             />
           </div>
-          <div class="col-xl-2">
+          <div class="col-xl-3">
             <base-form-text-input
               v-model="inputValues[index]"
               required
