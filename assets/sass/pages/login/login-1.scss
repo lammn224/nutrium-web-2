@@ -16,6 +16,7 @@
   // Form modes
   .login-signin,
   .login-signin-student,
+  .login-signin-sysadmin,
   .login-signup,
   .login-forgot {
     display: none;
@@ -31,6 +32,10 @@
     }
 
     .login-signin-student {
+      display: none;
+    }
+
+    .login-signin-sysadmin {
       display: none;
     }
 
@@ -52,6 +57,32 @@
       display: block;
     }
 
+    .login-signin-sysadmin {
+      display: none;
+    }
+
+    .login-forgot {
+      display: none;
+    }
+  }
+
+  &.login-signin-sysadmin-on {
+    .login-signup {
+      display: none;
+    }
+
+    .login-signin {
+      display: none;
+    }
+
+    .login-signin-student {
+      display: none;
+    }
+
+    .login-signin-sysadmin {
+      display: block;
+    }
+
     .login-forgot {
       display: none;
     }
@@ -63,6 +94,14 @@
     }
 
     .login-signin {
+      display: none;
+    }
+
+    .login-signin-student {
+      display: none;
+    }
+
+    .login-signin-sysadmin {
       display: none;
     }
 
@@ -81,6 +120,10 @@
     }
 
     .login-signin-student {
+      display: none;
+    }
+
+    .login-signin-sysadmin {
       display: none;
     }
 

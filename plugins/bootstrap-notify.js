@@ -56,36 +56,14 @@ const notify = (title, message, type = 'danger', icon = null) => {
 }
 
 Vue.prototype.$notify = notify
-Vue.prototype.$notifyTryAgain = () =>
-  notify('Thông báo', 'Có lỗi xảy ra. Vui lòng thử lại sau!', 'danger')
+Vue.prototype.$notifyTryAgain = (title, msg) =>
+  notify(title, `${msg}`, 'danger')
 
-Vue.prototype.$notifyNoPermission = () =>
-  notify('Thông báo', 'Bạn không có quyền thực hiện hành động này!', 'danger')
+Vue.prototype.$notifySuccess = (title, msg) =>
+  notify(title, `${msg}`, 'success')
 
-Vue.prototype.$notifyUpdateInfoSuccess = () =>
-  notify('Thông báo', 'Cập nhật thông tin thành công', 'primary')
+Vue.prototype.$notifyNoPermission = (title, msg) =>
+  notify(title, `${msg}`, 'danger')
 
-Vue.prototype.$notifyDanger = (objectName) =>
-  notify('Thông báo', objectName, 'danger')
-
-Vue.prototype.$notifySuccess = (objectName) =>
-  notify('Thông báo', objectName, 'success')
-
-Vue.prototype.$notifyAddSuccess = (objectName) =>
-  notify('Thông báo', `Thêm ${objectName} thành công!`, 'primary')
-
-Vue.prototype.$notifyUpdateSuccess = (objectName) =>
-  notify('Thông báo', `Cập nhật ${objectName} thành công!`, 'primary')
-
-Vue.prototype.$notifyDeleteSuccess = (objectName) =>
-  notify('Thông báo', `Xóa ${objectName} thành công!`, 'primary')
-
-Vue.prototype.$notifyResetPasswordSuccess = (objectName) => {
-  notify('Thông báo', `Đặt lại mật khẩu ${objectName} thành công!`, 'success')
-}
-
-Vue.prototype.$notifyEnoughMeal = (objectName) => {
-  notify('Thông báo', `Ngày ${objectName} đã đủ bữa ăn`, 'danger')
-}
-
-Vue.prototype.$notifyErrMsg = (msg) => notify('Thông báo', `${msg}`, 'danger')
+Vue.prototype.$notifyUpdateInfoSuccess = (title, msg) =>
+  notify(title, `${msg}`, 'success')

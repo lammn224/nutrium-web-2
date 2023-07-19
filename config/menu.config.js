@@ -1,11 +1,11 @@
-import { ADMIN, PARENTS, STUDENT } from '~/constants/role.constant'
+import { ADMIN, PARENTS, STUDENT, SYSADMIN } from '~/constants/role.constant'
 
 export default [
   {
     title: 'Dashboard',
     icon: 'flaticon2-architecture-and-city',
     route: '/',
-    role: [ADMIN, PARENTS, STUDENT],
+    role: [ADMIN, PARENTS, STUDENT, SYSADMIN],
   },
   {
     title: 'Quản lý người dùng',
@@ -31,6 +31,30 @@ export default [
         role: [ADMIN],
       },
     ],
+  },
+  {
+    title: 'Quản lý trường học',
+    icon: 'flaticon-map',
+    route: '/school',
+    role: [SYSADMIN],
+  },
+  {
+    title: 'Quản lý tài khoản',
+    icon: 'flaticon-users',
+    route: '/school',
+    role: [SYSADMIN],
+  },
+  {
+    title: 'Quản lý món ăn',
+    icon: 'flaticon-pie-chart',
+    route: '/school',
+    role: [SYSADMIN],
+  },
+  {
+    title: 'Quản lý hoạt động luyện tập',
+    icon: 'flaticon-layers',
+    route: '/school',
+    role: [SYSADMIN],
   },
   {
     title: 'Quản lý khối - lớp',
@@ -106,11 +130,19 @@ export const routeMenu = [
     role: [ADMIN],
   },
   {
+    route: '/class/:slug',
+    role: [ADMIN],
+  },
+  {
     route: '/grade',
     role: [ADMIN],
   },
   {
     route: '/student',
+    role: [ADMIN],
+  },
+  {
+    route: '/student/:slug',
     role: [ADMIN],
   },
   {
@@ -122,7 +154,11 @@ export const routeMenu = [
     role: [ADMIN],
   },
   {
-    route: '/',
-    role: [ADMIN, PARENTS, STUDENT],
+    route: '',
+    role: [ADMIN, PARENTS, STUDENT, SYSADMIN],
+  },
+  {
+    route: '/school',
+    role: [SYSADMIN],
   },
 ]

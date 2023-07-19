@@ -77,6 +77,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import { Form } from 'vform'
 import BaseFormModal from '~/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 
 const defaultForm = {
   srcWeek: '',
@@ -85,7 +87,7 @@ const defaultForm = {
 }
 export default {
   name: 'CloneMealModal',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal, BaseFormMixin, NotifyMixin],
   props: {
     momentDay: {
       type: Object,
@@ -176,14 +178,27 @@ export default {
         await this.vForm.post(
           this.$axios.defaults.baseURL + '/meals/clone-meal-last-week'
         )
-        this.$notifyAddSuccess('bữa ăn')
+        this.$notifySuccess(this.notifyTitle, 'Thêm món ăn thành công!')
         this.$refs.modal.hide()
         this.form = cloneDeep(defaultForm)
 
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        // this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
+        if (e.response) {
+          if (e.response.status === 422) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else if (e.response.status === 500) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else {
+            this.$notifyTryAgain(
+              this.notifyTitle,
+              ERROR_CODES.get(e.response.data.code)
+            )
+          }
+        } else {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        }
       }
     },
   },

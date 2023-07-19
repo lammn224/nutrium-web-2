@@ -41,6 +41,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { Form } from 'vform'
 import BaseFormModal from '~/components/base/form/Modal.vue'
 import BaseFormMixin from '~/components/base/form/Mixin.vue'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const defaultForm = {
   name: '',
@@ -48,7 +49,7 @@ const defaultForm = {
 }
 export default {
   name: 'ActivityModal',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal, BaseFormMixin, NotifyMixin],
   data() {
     return {
       form: cloneDeep(defaultForm),
@@ -69,7 +70,7 @@ export default {
         const form = this.processFormToSubmit()
         this.vForm = new Form(form)
         await this.vForm.post(this.$axios.defaults.baseURL + '/activities')
-        this.$notifyAddSuccess('bài tập')
+        this.$notifySuccess(this.notifyTitle, 'Thêm bài tập thành công!')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
@@ -84,7 +85,7 @@ export default {
           this.$axios.defaults.baseURL + '/activities/' + this.form._id
         )
 
-        this.$notifyUpdateSuccess('bài tập')
+        this.$notifySuccess(this.notifyTitle, 'Cập nhật bài tập thành công!')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {

@@ -350,8 +350,11 @@ import {
 } from '~/services/convertTimeStamps.service'
 import { FEMALE, MALE } from '~/constants/gender.constant'
 import { ACTIVITY_TYPE } from '~/constants/activity-type.constant'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 export default {
   name: 'StudentPersonalInformation',
+  mixins: [NotifyMixin],
   data() {
     return {
       default_photo: 'media/students/blank.png',
@@ -486,7 +489,7 @@ export default {
             'spinner-right'
           )
         }, 1000)
-        this.$notifyUpdateInfoSuccess()
+        this.$notifySuccess(this.notifyTitle, 'Cập nhật thông tin thành công')
       } catch (e) {
         this.processError(e)
         submitButton.classList.remove(
@@ -509,11 +512,18 @@ export default {
 
     processError(e) {
       if (e.response) {
-        if (e.status !== 422) {
-          this.$notifyTryAgain()
+        if (e.response.status === 422) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else if (e.response.status === 500) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else {
+          this.$notifyTryAgain(
+            this.notifyTitle,
+            ERROR_CODES.get(e.response.data.code)
+          )
         }
       } else {
-        this.$notifyTryAgain()
+        this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
       }
     },
 

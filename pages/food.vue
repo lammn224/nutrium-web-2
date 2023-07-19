@@ -25,6 +25,7 @@
 
 <script>
 import { ADMIN } from '~/constants/role.constant'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const columns = [
   {
@@ -93,6 +94,7 @@ const columns = [
 ]
 export default {
   name: 'FoodPage',
+  mixins: [NotifyMixin],
   pageTitle: 'Quản lý món ăn',
   data() {
     return {
@@ -128,7 +130,7 @@ export default {
         .then(async (value) => {
           if (value) {
             await this.$axios.delete('/foods/' + food._id)
-            this.$notifyDeleteSuccess('món ăn')
+            this.$notifySuccess(this.notifyTitle, 'Xoá món ăn thành công!')
             this.reloadData()
           }
         })

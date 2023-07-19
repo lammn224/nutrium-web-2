@@ -132,6 +132,25 @@ export default {
           user: { url: '/students/me', method: 'get' },
         },
       },
+
+      localSysAdmin: {
+        scheme: 'local',
+        token: {
+          property: 'access_token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: '',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/auth/login/sysadmin', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/school-users/me', method: 'get' },
+        },
+      },
     },
   },
   //

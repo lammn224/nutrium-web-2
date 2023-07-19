@@ -25,9 +25,11 @@
 
 <script>
 import { ADMIN } from '~/constants/role.constant'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 export default {
   name: 'ActivityPage',
+  mixins: [NotifyMixin],
   pageTitle: 'Quản lý bài tập',
   data() {
     return {
@@ -80,7 +82,7 @@ export default {
         .then(async (value) => {
           if (value) {
             await this.$axios.delete('/activities/' + activity._id)
-            this.$notifyDeleteSuccess('bài tập')
+            this.$notifySuccess(this.notifyTitle, 'Xoá bài tập thành công!')
             this.reloadData()
           }
         })

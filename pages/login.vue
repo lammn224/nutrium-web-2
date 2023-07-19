@@ -1,3 +1,4 @@
+z
 <template>
   <div class="d-flex flex-column flex-root">
     <div
@@ -7,6 +8,7 @@
         'login-signin-on': state === 'signin',
         'login-signup-on': state === 'signup',
         'login-signin-student-on': state === 'signinstudent',
+        'login-signin-sysadmin-on': state === 'signinsysadmin',
         'login-forgot-on': state === 'forgot',
       }"
     >
@@ -53,6 +55,10 @@
           <!--begin::Signin student-->
           <auth-login-student @showForm="showForm"></auth-login-student>
           <!--end::Signin student-->
+
+          <!--begin::Signin sysadmin-->
+          <auth-login-sys-admin @showForm="showForm"></auth-login-sys-admin>
+          <!--end::Signin sysadmin-->
 
           <!--begin::Forgot-->
           <auth-forgot-password @showForm="showForm"></auth-forgot-password>

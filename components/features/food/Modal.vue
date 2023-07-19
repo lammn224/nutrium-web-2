@@ -129,6 +129,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { Form } from 'vform'
 import BaseFormModal from '~/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const defaultForm = {
   name: '',
@@ -143,7 +144,7 @@ const defaultForm = {
 }
 export default {
   name: 'FoodModal',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal, BaseFormMixin, NotifyMixin],
   data() {
     return {
       form: cloneDeep(defaultForm),
@@ -163,7 +164,7 @@ export default {
         const form = this.processFormToSubmit()
         this.vForm = new Form(form)
         await this.vForm.post(this.$axios.defaults.baseURL + '/foods')
-        this.$notifyAddSuccess('món ăn')
+        this.$notifySuccess(this.notifyTitle, 'Thêm món ăn thành công!')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
@@ -178,7 +179,7 @@ export default {
           this.$axios.defaults.baseURL + '/foods/' + this.form._id
         )
 
-        this.$notifyUpdateSuccess('món ăn')
+        this.$notifySuccess(this.notifyTitle, 'Cập nhật món ăn thành công!')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {

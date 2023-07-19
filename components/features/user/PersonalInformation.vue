@@ -41,11 +41,17 @@
               <span class="font-weight-bold mr-2">Số điện thoại:</span>
               <span class="text-muted">{{ user.phoneNumber }}</span>
             </div>
-            <div class="d-flex align-items-center justify-content-between mb-2">
+            <div
+              v-if="user.school"
+              class="d-flex align-items-center justify-content-between mb-2"
+            >
               <span class="font-weight-bold mr-2">Tên trường:</span>
               <span class="text-muted">{{ user.school.name }}</span>
             </div>
-            <div class="d-flex align-items-center justify-content-between">
+            <div
+              v-if="user.school"
+              class="d-flex align-items-center justify-content-between"
+            >
               <span class="font-weight-bold mr-2">Mã trường:</span>
               <span class="text-muted">{{ user.school.code }}</span>
             </div>
@@ -135,7 +141,7 @@
                 />
               </div>
             </div>
-            <div class="form-group row">
+            <div v-if="user.school" class="form-group row">
               <label class="col-xl-3 col-lg-3 col-form-label text-right"
                 >Tên trường</label
               >
@@ -187,10 +193,13 @@
 
 <script>
 import cloneDeep from 'lodash/cloneDeep'
-import { ROLES } from '../../../constants/role.constant'
+import { ROLES } from '~/constants/role.constant'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 
 export default {
   name: 'PersonalInformation',
+  mixins: [NotifyMixin],
   data() {
     return {
       default_photo: 'media/users/blank.png',
@@ -241,7 +250,7 @@ export default {
             'spinner-right'
           )
         }, 1000)
-        this.$notifyUpdateInfoSuccess()
+        this.$notifySuccess(this.notifyTitle, 'Cập nhật thông tin thành công')
       } catch (e) {
         this.processError(e)
         submitButton.classList.remove(
@@ -259,11 +268,18 @@ export default {
 
     processError(e) {
       if (e.response) {
-        if (e.status !== 422) {
-          this.$notifyTryAgain()
+        if (e.response.status === 422) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else if (e.response.status === 500) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else {
+          this.$notifyTryAgain(
+            this.notifyTitle,
+            ERROR_CODES.get(e.response.data.code)
+          )
         }
       } else {
-        this.$notifyTryAgain()
+        this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
       }
     },
 

@@ -311,6 +311,7 @@ import {
   dateToString,
 } from '~/services/convertTimeStamps.service'
 import { ERROR_CODES } from '~/constants/error-code.constants'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const defaultForm = {
   type: MEALS.get(LAUNCH),
@@ -327,7 +328,7 @@ const defaultForm = {
 }
 export default {
   name: 'MealModalThird',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal, BaseFormMixin, NotifyMixin],
   props: {
     momentDay: {
       type: Object,
@@ -532,14 +533,27 @@ export default {
         this.vForm = new Form(form)
 
         await this.vForm.post(this.$axios.defaults.baseURL + '/meals')
-        this.$notifyAddSuccess('bữa ăn')
+        this.$notifySuccess(this.notifyTitle, 'Thêm bữa ăn thành công!')
         this.$refs.modal.hide()
         this.form = cloneDeep(defaultForm)
 
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
+        if (e.response) {
+          if (e.response.status === 422) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else if (e.response.status === 500) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else {
+            this.$notifyTryAgain(
+              this.notifyTitle,
+              ERROR_CODES.get(e.response.data.code)
+            )
+          }
+        } else {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        }
       }
     },
     async updateItem() {
@@ -551,13 +565,26 @@ export default {
         await this.vForm.patch(
           this.$axios.defaults.baseURL + '/meals/' + this.form._id
         )
-        this.$notifyUpdateSuccess('bữa ăn')
+        this.$notifySuccess(this.notifyTitle, 'Cập nhật bữa ăn thành công!')
         this.$refs.modal.hide()
 
         this.$bus.$emit('reloadMealData')
       } catch (e) {
         // this.$refs.modal.hide()
-        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
+        if (e.response) {
+          if (e.response.status === 422) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else if (e.response.status === 500) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else {
+            this.$notifyTryAgain(
+              this.notifyTitle,
+              ERROR_CODES.get(e.response.data.code)
+            )
+          }
+        } else {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        }
       }
     },
     onSelectChange(index) {

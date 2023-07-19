@@ -160,9 +160,11 @@
 
 <script>
 import { ERROR_CODES } from '~/constants/error-code.constants'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 export default {
   name: 'AuthRegister',
+  mixins: [NotifyMixin],
   data() {
     return {
       form: {
@@ -191,7 +193,10 @@ export default {
         await this.$router.push('/')
       } catch (e) {
         this.error = e
-        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
+        this.$notifyTryAgain(
+          this.notifyTitle,
+          ERROR_CODES.get(e.response.data.code)
+        )
       } finally {
         this.isLoading = false
       }

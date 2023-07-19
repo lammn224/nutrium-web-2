@@ -88,6 +88,7 @@ import BaseFormModal from '~/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin'
 import { PARENTS, STUDENT } from '~/constants/role.constant'
 import { convertStringToTimeStamps } from '~/services/convertTimeStamps.service'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const defaultForm = {
   activity: null,
@@ -97,7 +98,7 @@ const defaultForm = {
 }
 export default {
   name: 'ScheduleExerciseModal',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal, BaseFormMixin, NotifyMixin],
   data() {
     return {
       form: cloneDeep(defaultForm),
@@ -217,7 +218,7 @@ export default {
         await this.vForm.post(
           this.$axios.defaults.baseURL + '/schedule-exercise'
         )
-        this.$notifyAddSuccess('hoạt động')
+        this.$notifySuccess(this.notifyTitle, 'Thêm hoạt động thành công!')
         this.$refs.modal.hide()
         this.form = cloneDeep(defaultForm)
 
@@ -236,7 +237,7 @@ export default {
           this.$axios.defaults.baseURL + '/schedule-exercise/' + this.form._id
         )
 
-        this.$notifyUpdateSuccess('hoạt động')
+        this.$notifySuccess(this.notifyTitle, 'Cập nhật hoạt động thành công!')
         this.$refs.modal.hide()
 
         this.$bus.$emit('reloadScheduleExerciseData')

@@ -13,15 +13,16 @@
             Chào mừng tới Nutrium
           </h3>
           <span class="text-muted font-weight-bold font-size-h4">
-            Chưa có tài khoản?
-            <a
-              id="kt_login_signup"
-              class="text-primary font-weight-bolder"
-              style="cursor: pointer"
-              @click="showForm('signup')"
-            >
-              Đăng ký
-            </a>
+            Học sinh
+            <!--            Chưa có tài khoản?-->
+            <!--            <a-->
+            <!--              id="kt_login_signup"-->
+            <!--              class="text-primary font-weight-bolder"-->
+            <!--              style="cursor: pointer"-->
+            <!--              @click="showForm('signup')"-->
+            <!--            >-->
+            <!--              Đăng ký-->
+            <!--            </a>-->
 
             <div class="pt-13 pt-5">
               <a

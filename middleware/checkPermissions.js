@@ -3,12 +3,13 @@ export default function ({ $auth, route, redirect }) {
   if (
     route.fullPath === '/error' ||
     route.fullPath === '/login' ||
-    route.fullPath === '/test'
+    route.fullPath === '/test' ||
+    route.fullPath === '/profile'
   ) {
     return
   }
   const isExistRoute = routeMenu.some((item) => {
-    return item.route === route.fullPath
+    return item.route === route.matched[0].path
   })
 
   if (!isExistRoute) {
@@ -16,7 +17,10 @@ export default function ({ $auth, route, redirect }) {
   }
 
   const hasPermission = routeMenu.some((item) => {
-    return item.role.includes($auth.user.role) && item.route === route.fullPath
+    return (
+      item.role.includes($auth.user.role) &&
+      item.route === route.matched[0].path
+    )
   })
 
   if (!hasPermission) {

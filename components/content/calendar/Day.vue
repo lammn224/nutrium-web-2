@@ -121,9 +121,6 @@ export default {
       }
 
       this.$refs.modal.show(defaultForm)
-      // } else {
-      //   this.$notifyEnoughMeal(dateToString(this.day.date._d))
-      // }
     },
 
     showDetailMeal(meal) {

@@ -14,17 +14,26 @@
         >
           Oops...
         </h1>
-        <p
-          v-if="error.statusCode === 404"
-          class="display-4 font-weight-bold text-primary"
-        >
-          Không tìm thấy trang bạn yêu cầu!
-        </p>
-        <p v-else class="display-4 font-weight-bold text-primary">
-          Có vẻ như đã xảy ra sự cố.
-          <br />Chúng tôi đang xử lý!
-          <br />
-        </p>
+        <div v-if="error.statusCode === 404">
+          <p class="display-4 font-weight-bold text-primary">
+            Không tìm thấy trang bạn yêu cầu!
+          </p>
+          <div>
+            <a class="btn btn-outline btn-primary" href="/">
+              <i class="flaticon2-back"></i> Trở lại
+            </a>
+          </div>
+        </div>
+        <div v-else>
+          <p class="display-4 font-weight-bold text-primary">
+            Có vẻ như đã xảy ra sự cố.
+            <br />Chúng tôi đang xử lý!
+            <br />
+          </p>
+          <a class="btn btn-outline btn-primary" href="/">
+            <i class="flaticon2-back"></i> Trở lại
+          </a>
+        </div>
       </div>
       <!-- end:: Content -->
     </div>

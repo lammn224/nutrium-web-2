@@ -63,7 +63,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import BaseFormModal from '@/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin.vue'
 import { ERROR_CODES } from '~/constants/error-code.constants'
-import { convertTimeStampsToDatePickerString } from '~/services/convertTimeStamps.service'
+// import { convertTimeStampsToDatePickerString } from '~/services/convertTimeStamps.service'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const defaultForm = {
   phoneNumber: '',
@@ -74,7 +75,7 @@ const defaultForm = {
 
 export default {
   name: 'UserModal',
-  mixins: [BaseFormModal, BaseFormMixin],
+  mixins: [BaseFormModal, BaseFormMixin, NotifyMixin],
   data() {
     return {
       form: cloneDeep(defaultForm),
@@ -110,39 +111,52 @@ export default {
 
     async addItem() {
       try {
-        this.form.dateOfBirth = new Date(this.form.dateOfBirth).getTime() / 1000
+        // this.form.dateOfBirth = new Date(this.form.dateOfBirth).getTime() / 1000
 
         this.vForm = new Form(this.form)
         await this.vForm.post(
           this.$axios.defaults.baseURL + '/school-users/admin'
         )
 
-        this.$notifyAddSuccess('người dùng')
+        this.$notifySuccess(this.notifyTitle, 'Thêm người dùng thành công!')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
-        this.form.dateOfBirth = convertTimeStampsToDatePickerString(
-          this.form.dateOfBirth
-        )
-        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
+        // this.form.dateOfBirth = convertTimeStampsToDatePickerString(
+        //   this.form.dateOfBirth
+        // )
+        if (e.response) {
+          if (e.response.status === 422) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else if (e.response.status === 500) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else {
+            this.$notifyTryAgain(
+              this.notifyTitle,
+              ERROR_CODES.get(e.response.data.code)
+            )
+          }
+        } else {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        }
         // this.processError(e)
       }
     },
-    async updateItem() {
-      try {
-        const form = this.processFormToSubmit()
-        this.vForm = new Form(form)
-        await this.vForm.patch(
-          this.$axios.defaults.baseURL + '/users/' + this.form._id
-        )
-
-        this.$notifyUpdateSuccess('người dùng')
-        this.$refs.modal.hide()
-        this.onActionSuccess()
-      } catch (e) {
-        this.processError(e)
-      }
-    },
+    // async updateItem() {
+    //   try {
+    //     const form = this.processFormToSubmit()
+    //     this.vForm = new Form(form)
+    //     await this.vForm.patch(
+    //       this.$axios.defaults.baseURL + '/users/' + this.form._id
+    //     )
+    //
+    //     this.$notifyUpdateSuccess('người dùng')
+    //     this.$refs.modal.hide()
+    //     this.onActionSuccess()
+    //   } catch (e) {
+    //     this.processError(e)
+    //   }
+    // },
   },
 }
 </script>

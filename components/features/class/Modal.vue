@@ -75,10 +75,11 @@
 <script>
 import BaseFormModal from '~/components/base/form/Modal'
 import { ERROR_CODES } from '~/constants/error-code.constants'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 export default {
   name: 'ClassModal',
-  mixins: [BaseFormModal],
+  mixins: [BaseFormModal, NotifyMixin],
   data() {
     return {
       fileExcel: null,
@@ -155,14 +156,27 @@ export default {
         addBtn.disabled = false
         cancelBtn.disabled = false
 
-        this.$notifyAddSuccess('lớp học')
+        this.$notifySuccess(this.notifyTitle, 'Thêm lớp học thành công!')
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
         addBtn.classList.remove('spinner', 'spinner-light', 'spinner-right')
         addBtn.disabled = false
         cancelBtn.disabled = false
-        this.$notifyErrMsg(ERROR_CODES.get(e.response.data.code))
+        if (e.response) {
+          if (e.response.status === 422) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else if (e.response.status === 500) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else {
+            this.$notifyTryAgain(
+              this.notifyTitle,
+              ERROR_CODES.get(e.response.data.code)
+            )
+          }
+        } else {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        }
       }
     },
   },

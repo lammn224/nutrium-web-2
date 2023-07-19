@@ -41,6 +41,8 @@
 import { Form } from 'vform'
 import cloneDeep from 'lodash/cloneDeep'
 import BaseFormModal from '@/components/base/form/Modal'
+import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 
 const defaultForm = {
   newPassword: '',
@@ -49,7 +51,7 @@ const defaultForm = {
 
 export default {
   name: 'StudentResetPasswordModal',
-  mixins: [BaseFormModal],
+  mixins: [BaseFormModal, NotifyMixin],
   data() {
     return {
       form: cloneDeep(defaultForm),
@@ -92,7 +94,10 @@ export default {
             '/reset-password'
         )
 
-        this.$notifyResetPasswordSuccess('người dùng')
+        this.$notifySuccess(
+          this.notifyTitle,
+          'Đặt lại mật khẩu người dùng thành công!'
+        )
         this.$refs.resetPasswordModal.hide()
         this.onActionSuccess()
       } catch (e) {
@@ -101,11 +106,18 @@ export default {
     },
     processError(e) {
       if (e.response) {
-        if (e.status !== 422) {
-          this.$notifyTryAgain()
+        if (e.response.status === 422) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else if (e.response.status === 500) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else {
+          this.$notifyTryAgain(
+            this.notifyTitle,
+            ERROR_CODES.get(e.response.data.code)
+          )
         }
       } else {
-        this.$notifyTryAgain()
+        this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
       }
     },
   },

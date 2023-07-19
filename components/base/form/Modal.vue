@@ -1,6 +1,7 @@
 <script>
 import { Form } from 'vform'
 import cloneDeep from 'lodash/cloneDeep'
+import { ERROR_CODES } from '~/constants/error-code.constants'
 
 export default {
   name: 'BaseFormModal',
@@ -47,11 +48,18 @@ export default {
     },
     processError(e) {
       if (e.response) {
-        if (e.status !== 422) {
-          this.$notifyTryAgain()
+        if (e.response.status === 422) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else if (e.response.status === 500) {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        } else {
+          this.$notifyTryAgain(
+            this.notifyTitle,
+            ERROR_CODES.get(e.response.data.code)
+          )
         }
       } else {
-        this.$notifyTryAgain()
+        this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
       }
     },
   },
