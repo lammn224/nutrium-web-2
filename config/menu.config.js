@@ -61,13 +61,13 @@ export default [
   {
     title: 'Quản lý món ăn',
     icon: 'flaticon-pie-chart',
-    route: '/school',
+    route: '/food',
     role: [SYSADMIN],
   },
   {
     title: 'Quản lý hoạt động luyện tập',
     icon: 'flaticon-layers',
-    route: '/school',
+    route: '/activity',
     role: [SYSADMIN],
   },
   {
@@ -181,6 +181,14 @@ export const routeMenu = [
   },
   {
     route: '/account/school-user',
+    role: [SYSADMIN],
+  },
+  {
+    route: '/food',
+    role: [SYSADMIN],
+  },
+  {
+    route: '/activity',
     role: [SYSADMIN],
   },
 ]

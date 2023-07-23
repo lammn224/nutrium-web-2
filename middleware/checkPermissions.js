@@ -9,7 +9,7 @@ export default function ({ $auth, route, redirect }) {
     return
   }
   const isExistRoute = routeMenu.some((item) => {
-    return item.route === route.matched[0].path
+    return item.route === route.matched[0]?.path
   })
 
   if (!isExistRoute) {

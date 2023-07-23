@@ -30,6 +30,7 @@
             ref="table"
             hover
             bordered
+            show-empty
             head-variant="light"
             :items="schools"
             :fields="fields"

@@ -21,9 +21,13 @@ export const GRADE_NOT_EXISTED = 'GRADE_NOT_EXISTED'
 // ACTIVITY
 export const ACTIVITY_EXISTED = 'ACTIVITY_EXISTED'
 export const ACTIVITY_NOT_EXISTED = 'ACTIVITY_NOT_EXISTED'
+export const ACTIVITY_CANNOT_UPDATED = 'ACTIVITY_CANNOT_UPDATED'
+export const ACTIVITY_CANNOT_DELETED = 'ACTIVITY_CANNOT_DELETED'
 
 // FOOD
 export const FOOD_NOT_EXIST = 'FOOD_NOT_EXIST'
+export const FOOD_CANNOT_UPDATED = 'FOOD_CANNOT_UPDATED'
+export const FOOD_CANNOT_DELETED = 'FOOD_CANNOT_DELETED'
 
 // FILE
 export const UPLOAD_FAILED = 'UPLOAD_FAILED'
@@ -66,6 +70,8 @@ export const ERROR_CODES = new Map([
 
   // FOOD
   [FOOD_NOT_EXIST, 'Món ăn không tồn tại'],
+  [FOOD_CANNOT_UPDATED, 'Không thể cập nhật món ăn này'],
+  [FOOD_CANNOT_DELETED, 'Không thể xoá món ăn này'],
 
   // FILE
   [
@@ -89,6 +95,8 @@ export const ERROR_CODES = new Map([
   // ACTIVITY
   [ACTIVITY_EXISTED, 'Hoạt động luyện tập đã tồn tại'],
   [ACTIVITY_NOT_EXISTED, 'Hoạt động luyện tập không tồn tại'],
+  [ACTIVITY_CANNOT_UPDATED, 'Không thể cập nhật hoạt động này'],
+  [ACTIVITY_CANNOT_DELETED, 'Không thể xoá hoạt động này'],
 
   // SCHEDULE EXERCISE
   [SCHEDULE_EXISTED, 'Lịch hoạt động luyện tập đã tồn tại'],

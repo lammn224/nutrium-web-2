@@ -46,6 +46,7 @@ import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 const defaultForm = {
   name: '',
   metIdx: '',
+  school: null,
 }
 export default {
   name: 'ActivityModal',
@@ -62,7 +63,9 @@ export default {
     },
     processFormToSubmit() {
       const form = cloneDeep(this.form)
-      form.school = this.$auth.user.school._id
+      if (this.$auth.user.school) {
+        form.school = this.$auth.user.school._id
+      }
       return form
     },
     async addItem() {
