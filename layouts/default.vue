@@ -27,7 +27,14 @@
             >
               <div class="d-lg-flex flex-row-fluid">
                 <!-- begin:: Aside Left -->
-                <MainAside v-if="asideEnabled"></MainAside>
+                <MainAside
+                  v-if="
+                    (asideEnabled && $auth.user.role === 'sysadmin') ||
+                    (asideEnabled &&
+                      $auth.user.school?.status !== 'unconfirmed' &&
+                      $auth.user.role !== 'sysadmin')
+                  "
+                ></MainAside>
                 <!-- end:: Aside Left -->
                 <div class="content-wrapper flex-row-fluid">
                   <transition name="fade-in-up">

@@ -18,11 +18,9 @@
           <p class="display-4 font-weight-bold text-primary">
             Không tìm thấy trang bạn yêu cầu!
           </p>
-          <div>
-            <a class="btn btn-outline btn-primary" href="/">
-              <i class="flaticon2-back"></i> Trở lại
-            </a>
-          </div>
+          <a class="btn btn-outline btn-primary" href="/">
+            <i class="flaticon2-back"></i> Trở lại
+          </a>
         </div>
         <div v-else>
           <p class="display-4 font-weight-bold text-primary">

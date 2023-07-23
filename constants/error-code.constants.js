@@ -3,11 +3,14 @@ export const DATA_REFERENCE = 'DATA_REFERENCE'
 
 // USER
 export const BLACKLIST_TOKEN = 'BLACKLIST_TOKEN'
+export const WRONG_USER_OR_PASSWORD = 'WRONG_USER_OR_PASSWORD'
 export const USER_NOT_EXIST = 'USER_NOT_EXIST'
 export const PHONE_NUMBER_ALREADY_EXIST = 'PHONE_NUMBER_ALREADY_EXIST'
 export const PARENTS_ACCOUNT_NOT_FOUND = 'PARENTS_ACCOUNT_NOT_FOUND'
 export const PARENTS_ACCOUNT_EXISTED = 'PARENTS_ACCOUNT_EXISTED'
 export const STUDENT_ID_ALREADY_EXISTED = 'STUDENT_ID_ALREADY_EXISTED'
+export const CONTACT_SYSADMIN_TO_ACTIVE = 'CONTACT_SYSADMIN_TO_ACTIVE'
+export const PLEASE_CONFIRM = 'PLEASE_CONFIRM'
 
 // SCHOOL
 export const SCHOOL_NOT_EXIST = 'SCHOOL_NOT_EXIST'
@@ -41,6 +44,7 @@ export const SCHEDULE_NOT_EXISTED = 'SCHEDULE_NOT_EXISTED'
 export const ERROR_CODES = new Map([
   [DATA_REFERENCE, 'Data reference'],
   [BLACKLIST_TOKEN, 'Token is in blacklist (logout, deleted, ...)'],
+  [WRONG_USER_OR_PASSWORD, 'Thông tin đăng nhập chưa chính xác!'],
 
   // USER
   [USER_NOT_EXIST, 'Người dùng không tồn tại'],
@@ -48,6 +52,11 @@ export const ERROR_CODES = new Map([
   [PARENTS_ACCOUNT_NOT_FOUND, 'Không tìm thấy tài khoản phụ huynh'],
   [PARENTS_ACCOUNT_EXISTED, 'Tài khoản phụ huynh đã tồn tại số điện thoại'],
   [STUDENT_ID_ALREADY_EXISTED, 'Mã học sinh đã tồn tại'],
+  [
+    CONTACT_SYSADMIN_TO_ACTIVE,
+    'Liên hệ với quản trị viên để được phê duyệt vào hệ thống',
+  ],
+  [PLEASE_CONFIRM, 'Hãy xác nhận vào hệ thống bằng active code được gửi'],
 
   // SCHOOL
   [SCHOOL_NOT_EXIST, 'Không tìm thấy trường học'],

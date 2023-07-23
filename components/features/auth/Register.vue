@@ -162,6 +162,14 @@
 import { ERROR_CODES } from '~/constants/error-code.constants'
 import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
+const defaultForm = {
+  phoneNumber: '',
+  fullName: '',
+  password: '',
+  cpassword: '',
+  code: '',
+  name: '',
+}
 export default {
   name: 'AuthRegister',
   mixins: [NotifyMixin],
@@ -185,18 +193,33 @@ export default {
       try {
         this.isLoading = true
 
+        // eslint-disable-next-line no-unused-vars
         const { data } = await this.$axios.post('/auth/register', this.form)
 
-        this.$auth.strategy.token.set(data.access_token)
-        this.$auth.setUser(data.owner)
-        this.$auth.loggedIn = true
-        await this.$router.push('/')
+        // this.$auth.strategy.token.set(data.access_token)
+        // this.$auth.setUser(data.owner)
+        // this.$auth.loggedIn = true
+        // await this.$router.push('/')
+        // this.$notifySuccess(this.notifyTitle, 'Tạo mới tài khoản thành công! Liên hệ admin để được phê duyệt!')
+        this.$notifySuccess(this.notifyTitle, 'Tạo mới tài khoản thành công!')
+        this.form = defaultForm
+        this.showForm('signin')
       } catch (e) {
         this.error = e
-        this.$notifyTryAgain(
-          this.notifyTitle,
-          ERROR_CODES.get(e.response.data.code)
-        )
+        if (e.response) {
+          if (e.response.status === 422) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else if (e.response.status === 500) {
+            this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+          } else {
+            this.$notifyTryAgain(
+              this.notifyTitle,
+              ERROR_CODES.get(e.response.data.code)
+            )
+          }
+        } else {
+          this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
+        }
       } finally {
         this.isLoading = false
       }

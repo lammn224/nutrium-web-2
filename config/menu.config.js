@@ -41,8 +41,22 @@ export default [
   {
     title: 'Quản lý tài khoản',
     icon: 'flaticon-users',
-    route: '/school',
-    role: [SYSADMIN],
+    // route: '/account',
+    // role: [SYSADMIN],
+    subMenus: [
+      {
+        title: 'Tài khoản Học sinh',
+        icon: 'flaticon2-user',
+        route: '/account/student',
+        role: [SYSADMIN],
+      },
+      {
+        title: 'Tài khoản admin & phụ huynh',
+        icon: 'flaticon2-user',
+        route: '/account/school-user',
+        role: [SYSADMIN],
+      },
+    ],
   },
   {
     title: 'Quản lý món ăn',
@@ -159,6 +173,14 @@ export const routeMenu = [
   },
   {
     route: '/school',
+    role: [SYSADMIN],
+  },
+  {
+    route: '/account/student',
+    role: [SYSADMIN],
+  },
+  {
+    route: '/account/school-user',
     role: [SYSADMIN],
   },
 ]

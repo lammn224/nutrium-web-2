@@ -11,6 +11,14 @@ export default () => {
       /* webpackChunkName: 'element-ui-date-picker' */ 'element-ui/lib/date-picker'
     )
   )
+
+  Vue.component('ElSelect', () =>
+    import(/* webpackChunkName: 'element-ui-select' */ 'element-ui/lib/select')
+  )
+
+  Vue.component('ElOption', () =>
+    import(/* webpackChunkName: 'element-ui-option' */ 'element-ui/lib/option')
+  )
 }
 
 // import Vue from 'vue'
