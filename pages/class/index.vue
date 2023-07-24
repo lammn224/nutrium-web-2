@@ -6,17 +6,65 @@
       </b-button>
     </template>
     <template #body>
-      <div ref="datatable">
-        <ve-table
-          :style="{ 'word-break': 'break-all' }"
-          :columns="tableColumns"
-          :sort-option="sortOption"
-          :table-data="tableData"
-          :row-style-option="rowStyleOption"
-          :max-height="650"
-          border-y
-        />
-      </div>
+      <b-overlay
+        :show="isLoading"
+        spinner-variant="primary"
+        spinner-type="grow"
+        spinner-small
+        rounded="sm"
+      >
+        <b-input-group class="float-right pb-2" style="width: 300px">
+          <template #prepend>
+            <b-input-group-text>
+              <i class="flaticon-search"></i>
+            </b-input-group-text>
+          </template>
+          <b-form-input
+            v-model="keyword"
+            :placeholder="'Tìm kiếm'"
+            debounce="500"
+          ></b-form-input>
+        </b-input-group>
+        <b-table
+          ref="table"
+          hover
+          bordered
+          show-empty
+          head-variant="light"
+          :items="classes"
+          :fields="fields"
+          :current-page="curPage"
+          :per-page="0"
+          :busy="isLoading"
+          thead-class="font-weight-bold font-size-lg text-center"
+        >
+          <template #empty>
+            <h4 class="text-center">Không có dữ liệu</h4>
+          </template>
+          <template #cell(idx)="row">
+            {{ ++row.index + limit * (curPage - 1) }}
+          </template>
+          <template #cell(member)="row">
+            {{ row.item.members.length }}
+          </template>
+          <template #cell(action)="row">
+            <b-button
+              size="sm"
+              variant="primary"
+              class="mr-1"
+              @click="getDetailClass(row.item._id)"
+              >Chi tiết</b-button
+            >
+          </template>
+        </b-table>
+        <b-pagination
+          v-model="curPage"
+          :total-rows="totalRows"
+          :per-page="limit"
+          class="justify-content-end"
+          pills
+        ></b-pagination>
+      </b-overlay>
 
       <class-modal ref="modal" :on-action-success="reloadData" />
     </template>
@@ -24,36 +72,21 @@
 </template>
 
 <script>
-import 'vue-easytable/libs/theme-default/index.css'
-import { VeTable, VeLoading } from 'vue-easytable'
-
 export default {
   name: 'ClassPage',
-  components: {
-    VeTable,
-  },
-  pageTitle: 'Quản lý món ăn',
+  pageTitle: 'Quản lý lớp học',
   data() {
     return {
-      remoteUrl: '/classes',
-      loadingInstance: null,
-      loading: true,
-      firstLoading: false,
-      rowStyleOption: {
-        stripe: true,
-        hoverHighlight: true,
-      },
-      tableData: [],
-      totalRecord: 0,
-      currentPage: 1,
+      classes: [],
+      curPage: 1,
+      keyword: '',
+      totalRows: 0,
       limit: 10,
-      sortObj: null,
-      sortOption: {
-        sortAlways: true,
-        sortChange: (params) => {
-          this.sortChange(params)
-        },
-      },
+      params: '',
+      isLoading: false,
+      delay: null,
+      sortBy: 'name',
+      sortType: 'asc',
     }
   },
   head() {
@@ -62,156 +95,92 @@ export default {
     }
   },
   computed: {
-    tableColumns() {
+    fields() {
       return [
         {
-          field: '',
-          key: 'stt',
-          title: 'STT',
-          width: 50,
-          align: 'center',
-          fixed: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return ++rowIndex
-          },
+          key: 'idx',
+          label: 'STT',
+          thStyle: { width: '5%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
         },
         {
-          field: 'name',
-          key: 'a',
-          title: 'Tên lớp',
-          width: 200,
-          align: 'left',
-          sortBy: 'asc',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return <span>{row.name}</span>
-          },
+          key: 'name',
+          label: 'Tên lớp',
+          sortable: true,
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
         {
-          field: 'member',
-          key: 'b',
-          title: 'Sĩ số',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return <span>{row.members.length}</span>
-          },
+          key: 'member',
+          label: 'Sĩ số',
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
         {
-          field: '',
           key: 'action',
-          title: 'Hành động',
-          width: 50,
-          align: 'center',
-          fixed: 'right',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span>
-                <button
-                  class="btn btn-sm btn-primary"
-                  on-click={() => this.handleClick(row._id)}
-                >
-                  Chi tiết
-                </button>
-              </span>
-            )
-          },
+          label: 'Hành động',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
       ]
     },
-    queryUrl() {
-      let url = this.remoteUrl
-
-      const params = new URLSearchParams({
-        limit: this.limit,
-        offset: (this.currentPage - 1) * this.limit,
-      })
-
-      if (this.sortObj) {
-        params.append('sortBy', this.sortObj.sortBy)
-        params.append('sortType', this.sortObj.sortType)
-      }
-
-      const paramsStr = params.toString()
-
-      url += '?' + paramsStr
-
-      return url
-    },
   },
+
   watch: {
-    loading(val) {
-      if (val) {
-        this.loadingInstance.show()
-      } else {
-        this.loadingInstance.close()
-      }
+    curPage: {
+      async handler(value) {
+        this.params = `offset=${(value - 1) * this.limit}&limit=${
+          this.limit
+        }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${
+          this.sortType
+        }`
+        await this.loadClassesData()
+      },
     },
-    queryUrl() {
-      this.loadData()
+    keyword: {
+      async handler(value) {
+        this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
+          this.limit
+        }&keyword=${value}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+        await this.loadClassesData()
+      },
     },
   },
-  created() {
-    this.sortObj = this.getFirstSortObj()
-  },
-  mounted() {
-    this.loadingInstance = VeLoading({
-      target: this.$refs.datatable,
-      name: null,
-    })
 
-    this.loadData()
+  created() {
+    this.loadClassesData()
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
   },
+
   methods: {
-    async loadData() {
-      this.loadingInstance.show()
+    async loadClassesData() {
+      this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
+        this.limit
+      }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
 
       try {
-        const { data } = await this.$axios.get(this.queryUrl)
-
-        this.tableData = data.results
-        this.totalRecord = data.total
+        const { data } = await this.$axios.get(`/classes?${this.params}`)
+        this.isLoading = true
+        await this.delay(500)
+        this.classes = data.results
+        this.totalRows = data.total
       } catch (e) {
-        this.tableData = []
-        this.totalRecord = 0
       } finally {
-        this.loadingInstance.close()
-        this.firstLoading = true
+        this.isLoading = false
       }
     },
-    sortChange(params) {
-      let prop, type
-      for (const key in params) {
-        if (params[key]) {
-          type = params[key]
-          prop = key
-          break
-        }
-      }
-      this.sortObj = {
-        sortBy: prop,
-        sortType: type,
-      }
-    },
-    getFirstSortObj() {
-      const sortCol = this.tableColumns.find((item) => item.sortBy)
 
-      if (sortCol) {
-        return {
-          sortBy: sortCol.field,
-          sortType: sortCol.sortBy,
-        }
-      }
-
-      return null
-    },
     show() {
       this.$refs.modal.show()
     },
-    reloadData() {
-      this.loadData()
+
+    async reloadData() {
+      await this.loadClassesData()
     },
-    handleClick(rowVal) {
-      this.$router.push({ path: `/class/${rowVal}` })
+
+    getDetailClass(classId) {
+      this.$router.push({ path: `/class/${classId}` })
     },
   },
 }

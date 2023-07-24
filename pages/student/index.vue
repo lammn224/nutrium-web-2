@@ -2,7 +2,7 @@
   <content-card title="Danh sách tài khoản học sinh">
     <template #toolbar>
       <b-button
-        v-if="$auth.user.role === ADMIN()"
+        v-if="$auth.user.role === ADMIN"
         variant="primary"
         @click="show()"
       >
@@ -10,12 +10,76 @@
       </b-button>
     </template>
     <template #body>
-      <base-table
-        ref="table"
-        :columns="columns"
-        remote-url="/students"
-        hide-action-column
-      />
+      <b-overlay
+        :show="isLoading"
+        spinner-variant="primary"
+        spinner-type="grow"
+        spinner-small
+        rounded="sm"
+      >
+        <b-input-group class="float-right pb-2" style="width: 300px">
+          <template #prepend>
+            <b-input-group-text>
+              <i class="flaticon-search"></i>
+            </b-input-group-text>
+          </template>
+          <b-form-input
+            v-model="keyword"
+            :placeholder="'Tìm kiếm'"
+            debounce="500"
+          ></b-form-input>
+        </b-input-group>
+        <b-table
+          ref="table"
+          hover
+          bordered
+          show-empty
+          head-variant="light"
+          :items="students"
+          :fields="fields"
+          :current-page="curPage"
+          :per-page="0"
+          :busy="isLoading"
+          thead-class="font-weight-bold font-size-lg text-center"
+        >
+          <template #empty>
+            <h4 class="text-center">Không có dữ liệu</h4>
+          </template>
+          <template #cell(idx)="row">
+            {{ ++row.index + limit * (curPage - 1) }}
+          </template>
+          <template #cell(dateOfBirth)="row">
+            {{ convertTimeStampsToString(row.item.dateOfBirth) }}
+          </template>
+          <template #cell(class)="row">
+            {{ row.item.class.name }}
+          </template>
+          <template #cell(action)="row">
+            <b-button
+              size="sm"
+              variant="info"
+              class="mr-1"
+              @click="resetPassword(row.item)"
+              >Đổi mật khẩu</b-button
+            >
+            <b-button
+              size="sm"
+              variant="primary"
+              class="mr-1"
+              @click="getDetailsStudent(row.item)"
+            >
+              Chi tiết
+            </b-button>
+          </template>
+        </b-table>
+        <b-pagination
+          v-model="curPage"
+          :total-rows="totalRows"
+          :per-page="limit"
+          class="justify-content-end"
+          pills
+        ></b-pagination>
+      </b-overlay>
 
       <student-modal ref="modal" :on-action-success="reloadData" />
 
@@ -28,81 +92,25 @@
 </template>
 
 <script>
-import { ADMIN } from '~/constants/role.constant'
+import { ADMIN, SYSADMIN } from '~/constants/role.constant'
 import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
+import { STATUS } from '~/constants/status.constant'
 
 export default {
   name: 'StudentPage',
   pageTitle: 'Quản lý tài khoản học sinh',
   data() {
     return {
-      columns: [
-        {
-          field: 'studentId',
-          key: 'mhs',
-          title: 'Mã học sinh',
-          width: 100,
-          align: 'left',
-          sortBy: 'asc',
-        },
-        {
-          field: 'fullName',
-          key: 'a',
-          title: 'Họ và tên',
-          width: 200,
-          align: 'left',
-          sortBy: 'asc',
-        },
-        {
-          field: 'dateOfBirth',
-          key: 'b',
-          title: 'Ngày sinh',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return convertTimeStampsToString(row.dateOfBirth)
-          },
-        },
-        {
-          field: 'class',
-          key: 'c',
-          title: 'Lớp',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column }, h) => {
-            return <span>{row.class.name}</span>
-          },
-        },
-        {
-          field: '',
-          key: 'action',
-          title: 'Hành động',
-          width: 250,
-          align: 'center',
-          fixed: 'right',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span>
-                <button
-                  class="btn btn-sm btn-info"
-                  on-click={() => this.resetPassword(row)}
-                >
-                  Đổi mật khẩu
-                </button>
-                &nbsp;
-                <button
-                  class="btn btn-sm btn-primary"
-                  on-click={() => {
-                    this.getDetailsStudent(row._id)
-                  }}
-                >
-                  Chi tiết
-                </button>
-              </span>
-            )
-          },
-        },
-      ],
+      students: [],
+      curPage: 1,
+      keyword: '',
+      totalRows: 0,
+      limit: 10,
+      params: '',
+      isLoading: false,
+      delay: null,
+      sortBy: 'fullName',
+      sortType: 'asc',
     }
   },
   head() {
@@ -111,25 +119,121 @@ export default {
     }
   },
 
-  methods: {
+  computed: {
+    STATUS() {
+      return STATUS
+    },
+    SYSADMIN() {
+      return SYSADMIN
+    },
     ADMIN() {
       return ADMIN
     },
+    fields() {
+      return [
+        {
+          key: 'idx',
+          label: 'STT',
+          thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
+        },
+        {
+          key: 'studentId',
+          label: 'Mã học sinh',
+          sortable: true,
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
+        },
+        {
+          key: 'fullName',
+          label: 'Họ và tên',
+          sortable: true,
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
+        },
+        {
+          key: 'dateOfBirth',
+          label: 'Ngày sinh',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
+        },
+        {
+          key: 'class',
+          label: 'Lớp',
+          thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
+        },
+        {
+          key: 'action',
+          label: 'Hành động',
+          thStyle: { width: '25%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
+        },
+      ]
+    },
+  },
+
+  watch: {
+    curPage: {
+      async handler(value) {
+        this.params = `offset=${(value - 1) * this.limit}&limit=${
+          this.limit
+        }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${
+          this.sortType
+        }`
+        await this.loadStudents()
+      },
+    },
+    keyword: {
+      async handler(value) {
+        this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
+          this.limit
+        }&keyword=${value}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+        await this.loadStudents()
+      },
+    },
+  },
+
+  created() {
+    this.loadStudents()
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
+  },
+
+  methods: {
+    convertTimeStampsToString,
 
     show() {
       this.$refs.modal.show()
     },
 
-    reloadData() {
-      this.$refs.table.loadData()
+    async reloadData() {
+      // this.$refs.table.loadData()
+      await this.loadStudents()
+    },
+
+    async loadStudents() {
+      this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
+        this.limit
+      }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+      try {
+        const { data } = await this.$axios.get(`/students?${this.params}`)
+        this.isLoading = true
+        await this.delay(500)
+        this.students = data.results
+        this.totalRows = data.total
+      } catch (e) {
+      } finally {
+        this.isLoading = false
+      }
     },
 
     resetPassword(user) {
       this.$refs.resetPasswordModal.show(user)
     },
 
-    getDetailsStudent(rowVal) {
-      this.$router.push({ path: `/student/${rowVal}` })
+    getDetailsStudent(row) {
+      this.$router.push({ path: `/student/${row._id}` })
     },
   },
 }

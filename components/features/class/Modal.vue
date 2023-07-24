@@ -21,8 +21,8 @@
           <b-form-file
             ref="fileInput"
             v-model="fileExcel"
-            placeholder="Choose a file or drop it here..."
-            drop-placeholder="Drop file here..."
+            placeholder="Chọn file để tải lên..."
+            drop-placeholder="Kéo thả file vào đây..."
             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             :state="errors[0] || error !== null ? false : null"
           ></b-form-file>
@@ -32,7 +32,7 @@
           </b-form-invalid-feedback>
 
           <div class="mt-3">
-            Selected file: {{ fileExcel ? fileExcel.name : '' }}
+            File đã chọn: {{ fileExcel ? fileExcel.name : '' }}
           </div>
         </b-form-group>
       </validation-provider>

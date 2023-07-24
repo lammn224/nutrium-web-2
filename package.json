@@ -2,11 +2,14 @@
   "name": "nutrium-web",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
+    "build": "nuxt --openssl-legacy-provider build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
+    "generate": "nuxt --openssl-legacy-provider generate",
     "lint:js": "eslint --ext \".vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{css,scss,sass,html,vue}\" --ignore-path .gitignore",
     "lint:prettier": "prettier --check .",
@@ -55,7 +58,7 @@
     "vue-template-compiler": "^2.6.14",
     "vue2-perfect-scrollbar": "^1.5.5",
     "vuejs-datepicker": "^1.6.2",
-    "webpack": "^4.46.0"
+    "webpack": "^5.61.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",

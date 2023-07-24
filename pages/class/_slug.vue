@@ -1,50 +1,73 @@
 <template>
   <content-card :title="tableTitle">
     <template #body>
-      <ve-table
-        :style="{ 'word-break': 'break-all' }"
-        :columns="tableColumns"
-        :sort-option="sortOption"
-        :table-data="tableData"
-        :row-style-option="rowStyleOption"
-        :max-height="650"
-        border-y
-      />
+      <b-overlay
+        :show="isLoading"
+        spinner-variant="primary"
+        spinner-type="grow"
+        spinner-small
+        rounded="sm"
+      >
+        <b-table
+          ref="table"
+          hover
+          bordered
+          show-empty
+          sticky-header="600px"
+          :no-border-collapse="true"
+          head-variant="light"
+          :items="students"
+          :fields="fields"
+          :busy="isLoading"
+          thead-class="font-weight-bold font-size-lg text-center"
+        >
+          <template #empty>
+            <h4 class="text-center">Không có dữ liệu</h4>
+          </template>
+          <template #cell(idx)="row">
+            {{ ++row.index }}
+          </template>
+          <template #cell(dateOfBirth)="row">
+            {{ convertTimeStampsToString(row.item.dateOfBirth) }}
+          </template>
+          <template #cell(gender)="row">
+            <span>{{ GENDER.get(row.item.gender) }}</span>
+          </template>
+          <template #cell(action)="row">
+            <b-button
+              size="sm"
+              variant="info"
+              class="mr-1"
+              @click="getDetailsStudent(row.item._id)"
+              >Chi tiết</b-button
+            >
+          </template>
+        </b-table>
+      </b-overlay>
     </template>
   </content-card>
 </template>
 
 <script>
-import { VeTable } from 'vue-easytable'
-import { MALE } from '~/constants/gender.constant'
+import { GENDER } from '~/constants/gender.constant'
 import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
 
 export default {
-  components: {
-    VeTable,
-  },
   data() {
     return {
       class: null,
       tableTitle: 'Danh sách lớp học: ',
-      tableData: [],
-      rowStyleOption: {
-        stripe: true,
-        hoverHighlight: true,
-      },
-      sortObj: null,
-      sortOption: {
-        sortAlways: true,
-        sortChange: (params) => {
-          this.sortChange(params)
-        },
-      },
+      students: [],
+      isLoading: false,
+      delay: null,
+      sortBy: 'name',
+      sortType: 'asc',
     }
   },
 
-  async fetch() {
-    await this.detailsClass()
-  },
+  // async fetch() {
+  //   await this.detailsClass()
+  // },
 
   head() {
     return {
@@ -53,149 +76,87 @@ export default {
   },
 
   computed: {
-    tableColumns() {
+    GENDER() {
+      return GENDER
+    },
+
+    fields() {
       return [
         {
-          field: '',
-          key: 'stt',
-          title: 'STT',
-          width: 50,
-          align: 'center',
-          fixed: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return ++rowIndex
-          },
+          key: 'idx',
+          label: 'STT',
+          thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true, 'align-middle': true },
         },
         {
-          field: 'studentId',
-          key: 'id',
-          title: 'Mã học sinh',
-          width: 100,
-          align: 'left',
-          sortBy: 'asc',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return row.studentId
-          },
+          key: 'studentId',
+          label: 'Mã học sinh',
+          sortable: true,
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
         {
-          field: 'fullName',
-          key: 'a',
-          title: 'Họ tên',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return row.fullName
-          },
+          key: 'fullName',
+          label: 'Họ và tên',
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
         {
-          field: 'dateOfBirth',
-          key: 'b',
-          title: 'Ngày sinh',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return convertTimeStampsToString(row.dateOfBirth)
-          },
+          key: 'dateOfBirth',
+          label: 'Ngày sinh',
+          thStyle: { width: '15%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
         {
-          field: 'gender',
-          key: 'c',
-          title: 'Giới tính',
-          width: 200,
-          align: 'left',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return row.gender === MALE ? 'Nam' : 'Nữ'
-          },
+          key: 'gender',
+          label: 'Giới tính',
+          thStyle: { width: '15%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
         {
-          field: '',
-          key: 'defaultAction',
-          title: 'Hành động',
-          width: 100,
-          align: 'center',
-          fixed: 'right',
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span>
-                <button
-                  class="btn btn-sm btn-primary"
-                  on-click={() => {
-                    this.getDetailsStudent(row._id)
-                  }}
-                >
-                  Chi tiết
-                </button>
-              </span>
-            )
-          },
+          key: 'action',
+          label: 'Hành động',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
         },
       ]
-    },
-    queryUrl() {
-      let url = this.remoteUrl
-
-      const params = new URLSearchParams({
-        limit: this.limit,
-        offset: (this.currentPage - 1) * this.limit,
-      })
-
-      if (this.sortObj) {
-        params.append('sortBy', this.sortObj.sortBy)
-        params.append('sortType', this.sortObj.sortType)
-      }
-
-      const paramsStr = params.toString()
-
-      url += '?' + paramsStr
-
-      return url
     },
   },
 
   created() {
-    this.sortObj = this.getFirstSortObj()
+    this.detailsClass()
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
   },
 
   methods: {
+    convertTimeStampsToString,
+
     async detailsClass() {
       const params = this.$route.params
-      const { data } = await this.$axios.get(`classes/${params.slug}`)
-      this.class = data
-      this.tableTitle += data.name
-      this.tableData = data.members
-    },
-
-    sortChange(params) {
-      this.tableData.sort((a, b) => {
-        if (params.studentId) {
-          if (params.studentId === 'asc') {
-            return a.studentId - b.studentId
-          } else if (params.studentId === 'desc') {
-            return b.studentId - a.studentId
-          } else {
-            return 0
-          }
-        }
-        return 0
-      })
-    },
-
-    getFirstSortObj() {
-      const sortCol = this.tableColumns.find((item) => item.sortBy)
-
-      if (sortCol) {
-        return {
-          sortBy: sortCol.field,
-          sortType: sortCol.sortBy,
-        }
+      try {
+        const { data } = await this.$axios.get(`classes/${params.slug}`)
+        this.isLoading = true
+        await this.delay(500)
+        this.class = data
+        this.tableTitle += data.name
+        this.tableData = data.members
+        this.students = data.members
+      } catch (e) {
+      } finally {
+        this.isLoading = false
       }
-
-      return null
     },
 
-    getDetailsStudent(rowVal) {
-      this.$router.push({ path: `/student/${rowVal}` })
+    getDetailsStudent(studentId) {
+      this.$router.push({ path: `/student/${studentId}` })
     },
   },
 }
 </script>
+
+<style>
+.b-table-sticky-header > .table.b-table > thead > tr > th {
+  position: sticky !important;
+}
+</style>
