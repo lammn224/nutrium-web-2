@@ -67,7 +67,6 @@
 </template>
 
 <script>
-// import { VeLoading } from 'vue-easytable'
 import {
   dateToString,
   endOfWeek,
@@ -265,10 +264,6 @@ export default {
   },
 
   async mounted() {
-    // this.loadingInstance = VeLoading({
-    //   target: this.$refs.datatable,
-    //   name: null,
-    // })
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
 

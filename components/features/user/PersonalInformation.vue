@@ -126,63 +126,71 @@
         <!--begin::Form-->
         <form class="form">
           <!--begin::Body-->
-          <div class="card-body">
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Họ tên</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  v-model="form.fullName"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Họ tên"
-                />
-              </div>
-            </div>
-            <div v-if="user.school" class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Tên trường</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="school"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  disabled
-                  :value="user.school.name"
-                />
-              </div>
-            </div>
-            <div class="row">
-              <label class="col-xl-3"></label>
-              <div class="col-lg-9 col-xl-6">
-                <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Số điện thoại</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <div class="input-group input-group-lg input-group-solid">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="flaticon2-phone"></i>
-                    </span>
-                  </div>
+          <b-overlay
+            :show="isLoading"
+            spinner-variant="primary"
+            spinner-type="grow"
+            spinner-small
+            rounded="sm"
+          >
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Họ tên</label
+                >
+                <div class="col-lg-9 col-xl-6">
                   <input
-                    ref="phoneNumber"
-                    v-model="form.phoneNumber"
-                    type="text"
+                    ref="fullName"
+                    v-model="form.fullName"
                     class="form-control form-control-lg form-control-solid"
-                    placeholder="Số điện thoại"
+                    type="text"
+                    placeholder="Họ tên"
                   />
                 </div>
               </div>
+              <div v-if="user.school" class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Tên trường</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="school"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    disabled
+                    :value="user.school.name"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-xl-3"></label>
+                <div class="col-lg-9 col-xl-6">
+                  <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Số điện thoại</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="flaticon2-phone"></i>
+                      </span>
+                    </div>
+                    <input
+                      ref="phoneNumber"
+                      v-model="form.phoneNumber"
+                      type="text"
+                      class="form-control form-control-lg form-control-solid"
+                      placeholder="Số điện thoại"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </b-overlay>
           <!--end::Body-->
         </form>
         <!--end::Form-->
@@ -209,6 +217,8 @@ export default {
         fullName: this.$auth.user.fullName,
         phoneNumber: this.$auth.user.phoneNumber,
       },
+      isLoading: false,
+      delay: null,
     }
   },
 
@@ -216,6 +226,11 @@ export default {
     ROLES() {
       return ROLES
     },
+  },
+
+  created() {
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
   },
 
   mounted() {
@@ -232,6 +247,9 @@ export default {
       ) {
         return
       }
+
+      this.isLoading = true
+      await this.delay(500)
 
       try {
         submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
@@ -258,6 +276,8 @@ export default {
           'spinner-light',
           'spinner-right'
         )
+      } finally {
+        this.isLoading = false
       }
     },
 

@@ -10,14 +10,23 @@
           </div>
         </div>
       </div>
-      <div class="card-body">
-        <BarChart
-          :chart-data="barChartData"
-          :chart-options="barChartOptions"
-          :height="60"
-          :width="100"
-        />
-      </div>
+
+      <b-overlay
+        :show="isLoading"
+        spinner-variant="primary"
+        spinner-type="grow"
+        spinner-small
+        rounded="sm"
+      >
+        <div class="card-body">
+          <BarChart
+            :chart-data="barChartData"
+            :chart-options="barChartOptions"
+            :height="60"
+            :width="100"
+          />
+        </div>
+      </b-overlay>
     </div>
   </div>
 </template>
@@ -38,6 +47,8 @@ export default {
       labels: [],
       dataForChart: [],
       calcData: [[], []],
+      isLoading: false,
+      delay: null,
     }
   },
 
@@ -71,13 +82,18 @@ export default {
     },
   },
 
+  created() {
+    this.loadStudentIdxData()
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
+  },
+
   async mounted() {
     // this.loadingInstance = VeLoading({
     //   target: this.$refs.datatable,
     //   name: null,
     // })
-
-    await this.loadStudentIdxData()
+    // await this.loadStudentIdxData()
   },
 
   methods: {
@@ -86,6 +102,8 @@ export default {
 
       try {
         const { data } = await this.$axios.get(this.remoteUrl)
+        this.isLoading = true
+        await this.delay(500)
         data.forEach((d) => {
           this.labels.push(d.grade)
           this.calcData[0].push(d.avgWeight)
@@ -93,8 +111,7 @@ export default {
         })
       } catch (e) {
       } finally {
-        // this.loadingInstance.close()
-        this.firstLoading = true
+        this.isLoading = false
       }
     },
   },

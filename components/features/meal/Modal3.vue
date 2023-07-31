@@ -126,7 +126,7 @@
 
         <div class="col-xl-4">
           <base-form-text-input
-            :value="`45% ~ ${selectedStudent.maxBreakfastCalories} kcal`"
+            :value="`40% ~ ${selectedStudent.maxBreakfastCalories} kcal`"
             disabled
             placeholder="KNNL"
             label="% Năng lượng khuyến nghị bữa sáng"
@@ -136,7 +136,7 @@
 
         <div class="col-xl-4">
           <base-form-text-input
-            :value="`20% ~ ${selectedStudent.maxDinnerCalories} kcal`"
+            :value="`25% ~ ${selectedStudent.maxDinnerCalories} kcal`"
             disabled
             placeholder="KNNL"
             label="% Năng lượng khuyến nghị bữa tối"
@@ -218,6 +218,89 @@
                 class="border border-2 border-primary"
                 disabled
                 placeholder="Glucid"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3">
+          <validation-provider
+            v-slot="{ errors }"
+            name="Canxi"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+          >
+            <b-form-group v-bind="$attrs" label="Canxi">
+              <b-form-input
+                v-model="form.ca"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Canxi"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+        </div>
+        <div class="col-xl-3">
+          <validation-provider
+            v-slot="{ errors }"
+            name="Sắt"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+          >
+            <b-form-group v-bind="$attrs" label="Sắt">
+              <b-form-input
+                v-model="form.fe"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Sắt"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+        </div>
+        <div class="col-xl-3">
+          <validation-provider
+            v-slot="{ errors }"
+            name="Chất xơ"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+          >
+            <b-form-group v-bind="$attrs" label="Chất xơ">
+              <b-form-input
+                v-model="form.fiber"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Chất xơ"
+              ></b-form-input>
+
+              <b-form-invalid-feedback>
+                {{ errors[0] || error }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
+        </div>
+        <div class="col-xl-3">
+          <validation-provider
+            v-slot="{ errors }"
+            name="Kẽm"
+            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+          >
+            <b-form-group v-bind="$attrs" label="Kẽm">
+              <b-form-input
+                v-model="form.zn"
+                class="border border-2 border-primary"
+                disabled
+                placeholder="Kẽm"
               ></b-form-input>
 
               <b-form-invalid-feedback>
@@ -320,6 +403,10 @@ const defaultForm = {
   protein: '0',
   lipid: '0',
   glucid: '0',
+  ca: '0',
+  fe: '0',
+  fiber: '0',
+  zn: '0',
   student: null,
   foods: [],
   values: [],
@@ -428,11 +515,19 @@ export default {
           this.form.protein = '0'
           this.form.lipid = '0'
           this.form.glucid = '0'
+          this.form.ca = '0'
+          this.form.fe = '0'
+          this.form.fiber = '0'
+          this.form.zn = '0'
           if (newVal && newVal.length && newVal[0] !== '') {
             let sumPower = 0
             let sumProtein = 0
             let sumLipid = 0
             let sumGlucid = 0
+            let sumCa = 0
+            let sumFe = 0
+            let sumFiber = 0
+            let sumZn = 0
             for (let i = 0; i < newVal.length; i++) {
               if (this.selectValues[i] && this.selectValues[i] !== '') {
                 sumPower = (
@@ -459,12 +554,40 @@ export default {
                     parseFloat(newVal[i])) /
                     100
                 ).toFixed(2)
+                sumCa = (
+                  parseFloat(sumCa) +
+                  (parseFloat(this.selectValues[i].ca) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+                sumFe = (
+                  parseFloat(sumFe) +
+                  (parseFloat(this.selectValues[i].fe) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+                sumFiber = (
+                  parseFloat(sumFiber) +
+                  (parseFloat(this.selectValues[i].fiber) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
+                sumZn = (
+                  parseFloat(sumZn) +
+                  (parseFloat(this.selectValues[i].zn) *
+                    parseFloat(newVal[i])) /
+                    100
+                ).toFixed(2)
               }
             }
             this.form.power = sumPower.toString()
             this.form.protein = sumProtein.toString()
             this.form.lipid = sumLipid.toString()
             this.form.glucid = sumGlucid.toString()
+            this.form.ca = sumCa.toString()
+            this.form.fe = sumFe.toString()
+            this.form.fiber = sumFiber.toString()
+            this.form.zn = sumZn.toString()
           }
 
           this.form.foods = this.selectValues.map((item) => item._id)
@@ -501,6 +624,7 @@ export default {
         this.isEdit = true
         this.form = cloneDeep(item)
         this.selectValues = this.form.foods
+        // value as amount (gam)
         this.inputValues = this.form.values
       }
 

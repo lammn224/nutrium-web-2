@@ -130,208 +130,216 @@
         <!--begin::Form-->
         <form class="form">
           <!--begin::Body-->
-          <div class="card-body">
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Họ tên</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  v-model="form.fullName"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Họ tên"
-                />
+          <b-overlay
+            :show="isLoading"
+            spinner-variant="primary"
+            spinner-type="grow"
+            spinner-small
+            rounded="sm"
+          >
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Họ tên</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="fullName"
+                    v-model="form.fullName"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    placeholder="Họ tên"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Ngày sinh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <!--                <input-->
-                <!--                  ref="fullName"-->
-                <!--                  v-model="form.dateOfBirth"-->
-                <!--                  class="form-control form-control-lg form-control-solid"-->
-                <!--                  type="text"-->
-                <!--                  placeholder="Ngày sinh"-->
-                <!--                />-->
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Ngày sinh</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <!--                <input-->
+                  <!--                  ref="fullName"-->
+                  <!--                  v-model="form.dateOfBirth"-->
+                  <!--                  class="form-control form-control-lg form-control-solid"-->
+                  <!--                  type="text"-->
+                  <!--                  placeholder="Ngày sinh"-->
+                  <!--                />-->
 
-                <b-form-datepicker
-                  v-model="form.dateOfBirth"
-                  :date-format-options="{
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                  }"
-                  locale="vi"
-                ></b-form-datepicker>
+                  <b-form-datepicker
+                    v-model="form.dateOfBirth"
+                    :date-format-options="{
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    }"
+                    locale="vi"
+                  ></b-form-datepicker>
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Chiều cao (cm)</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  v-model="form.height"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Chiều cao"
-                />
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Chiều cao (cm)</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="fullName"
+                    v-model="form.height"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    placeholder="Chiều cao"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Cân nặng (kg)</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  v-model="form.weight"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Cân nặng"
-                />
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Cân nặng (kg)</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="fullName"
+                    v-model="form.weight"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    placeholder="Cân nặng"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Chỉ số BMI</label
-              >
-              <div class="col-lg-4 col-xl-2">
-                <input
-                  ref="fullName"
-                  disabled
-                  :value="form.bmi"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Cân nặng"
-                />
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Chỉ số BMI</label
+                >
+                <div class="col-lg-4 col-xl-2">
+                  <input
+                    ref="fullName"
+                    disabled
+                    :value="form.bmi"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    placeholder="Cân nặng"
+                  />
+                </div>
+                <div class="col-lg-4 col-xl-4">
+                  <input
+                    ref="fullName"
+                    disabled
+                    :value="bmiResult"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    placeholder="Cân nặng"
+                  />
+                </div>
               </div>
-              <div class="col-lg-4 col-xl-4">
-                <input
-                  ref="fullName"
-                  disabled
-                  :value="bmiResult"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Cân nặng"
-                />
-              </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Nguy cơ phát triển bệnh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="diseaseRisk"
-                  disabled
-                  :value="diseaseRisk"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Không xác định"
-                />
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Nguy cơ phát triển bệnh</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="diseaseRisk"
+                    disabled
+                    :value="diseaseRisk"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    placeholder="Không xác định"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                Giới tính
-              </label>
-              <div class="col-lg-9 col-xl-6">
-                <b-form-group v-slot="{ ariaDescribedby }" label="">
-                  <b-form-radio-group
-                    id="radio-group-1"
-                    v-model="form.gender"
-                    :options="genderOptions"
-                    :aria-describedby="ariaDescribedby"
-                    name="radio-options"
-                  ></b-form-radio-group>
-                </b-form-group>
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                  Giới tính
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                  <b-form-group v-slot="{ ariaDescribedby }" label="">
+                    <b-form-radio-group
+                      id="radio-group-1"
+                      v-model="form.gender"
+                      :options="genderOptions"
+                      :aria-describedby="ariaDescribedby"
+                      name="radio-options"
+                    ></b-form-radio-group>
+                  </b-form-group>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                Hoạt động thể lực
-              </label>
-              <div class="col-lg-9 col-xl-6">
-                <b-form-group v-slot="{ ariaDescribedby2 }" label="">
-                  <b-form-radio-group
-                    id="radio-group-2"
-                    v-model="form.activityType"
-                    :options="activityTypeOptions"
-                    :aria-describedby="ariaDescribedby2"
-                    name="radio-options2"
-                  ></b-form-radio-group>
-                </b-form-group>
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                  Hoạt động thể lực
+                </label>
+                <div class="col-lg-9 col-xl-6">
+                  <b-form-group v-slot="{ ariaDescribedby2 }" label="">
+                    <b-form-radio-group
+                      id="radio-group-2"
+                      v-model="form.activityType"
+                      :options="activityTypeOptions"
+                      :aria-describedby="ariaDescribedby2"
+                      name="radio-options2"
+                    ></b-form-radio-group>
+                  </b-form-group>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >KNNL (kcal)</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="school"
-                  v-model="form.rcmCalories"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  disabled
-                />
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >KNNL (kcal)</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="school"
+                    v-model="form.rcmCalories"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    disabled
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Mã học sinh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="school"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  disabled
-                  :value="student.studentId"
-                />
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Mã học sinh</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="school"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    disabled
+                    :value="student.studentId"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Tên trường</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="school"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    disabled
+                    :value="student.school.name"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                  >Lớp</label
+                >
+                <div class="col-lg-9 col-xl-6">
+                  <input
+                    ref="school"
+                    class="form-control form-control-lg form-control-solid"
+                    type="text"
+                    disabled
+                    :value="student.class.name"
+                  />
+                </div>
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Tên trường</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="school"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  disabled
-                  :value="student.school.name"
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Lớp</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="school"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  disabled
-                  :value="student.class.name"
-                />
-              </div>
-            </div>
-          </div>
+          </b-overlay>
           <!--end::Body-->
         </form>
         <!--end::Form-->
@@ -386,6 +394,8 @@ export default {
       ],
       bmiResult: '',
       diseaseRisk: '',
+      isLoading: false,
+      delay: null,
     }
   },
 
@@ -438,6 +448,11 @@ export default {
     },
   },
 
+  created() {
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
+  },
+
   mounted() {
     this.current_photo = this.student.photo
     this.calculateBMIResult()
@@ -463,6 +478,9 @@ export default {
       ) {
         return
       }
+
+      this.isLoading = true
+      await this.delay(500)
 
       try {
         this.form.dateOfBirth = new Date(this.form.dateOfBirth).getTime() / 1000
@@ -497,6 +515,8 @@ export default {
           'spinner-light',
           'spinner-right'
         )
+      } finally {
+        this.isLoading = false
       }
     },
     cancel() {

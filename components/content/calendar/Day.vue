@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <div v-show="isDaySelected" v-if="$auth.user.role !== STUDENT()">
           <span class="label-cus bg-primary" @click="showAddMealForm">
-            Add meal</span
+            Tạo bữa ăn</span
           >
         </div>
       </div>
@@ -52,6 +52,10 @@ const defaultForm = {
   protein: '0',
   lipid: '0',
   glucid: '0',
+  ca: '0',
+  fe: '0',
+  fiber: '0',
+  zn: '0',
   student: null,
   foods: [],
   values: [],

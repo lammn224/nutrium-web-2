@@ -1,45 +1,55 @@
 <template>
   <div class="">
-    <div v-if="loading">Loading...</div>
+    <b-overlay
+      :show="isLoading"
+      spinner-variant="primary"
+      spinner-type="grow"
+      spinner-small
+      rounded="sm"
+    >
+      <div class="panel panel-default">
+        <div class="panel-heading rounded"><h2>Luyện tập</h2></div>
 
-    <div v-if="error" class="error"></div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <exercise-header
+                :current-month="currentMonth"
+                :first-day="firstDay"
+              ></exercise-header>
 
-    <div class="panel panel-default">
-      <div class="panel-heading rounded"><h2>Luyện tập</h2></div>
+              <div class="full-calendar-body">
+                <div class="weeks">
+                  <strong
+                    v-for="(dayIndex, idx) in 7"
+                    :key="idx"
+                    class="week"
+                    >{{
+                      (dayIndex - 1) | weekDayName(firstDay, appLocale)
+                    }}</strong
+                  >
+                </div>
 
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-sm-12">
-            <exercise-header
-              :current-month="currentMonth"
-              :first-day="firstDay"
-            ></exercise-header>
-
-            <div class="full-calendar-body">
-              <div class="weeks">
-                <strong v-for="(dayIndex, idx) in 7" :key="idx" class="week">{{
-                  (dayIndex - 1) | weekDayName(firstDay, appLocale)
-                }}</strong>
-              </div>
-
-              <div ref="dates" class="dates">
-                <exercise-week
-                  v-for="(week, index) in Weeks"
-                  :key="index"
-                  :first-day="firstDay"
-                  :week="week"
-                >
-                </exercise-week>
+                <div ref="dates" class="dates">
+                  <exercise-week
+                    v-for="(week, index) in Weeks"
+                    :key="index"
+                    :first-day="firstDay"
+                    :week="week"
+                  >
+                  </exercise-week>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </b-overlay>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import moment from 'moment'
 import { CHANGE_MONTH } from '~/constants/calendar-actions.constant'
 
@@ -53,12 +63,6 @@ export default {
     },
   },
   props: {
-    allExercises: {
-      type: Array,
-      default() {
-        return []
-      },
-    },
     firstDay: {
       // eslint-disable-next-line vue/require-prop-type-constructor
       type: Number | String,
@@ -71,10 +75,13 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      scheduledExercises: [],
+      isLoading: false,
       error: null,
       currentMonth: moment().startOf('month'),
       appLocale: 'vi',
+      startMonth: moment().startOf('month').unix(),
+      endMonth: moment().endOf('month').unix(),
     }
   },
   computed: {
@@ -114,22 +121,68 @@ export default {
 
       return weeks
     },
-    exercises() {
-      return this.allExercises
-    },
   },
   created() {
     const me = this
-    this.$root.$on(CHANGE_MONTH, function (payload) {
+    this.$root.$on(CHANGE_MONTH, async (payload) => {
       me.currentMonth = payload
+      this.startMonth = moment(payload).startOf('month').unix()
+      this.endMonth = moment(payload).endOf('month').unix()
+      await this.loadScheduledExercise()
+      await this.loadActivityData()
+    })
+    this.$bus.$on('reloadScheduleExerciseData', async () => {
+      await this.loadScheduledExercise()
+      await this.loadActivityData()
     })
   },
-  mounted() {
-    this.loading = false
+  async mounted() {
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    await this.loadScheduledExercise()
+    await this.loadActivityData()
   },
   methods: {
+    ...mapActions({
+      setActivities: 'activity/setActivities',
+    }),
+
+    async loadScheduledExercise() {
+      const params = `startMonth=${this.startMonth}&endMonth=${this.endMonth}`
+      this.isLoading = true
+      await this.delay(500)
+
+      try {
+        const { data } = await this.$axios.get(`/schedule-exercise?${params}`)
+        data.forEach((ex) => {
+          ex.date = new Date(ex.date * 1000)
+        })
+
+        this.scheduledExercises = data
+      } catch (e) {
+        this.scheduledExercises = []
+      } finally {
+        this.isLoading = false
+      }
+    },
+
+    async loadActivityData() {
+      this.isLoading = true
+      await this.delay(500)
+
+      try {
+        const { data } = await this.$axios.get('/activities/all')
+
+        await this.setActivities(data)
+      } catch (e) {
+      } finally {
+        this.isLoading = false
+      }
+    },
+
     getExercises(date) {
-      return this.exercises.filter((exercise) => {
+      return this.scheduledExercises.filter((exercise) => {
         return date.isSame(exercise.date, 'day') ? exercise : null
       })
     },

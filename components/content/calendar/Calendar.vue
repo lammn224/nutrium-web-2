@@ -1,8 +1,5 @@
 <template>
   <div class="">
-    <!--    <div v-if="loading">Loading...</div>-->
-
-    <!--    <div v-if="error" class="error"></div>-->
     <b-overlay
       :show="isLoading"
       spinner-variant="primary"
@@ -66,12 +63,6 @@ export default {
     },
   },
   props: {
-    allMeals: {
-      type: Array,
-      default() {
-        return []
-      },
-    },
     firstDay: {
       // eslint-disable-next-line vue/require-prop-type-constructor
       type: Number | String,

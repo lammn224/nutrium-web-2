@@ -1,7 +1,7 @@
 <template>
   <div>
     <label>{{ label }}</label>
-    <span class="switch switch-outline switch-icon switch-success">
+    <span class="switch switch-outline switch-icon switch-primary">
       <label>
         <input
           v-model="innerValue"

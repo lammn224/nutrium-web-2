@@ -101,243 +101,253 @@
     </div>
 
     <div class="flex-row-fluid ml-lg-8">
-      <div class="card card-custom mb-5">
-        <!--begin::Header-->
-        <div class="card-header py-3">
-          <div class="card-title align-items-start flex-column">
-            <h3 class="card-label font-weight-bolder text-dark">
-              Thông tin cá nhân
-            </h3>
-            <span class="text-muted font-weight-bold font-size-sm mt-1"
-              >Thông tin cá nhân học sinh</span
-            >
-          </div>
-        </div>
-        <!--end::Header-->
-        <!--begin::Form-->
-        <form class="form">
-          <!--begin::Body-->
-          <div class="card-body">
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Họ tên</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  disabled
-                  :value="student.fullName"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Họ tên"
-                />
+      <b-card class="card-tabs-custom" no-body>
+        <b-tabs active-nav-item-class="font-weight-bold text-primary" card>
+          <b-tab title="Thông tin cá nhân">
+            <div class="card card-custom mb-5">
+              <!--begin::Header-->
+              <div class="card-header py-3">
+                <div class="card-title align-items-start flex-column">
+                  <h3 class="card-label font-weight-bolder text-dark">
+                    Thông tin cá nhân
+                  </h3>
+                  <span class="text-muted font-weight-bold font-size-sm mt-1"
+                    >Thông tin cá nhân học sinh</span
+                  >
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Ngày sinh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  disabled
-                  :value="convertTimeStampsToString(student.dateOfBirth)"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Ngày sinh"
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Chiều cao (cm)</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  disabled
-                  :value="student.height"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Chiều cao"
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Cân nặng (kg)</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="fullName"
-                  disabled
-                  :value="student.weight"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Cân nặng"
-                />
-              </div>
-            </div>
+              <!--end::Header-->
+              <!--begin::Form-->
+              <form class="form">
+                <!--begin::Body-->
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >Họ tên</label
+                    >
+                    <div class="col-lg-9 col-xl-6">
+                      <input
+                        ref="fullName"
+                        disabled
+                        :value="student.fullName"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Họ tên"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >Ngày sinh</label
+                    >
+                    <div class="col-lg-9 col-xl-6">
+                      <input
+                        ref="fullName"
+                        disabled
+                        :value="convertTimeStampsToString(student.dateOfBirth)"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Ngày sinh"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >Chiều cao (cm)</label
+                    >
+                    <div class="col-lg-9 col-xl-6">
+                      <input
+                        ref="fullName"
+                        disabled
+                        :value="student.height"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Chiều cao"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >Cân nặng (kg)</label
+                    >
+                    <div class="col-lg-9 col-xl-6">
+                      <input
+                        ref="fullName"
+                        disabled
+                        :value="student.weight"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Cân nặng"
+                      />
+                    </div>
+                  </div>
 
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Chỉ số BMI</label
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >Chỉ số BMI</label
+                    >
+                    <div class="col-lg-4 col-xl-2">
+                      <input
+                        ref="bmi"
+                        disabled
+                        :value="student.bmi"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Cân nặng"
+                      />
+                    </div>
+                    <div class="col-lg-4 col-xl-4">
+                      <input
+                        ref="bmiResult"
+                        disabled
+                        :value="bmiResult"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Không xác định"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >Nguy cơ phát triển bệnh</label
+                    >
+                    <div class="col-lg-9 col-xl-6">
+                      <input
+                        ref="diseaseRisk"
+                        disabled
+                        :value="diseaseRisk"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                        placeholder="Không xác định"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                      Giới tính
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                      <b-form-group v-slot="{ ariaDescribedby }" label="">
+                        <b-form-radio-group
+                          id="radio-group-1"
+                          v-model="selectedGender"
+                          disabled
+                          :options="genderOptions"
+                          :aria-describedby="ariaDescribedby"
+                          name="radio-options"
+                        ></b-form-radio-group>
+                      </b-form-group>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                      Hoạt động thể lực
+                    </label>
+                    <div class="col-lg-9 col-xl-6">
+                      <b-form-group v-slot="{ ariaDescribedby2 }" label="">
+                        <b-form-radio-group
+                          id="radio-group-2"
+                          v-model="selectedActivityType"
+                          disabled
+                          :options="activityTypeOptions"
+                          :aria-describedby="ariaDescribedby2"
+                          name="radio-options2"
+                        ></b-form-radio-group>
+                      </b-form-group>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                      >KNNL (kcal)</label
+                    >
+                    <div class="col-lg-9 col-xl-6">
+                      <input
+                        ref="school"
+                        disabled
+                        :value="student.rcmCalories"
+                        class="form-control form-control-lg form-control-solid"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!--end::Body-->
+              </form>
+              <!--end::Form-->
+            </div>
+          </b-tab>
+          <b-tab title="Thống kê">
+            <div class="card card-custom mb-5">
+              <!--begin::Header-->
+              <div class="card-header py-5" style="display: block">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="btn-group">
+                      <button
+                        class="btn btn-outline btn-primary"
+                        form=""
+                        @click.stop="goPrev"
+                      >
+                        <i class="flaticon2-back"></i> Tuần trước
+                      </button>
+                      <button
+                        class="btn btn-outline btn-primary today-button"
+                        form=""
+                        @click.stop="goToday"
+                      >
+                        <i class="flaticon2-down"></i> Hiện tại
+                      </button>
+                      <button
+                        class="btn btn-outline btn-primary"
+                        form=""
+                        @click.stop="goNext"
+                      >
+                        Tuần sau <i class="flaticon2-next"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="card-title align-items-start flex-column">
+                      <h3 class="card-label font-weight-bolder text-dark">
+                        Thông tin bữa ăn
+                      </h3>
+                      <span
+                        class="text-muted font-weight-bold font-size-sm mt-1"
+                      >
+                        {{ `Ngày ${startWeekStr} - ${endWeekStr}` }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end::Header-->
+              <div ref="datatable" class="mt-5">
+                <ve-table
+                  :style="{ 'word-break': 'break-all' }"
+                  :columns="tableColumns"
+                  :table-data="tableData"
+                  :row-style-option="rowStyleOption"
+                  :max-height="650"
+                  border-y
+                />
+              </div>
+              <meal-modal2 v-if="foods" ref="modal" />
+              <div
+                class="text-hover-primary p-5"
+                style="cursor: pointer"
+                @click="$router.push('/calendar')"
               >
-              <div class="col-lg-4 col-xl-2">
-                <input
-                  ref="bmi"
-                  disabled
-                  :value="student.bmi"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Cân nặng"
-                />
-              </div>
-              <div class="col-lg-4 col-xl-4">
-                <input
-                  ref="bmiResult"
-                  disabled
-                  :value="bmiResult"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Không xác định"
-                />
+                <i class="flaticon2-arrow"></i>
+                Đi tới lập lịch bữa ăn
               </div>
             </div>
-
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >Nguy cơ phát triển bệnh</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="diseaseRisk"
-                  disabled
-                  :value="diseaseRisk"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                  placeholder="Không xác định"
-                />
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                Giới tính
-              </label>
-              <div class="col-lg-9 col-xl-6">
-                <b-form-group v-slot="{ ariaDescribedby }" label="">
-                  <b-form-radio-group
-                    id="radio-group-1"
-                    v-model="selectedGender"
-                    disabled
-                    :options="genderOptions"
-                    :aria-describedby="ariaDescribedby"
-                    name="radio-options"
-                  ></b-form-radio-group>
-                </b-form-group>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                Hoạt động thể lực
-              </label>
-              <div class="col-lg-9 col-xl-6">
-                <b-form-group v-slot="{ ariaDescribedby2 }" label="">
-                  <b-form-radio-group
-                    id="radio-group-2"
-                    v-model="selectedActivityType"
-                    disabled
-                    :options="activityTypeOptions"
-                    :aria-describedby="ariaDescribedby2"
-                    name="radio-options2"
-                  ></b-form-radio-group>
-                </b-form-group>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                >KNNL (kcal)</label
-              >
-              <div class="col-lg-9 col-xl-6">
-                <input
-                  ref="school"
-                  disabled
-                  :value="student.rcmCalories"
-                  class="form-control form-control-lg form-control-solid"
-                  type="text"
-                />
-              </div>
-            </div>
-          </div>
-          <!--end::Body-->
-        </form>
-        <!--end::Form-->
-      </div>
-      <div class="card card-custom mb-5">
-        <!--begin::Header-->
-        <div class="card-header py-5" style="display: block">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="btn-group">
-                <button
-                  class="btn btn-outline btn-primary"
-                  form=""
-                  @click.stop="goPrev"
-                >
-                  <i class="flaticon2-back"></i> Tuần trước
-                </button>
-                <button
-                  class="btn btn-outline btn-primary today-button"
-                  form=""
-                  @click.stop="goToday"
-                >
-                  <i class="flaticon2-down"></i> Hiện tại
-                </button>
-                <button
-                  class="btn btn-outline btn-primary"
-                  form=""
-                  @click.stop="goNext"
-                >
-                  Tuần sau <i class="flaticon2-next"></i>
-                </button>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="card-title align-items-start flex-column">
-                <h3 class="card-label font-weight-bolder text-dark">
-                  Thông tin bữa ăn
-                </h3>
-                <span class="text-muted font-weight-bold font-size-sm mt-1">
-                  {{ `Ngày ${startWeekStr} - ${endWeekStr}` }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end::Header-->
-        <div ref="datatable" class="mt-5">
-          <ve-table
-            :style="{ 'word-break': 'break-all' }"
-            :columns="tableColumns"
-            :table-data="tableData"
-            :row-style-option="rowStyleOption"
-            :max-height="650"
-            border-y
-          />
-        </div>
-        <meal-modal2 v-if="foods" ref="modal" />
-        <div
-          class="text-hover-primary p-5"
-          style="cursor: pointer"
-          @click="$router.push('/calendar')"
-        >
-          <i class="flaticon2-arrow"></i>
-          Đi tới lập lịch bữa ăn
-        </div>
-      </div>
+          </b-tab>
+        </b-tabs>
+      </b-card>
     </div>
   </div>
 </template>
@@ -909,5 +919,10 @@ export default {
 
 .clickable-event {
   text-decoration: underline;
+}
+
+.card-tabs-custom {
+  box-shadow: 0 0 30px 0 rgba(82 63 105 / 5%) !important;
+  border: 0 !important;
 }
 </style>

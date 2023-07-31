@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <div v-show="isDaySelected" v-if="$auth.user.role !== ADMIN()">
           <span class="label-cus bg-primary" @click="showAddExerciseForm">
-            Add exercise</span
+            Tạo hoạt động</span
           >
         </div>
       </div>

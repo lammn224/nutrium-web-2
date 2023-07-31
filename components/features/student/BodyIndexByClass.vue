@@ -21,21 +21,27 @@
         </div>
       </div>
 
-      <div class="card-body">
-        <BarChart
-          :chart-data="barChartData"
-          :chart-options="barChartOptions"
-          :height="60"
-          :width="100"
-        />
-      </div>
+      <b-overlay
+        :show="isLoading"
+        spinner-variant="primary"
+        spinner-type="grow"
+        spinner-small
+        rounded="sm"
+      >
+        <div class="card-body">
+          <BarChart
+            :chart-data="barChartData"
+            :chart-options="barChartOptions"
+            :height="60"
+            :width="100"
+          />
+        </div>
+      </b-overlay>
     </div>
   </div>
 </template>
 
 <script>
-// import { VeLoading } from 'vue-easytable'
-
 export default {
   name: 'AvgBodyIndexByClass',
   data() {
@@ -51,6 +57,8 @@ export default {
       calcData: [[], []],
       grade: '',
       gradeOption: [],
+      isLoading: false,
+      delay: null,
     }
   },
 
@@ -103,20 +111,19 @@ export default {
     },
   },
 
-  async mounted() {
-    // this.loadingInstance = VeLoading({
-    //   target: this.$refs.datatable,
-    //   name: null,
-    // })
-
-    await this.loadGradeOption()
-    await this.loadStudentIdxData()
+  created() {
+    this.loadGradeOption()
+    this.loadStudentIdxData()
+    this.delay = (ms) =>
+      new Promise((resolve, reject) => setTimeout(resolve, ms))
   },
 
   methods: {
     async loadStudentIdxData() {
       try {
         const { data } = await this.$axios.get(this.queryUrl)
+        this.isLoading = true
+        await this.delay(500)
         const filteredData = [[], []]
         const labels = []
         data.forEach((d) => {
@@ -128,7 +135,7 @@ export default {
         this.labels = labels
       } catch (e) {
       } finally {
-        this.firstLoading = true
+        this.isLoading = false
       }
     },
 
