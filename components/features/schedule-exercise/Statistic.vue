@@ -47,18 +47,14 @@
             </div>
           </div>
         </div>
-        <div class="card-body d-flex flex-column align-items-center">
-          <div class="d-flex align-items-center justify-content-between w-25">
-            <div
-              v-if="student"
-              class="text-center card-label font-weight-bolder text-dark"
-            >
-              {{ student.fullName }}
-            </div>
-            <b-button variant="primary" size="sm" @click="showDetail"
-              >Xem chi tiết</b-button
-            >
-          </div>
+        <div class="card-body">
+          <b-button
+            variant="primary"
+            size="sm"
+            class="float-right"
+            @click="showDetail"
+            >Xem chi tiết</b-button
+          >
           <BarChart
             :chart-data="barChartData"
             :chart-options="barChartOptions"
@@ -70,48 +66,72 @@
         <div>
           <b-modal ref="modal" size="xl" :title="modalTitle" ok-only>
             <div>
-              <b-table
-                :items="items"
-                :fields="fields"
-                stacked="md"
-                show-empty
-                bordered
-                striped
-                head-variant="light"
-                small
-              >
-                <template #cell(activity)="row">
-                  <div class="d-flex justify-content-start">
-                    <b-card
-                      v-for="(d, idx) in row.item.scheduleExercise"
-                      :key="idx"
-                      class="m-2"
-                      bg-variant="primary"
-                      text-variant="white"
-                    >
-                      <!--                    <i class="fa-arrow-circle-o-right"></i>-->
-                      <div class="d-flex align-items-center">
-                        <i class="flaticon2-arrow text-white mr-2"></i>
-                        <span class="font-weight-bold">Hoạt động:&nbsp;</span>
-                        <span>{{ d.activity.name }}</span>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="flaticon2-arrow text-white mr-2"></i>
-                        <span class="font-weight-bold"
-                          >Lượng calo đốt cháy:&nbsp;</span
-                        >
-                        <span>{{ d.calo }} cal</span>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="flaticon2-arrow text-white mr-2"></i>
-                        <span class="font-weight-bold">Thời gian:&nbsp;</span>
-                        <span>{{ d.timeDur }} phút</span>
-                      </div>
-                    </b-card>
-                  </div>
-                </template>
-              </b-table>
+              <!--              <b-table-->
+              <!--                :items="items"-->
+              <!--                :fields="fields"-->
+              <!--                stacked="md"-->
+              <!--                show-empty-->
+              <!--                bordered-->
+              <!--                striped-->
+              <!--                head-variant="light"-->
+              <!--                small-->
+              <!--              >-->
+              <!--                <template #cell(activity)="row">-->
+              <!--                  <div class="d-flex justify-content-start">-->
+              <!--                    <b-card-->
+              <!--                      v-for="(d, idx) in row.item.scheduleExercise"-->
+              <!--                      :key="idx"-->
+              <!--                      class="m-2"-->
+              <!--                      bg-variant="primary"-->
+              <!--                      text-variant="white"-->
+              <!--                    >-->
+              <!--                      &lt;!&ndash;                    <i class="fa-arrow-circle-o-right"></i>&ndash;&gt;-->
+              <!--                      <div class="d-flex align-items-center">-->
+              <!--                        <i class="flaticon2-arrow text-white mr-2"></i>-->
+              <!--                        <span class="font-weight-bold">Hoạt động:&nbsp;</span>-->
+              <!--                        <span>{{ d.activity.name }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="d-flex align-items-center">-->
+              <!--                        <i class="flaticon2-arrow text-white mr-2"></i>-->
+              <!--                        <span class="font-weight-bold"-->
+              <!--                          >Lượng calo đốt cháy:&nbsp;</span-->
+              <!--                        >-->
+              <!--                        <span>{{ d.calo }} cal</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="d-flex align-items-center">-->
+              <!--                        <i class="flaticon2-arrow text-white mr-2"></i>-->
+              <!--                        <span class="font-weight-bold">Thời gian:&nbsp;</span>-->
+              <!--                        <span>{{ d.timeDur }} phút</span>-->
+              <!--                      </div>-->
+              <!--                    </b-card>-->
+              <!--                  </div>-->
+              <!--                </template>-->
+              <!--              </b-table>-->
             </div>
+            <b-tabs active-nav-item-class="font-weight-bold text-primary" card>
+              <b-tab
+                v-for="(se, key) in dataForChart"
+                :key="key"
+                :title="WEEKDAY.get(key)"
+              >
+                <b-table
+                  hover
+                  bordered
+                  show-empty
+                  head-variant="light"
+                  :fields="exerciseField"
+                  :items="se"
+                  thead-class="font-weight-bold text-center align-middle"
+                >
+                  <template #empty>
+                    <h4 class="text-center">Không có dữ liệu</h4>
+                  </template>
+                  <template #cell(idx)="row">
+                    {{ ++row.index }}
+                  </template>
+                </b-table>
+              </b-tab>
+            </b-tabs>
           </b-modal>
         </div>
       </div>
@@ -126,6 +146,7 @@ import {
   startOfWeek,
 } from '~/services/convertTimeStamps.service'
 import { ADMIN } from '~/constants/role.constant'
+import { WEEKDAY } from '~/constants/weekday.constant'
 
 export default {
   name: 'ScheduleExerciseStatistic',
@@ -142,6 +163,43 @@ export default {
   data() {
     return {
       isLoading: false,
+      exerciseField: [
+        {
+          key: 'idx',
+          label: 'STT',
+          thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'activity.name',
+          label: 'Tên hoạt động',
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'activity.metIdx',
+          label: 'Chỉ số MET',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'timeDur',
+          label: 'Thời gian (phút)',
+          thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'calo',
+          label: 'Calo đốt cháy (cal)',
+          thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+      ],
       barChartOptions: {
         responsive: true,
         aspectRatio: 3,
@@ -164,12 +222,10 @@ export default {
         },
       },
       timestamp: Math.floor(Date.now() / 1000),
-      loadingInstance: null,
-      loading: true,
       remoteUrl: '/schedule-exercise/by-week-chart',
       dataForChart: null,
       calcData: [],
-      items: [],
+      // items: [],
       fields: [
         {
           key: 'date',
@@ -192,6 +248,10 @@ export default {
   computed: {
     ADMIN() {
       return ADMIN
+    },
+
+    WEEKDAY() {
+      return WEEKDAY
     },
 
     startWeekStr() {
@@ -239,14 +299,6 @@ export default {
   },
 
   watch: {
-    loading(val) {
-      if (val) {
-        this.loadingInstance.show()
-      } else {
-        this.loadingInstance.close()
-      }
-    },
-
     queryUrl() {
       this.calcData = []
       this.loadScheduleExerciseData()
@@ -283,7 +335,7 @@ export default {
       try {
         const { data } = await this.$axios.get(this.queryUrl)
         this.dataForChart = data.chartData
-        this.items = data.tableData
+        // this.items = data.tableData
 
         for (const key in this.dataForChart) {
           let totalCal = 0

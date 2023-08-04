@@ -49,8 +49,6 @@ export default {
       barChartOptions: {
         responsive: true,
       },
-      loadingInstance: null,
-      loading: true,
       remoteUrl: '/students/student-idx-by-class',
       labels: [],
       dataForChart: [],
@@ -96,14 +94,6 @@ export default {
   },
 
   watch: {
-    loading(val) {
-      if (val) {
-        this.loadingInstance.show()
-      } else {
-        this.loadingInstance.close()
-      }
-    },
-
     async queryUrl() {
       this.calcData = [[], []]
       this.labels = []

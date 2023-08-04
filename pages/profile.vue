@@ -3,9 +3,7 @@
     <user-personal-information
       v-if="$auth.user.role !== STUDENT()"
     ></user-personal-information>
-    <user-student-personal-information
-      v-else
-    ></user-student-personal-information>
+    <student-personal-information v-else></student-personal-information>
   </div>
 </template>
 

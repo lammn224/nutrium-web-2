@@ -38,11 +38,8 @@
             <div class="col-lg-auto">
               <div class="card-title align-items-start flex-column">
                 <h3 class="card-label font-weight-bolder text-dark">
-                  Thông tin calo (kcal)
-                </h3>
-                <span class="text-dark font-weight-bold font-size-sm mt-1">
                   {{ `Ngày ${startWeekStr} - ${endWeekStr}` }}
-                </span>
+                </h3>
               </div>
             </div>
           </div>
@@ -52,14 +49,13 @@
             variant="primary"
             size="sm"
             class="float-right"
-            @click="showDetail"
+            @click="showDetailMeal"
             >Xem chi tiết</b-button
           >
           <BarChart
-            :chart-data="barChartData"
-            :chart-options="barChartOptions"
-            :height="$auth.user.role === ADMIN ? 40 : 60"
-            :width="100"
+            :chart-data="barChartMealData"
+            :chart-options="barChartMealOptions"
+            class="w-100 mb-10"
           />
           <div>
             <b-modal ref="mealModal" size="xl" :title="mealModalTitle" ok-only>
@@ -68,7 +64,7 @@
                 card
               >
                 <b-tab
-                  v-for="(mealsData, key) in dataForChart"
+                  v-for="(mealsData, key) in mealDataForChart"
                   :key="key"
                   :title="WEEKDAY.get(key)"
                 >
@@ -162,6 +158,103 @@
               </b-tabs>
             </b-modal>
           </div>
+          <hr class="w-100 d-block" />
+
+          <div class="w-100">
+            <b-button
+              variant="primary"
+              size="sm"
+              class="float-right"
+              @click="showDetailScheduledExercise"
+              >Xem chi tiết</b-button
+            >
+          </div>
+          <BarChart
+            :chart-data="barChartScheduledExerciseData"
+            :chart-options="barChartScheduleExerciseOptions"
+            class="w-100"
+          />
+          <div>
+            <b-modal
+              ref="scheduledExerciseModal"
+              size="xl"
+              :title="scheduledExerciseModalTitle"
+              ok-only
+            >
+              <!--              <div>-->
+              <!--                <b-table-->
+              <!--                  :items="scheduledExerciseItems"-->
+              <!--                  :fields="scheduledExerciseFields"-->
+              <!--                  stacked="md"-->
+              <!--                  show-empty-->
+              <!--                  bordered-->
+              <!--                  striped-->
+              <!--                  head-variant="light"-->
+              <!--                  small-->
+              <!--                >-->
+              <!--                  <template #cell(activity)="row">-->
+              <!--                    <div class="d-flex justify-content-start">-->
+              <!--                      <b-card-->
+              <!--                        v-for="(d, idx) in row.item.scheduleExercise"-->
+              <!--                        :key="idx"-->
+              <!--                        class="m-2"-->
+              <!--                        bg-variant="primary"-->
+              <!--                        text-variant="white"-->
+              <!--                      >-->
+              <!--                        &lt;!&ndash;                    <i class="fa-arrow-circle-o-right"></i>&ndash;&gt;-->
+              <!--                        <div class="d-flex align-items-center">-->
+              <!--                          <i class="flaticon2-arrow text-white mr-2"></i>-->
+              <!--                          <span class="font-weight-bold">Hoạt động:&nbsp;</span>-->
+              <!--                          <span>{{ d.activity.name }}</span>-->
+              <!--                        </div>-->
+              <!--                        <div class="d-flex align-items-center">-->
+              <!--                          <i class="flaticon2-arrow text-white mr-2"></i>-->
+              <!--                          <span class="font-weight-bold"-->
+              <!--                          >Lượng calo đốt cháy:&nbsp;</span-->
+              <!--                          >-->
+              <!--                          <span>{{ d.calo }} cal</span>-->
+              <!--                        </div>-->
+              <!--                        <div class="d-flex align-items-center">-->
+              <!--                          <i class="flaticon2-arrow text-white mr-2"></i>-->
+              <!--                          <span class="font-weight-bold">Thời gian:&nbsp;</span>-->
+              <!--                          <span>{{ d.timeDur }} phút</span>-->
+              <!--                        </div>-->
+              <!--                      </b-card>-->
+              <!--                    </div>-->
+              <!--                  </template>-->
+              <!--                </b-table>-->
+              <!--              </div>-->
+
+              <b-tabs
+                active-nav-item-class="font-weight-bold text-primary"
+                card
+              >
+                <b-tab
+                  v-for="(se, key) in scheduledExerciseDataForChart"
+                  :key="key"
+                  :title="WEEKDAY.get(key)"
+                >
+                  <b-table
+                    hover
+                    bordered
+                    show-empty
+                    head-variant="light"
+                    :fields="exerciseField"
+                    :items="se"
+                    thead-class="font-weight-bold text-center align-middle"
+                  >
+                    <template #empty>
+                      <h4 class="text-center">Không có dữ liệu</h4>
+                    </template>
+                    <template #cell(idx)="row">
+                      {{ ++row.index }}
+                    </template>
+                  </b-table>
+                </b-tab>
+              </b-tabs>
+            </b-modal>
+          </div>
+          <hr class="w-100 d-block" />
         </div>
       </div>
     </b-overlay>
@@ -169,12 +262,12 @@
 </template>
 
 <script>
+import { ADMIN } from '~/constants/role.constant'
 import {
   dateToString,
   endOfWeek,
   startOfWeek,
 } from '~/services/convertTimeStamps.service'
-import { ADMIN } from '~/constants/role.constant'
 import {
   BREAKFAST,
   DINNER,
@@ -184,7 +277,7 @@ import {
 import { WEEKDAY } from '~/constants/weekday.constant'
 
 export default {
-  name: 'MealStatistic',
+  name: 'StudentStatistic',
   props: {
     student: {
       type: Object,
@@ -198,9 +291,30 @@ export default {
   data() {
     return {
       isLoading: false,
-      barChartOptions: {
+      barChartScheduleExerciseOptions: {
         responsive: true,
-        aspectRatio: 3,
+        aspectRatio: 2.5,
+        scales: {
+          x: {
+            stacked: true,
+            title: {
+              display: true,
+              text: 'Ngày',
+            },
+          },
+          y: {
+            stacked: true,
+            // max: 3000,
+            title: {
+              display: true,
+              text: 'kcal',
+            },
+          },
+        },
+      },
+      barChartMealOptions: {
+        responsive: true,
+        aspectRatio: 2.5,
         plugins: {
           annotation: {
             clip: false,
@@ -255,10 +369,64 @@ export default {
           },
         },
       },
-      timestamp: Math.floor(Date.now() / 1000),
-      remoteUrl: '/meals/by-week-chart',
-      dataForChart: [],
-      calcData: [[], [], []],
+      calcScheduleExerciseData: [],
+      scheduledExerciseDataForChart: null,
+      exerciseField: [
+        {
+          key: 'idx',
+          label: 'STT',
+          thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'activity.name',
+          label: 'Tên hoạt động',
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'activity.metIdx',
+          label: 'Chỉ số MET',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'timeDur',
+          label: 'Thời gian (phút)',
+          thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+        {
+          key: 'calo',
+          label: 'Calo đốt cháy (cal)',
+          thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+          thClass: { 'align-middle': true },
+        },
+      ],
+      // scheduledExerciseItems: [],
+      // scheduledExerciseFields: [
+      //   {
+      //     key: 'date',
+      //     label: 'Ngày',
+      //     class: 'text-center',
+      //     thStyle: { width: '15%', fontWeight: 'bold' },
+      //     tdClass: 'align-middle',
+      //   },
+      //   {
+      //     key: 'activity',
+      //     label: 'Hoạt động',
+      //     class: 'text-center',
+      //     thStyle: { width: '85%', fontWeight: 'bold' },
+      //     tdClass: 'align-middle',
+      //   },
+      // ],
+      calcMealData: [[], [], []],
+      mealDataForChart: null,
       foodField: [
         {
           key: 'idx',
@@ -338,20 +506,19 @@ export default {
           thClass: { 'align-middle': true },
         },
       ],
+      timestamp: Math.floor(Date.now() / 1000),
     }
   },
 
   computed: {
-    ADMIN() {
-      return ADMIN
-    },
-
     MEALS() {
       return MEALS
     },
-
     WEEKDAY() {
       return WEEKDAY
+    },
+    ADMIN() {
+      return ADMIN
     },
 
     startWeekStr() {
@@ -366,17 +533,77 @@ export default {
       return `${this.student.fullName}: Chi tiết bữa ăn ${this.startWeekStr} - ${this.endWeekStr}`
     },
 
-    queryUrl() {
-      let url = this.remoteUrl
+    scheduledExerciseModalTitle() {
+      return `${this.student.fullName}: Chi tiết hoạt động luyện tập ${this.startWeekStr} - ${this.endWeekStr}`
+    },
 
-      const params = new URLSearchParams(
-        this.$auth.user.role === ADMIN
-          ? { ts: this.timestamp }
-          : {
-              ts: this.timestamp,
-              studentId: this.student._id,
-            }
-      )
+    barChartScheduledExerciseData() {
+      return {
+        labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+        datasets: [
+          {
+            label: 'Lượng calo đốt cháy (kcal)',
+            backgroundColor: '#016768',
+            data: this.calcScheduleExerciseData,
+          },
+        ],
+      }
+    },
+
+    barChartMealData() {
+      return {
+        labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+        datasets: [
+          {
+            label: 'Bữa trưa (kcal)',
+            backgroundColor: [
+              '#016768',
+              '#016768',
+              '#016768',
+              '#016768',
+              '#016768',
+              '#7b005c',
+              '#7b005c',
+            ],
+            data: this.calcMealData[0],
+          },
+          {
+            label: 'Bữa sáng (kcal)',
+            backgroundColor: [
+              '#01abae',
+              '#01abae',
+              '#01abae',
+              '#01abae',
+              '#01abae',
+              '#01abae',
+              '#01abae',
+            ],
+            data: this.calcMealData[1],
+          },
+          {
+            label: 'Bữa tối (kcal)',
+            backgroundColor: [
+              '#69b800',
+              '#69b800',
+              '#69b800',
+              '#69b800',
+              '#69b800',
+              '#69b800',
+              '#69b800',
+            ],
+            data: this.calcMealData[2],
+          },
+        ],
+      }
+    },
+
+    mealQueryUrl() {
+      let url = '/meals/by-week-chart'
+
+      const params = new URLSearchParams({
+        ts: this.timestamp,
+        studentId: this.student._id,
+      })
 
       const paramsStr = params.toString()
       url += '?' + paramsStr
@@ -384,75 +611,30 @@ export default {
       return url
     },
 
-    barChartData() {
-      return {
-        labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
-        datasets:
-          this.$auth.user.role === ADMIN
-            ? [
-                {
-                  label: 'Bữa trưa (kcal)',
-                  backgroundColor: [
-                    '#016768',
-                    '#016768',
-                    '#016768',
-                    '#016768',
-                    '#016768',
-                    '#7b005c',
-                    '#7b005c',
-                  ],
-                  data: this.calcData[0],
-                },
-              ]
-            : [
-                {
-                  label: 'Bữa trưa (kcal)',
-                  backgroundColor: [
-                    '#016768',
-                    '#016768',
-                    '#016768',
-                    '#016768',
-                    '#016768',
-                    '#7b005c',
-                    '#7b005c',
-                  ],
-                  data: this.calcData[0],
-                },
-                {
-                  label: 'Bữa sáng (kcal)',
-                  backgroundColor: [
-                    '#01abae',
-                    '#01abae',
-                    '#01abae',
-                    '#01abae',
-                    '#01abae',
-                    '#cd0096',
-                    '#cd0096',
-                  ],
-                  data: this.calcData[1],
-                },
-                {
-                  label: 'Bữa tối (kcal)',
-                  backgroundColor: [
-                    '#69b800',
-                    '#69b800',
-                    '#69b800',
-                    '#69b800',
-                    '#69b800',
-                    '#ffc403',
-                    '#ffc403',
-                  ],
-                  data: this.calcData[2],
-                },
-              ],
-      }
+    scheduledExerciseQueryUrl() {
+      let url = '/schedule-exercise/by-week-chart'
+
+      const params = new URLSearchParams({
+        ts: this.timestamp,
+        studentId: this.student._id,
+      })
+
+      const paramsStr = params.toString()
+      url += '?' + paramsStr
+
+      return url
     },
   },
 
   watch: {
-    queryUrl() {
-      this.calcData = [[], [], []]
+    mealQueryUrl() {
+      this.calcMealData = [[], [], []]
       this.loadMealsData()
+    },
+
+    scheduledExerciseQueryUrl() {
+      this.calcScheduleExerciseData = []
+      this.loadScheduleExerciseData()
     },
   },
 
@@ -461,6 +643,7 @@ export default {
       new Promise((resolve, reject) => setTimeout(resolve, ms))
 
     await this.loadMealsData()
+    await this.loadScheduleExerciseData()
   },
 
   methods: {
@@ -476,7 +659,11 @@ export default {
       this.timestamp = Date.now() / 1000
     },
 
-    showDetail() {
+    showDetailScheduledExercise() {
+      this.$refs.scheduledExerciseModal.show()
+    },
+
+    showDetailMeal() {
       this.$refs.mealModal.show()
     },
 
@@ -484,12 +671,12 @@ export default {
       this.isLoading = true
       await this.delay(500)
       try {
-        const { data } = await this.$axios.get(this.queryUrl)
-        this.dataForChart = data
+        const { data } = await this.$axios.get(this.mealQueryUrl)
+        this.mealDataForChart = data
 
-        for (const key in this.dataForChart) {
-          if (this.dataForChart[key].length) {
-            const day = this.dataForChart[key]
+        for (const key in this.mealDataForChart) {
+          if (this.mealDataForChart[key].length) {
+            const day = this.mealDataForChart[key]
 
             const isWeekend = new Date(day[0].date * 1000).toLocaleString(
               'en-US',
@@ -499,112 +686,112 @@ export default {
             if (isWeekend === 'Sun' || isWeekend === 'Sat') {
               if (day.length === 1) {
                 if (day[0].type === LAUNCH) {
-                  this.calcData[1].push(0)
-                  this.calcData[2].push(0)
+                  this.calcMealData[1].push(0)
+                  this.calcMealData[2].push(0)
 
-                  this.calcData[0].push(day[0].power)
+                  this.calcMealData[0].push(day[0].power)
                 }
 
                 if (day[0].type === BREAKFAST) {
-                  this.calcData[0].push(0)
-                  this.calcData[2].push(0)
+                  this.calcMealData[0].push(0)
+                  this.calcMealData[2].push(0)
 
-                  this.calcData[1].push(day[0].power)
+                  this.calcMealData[1].push(day[0].power)
                 }
 
                 if (day[0].type === DINNER) {
-                  this.calcData[0].push(0)
-                  this.calcData[1].push(0)
+                  this.calcMealData[0].push(0)
+                  this.calcMealData[1].push(0)
 
-                  this.calcData[2].push(day[0].power)
+                  this.calcMealData[2].push(day[0].power)
                 }
               }
 
               if (day.length === 2) {
                 if (day[0].type === BREAKFAST && day[1].type === LAUNCH) {
-                  this.calcData[2].push(0)
+                  this.calcMealData[2].push(0)
 
-                  this.calcData[0].push(day[1].power)
-                  this.calcData[1].push(day[0].power)
+                  this.calcMealData[0].push(day[1].power)
+                  this.calcMealData[1].push(day[0].power)
                 }
 
                 if (day[0].type === BREAKFAST && day[1].type === DINNER) {
-                  this.calcData[0].push(0)
+                  this.calcMealData[0].push(0)
 
-                  this.calcData[1].push(day[0].power)
-                  this.calcData[2].push(day[1].power)
+                  this.calcMealData[1].push(day[0].power)
+                  this.calcMealData[2].push(day[1].power)
                 }
 
                 if (day[0].type === DINNER && day[1].type === LAUNCH) {
-                  this.calcData[1].push(0)
+                  this.calcMealData[1].push(0)
 
-                  this.calcData[0].push(day[1].power)
-                  this.calcData[2].push(day[0].power)
+                  this.calcMealData[0].push(day[1].power)
+                  this.calcMealData[2].push(day[0].power)
                 }
               }
 
               if (day.length === 3) {
-                this.calcData[0].push(day[0].power)
-                this.calcData[1].push(day[1].power)
-                this.calcData[2].push(day[2].power)
+                this.calcMealData[0].push(day[0].power)
+                this.calcMealData[1].push(day[1].power)
+                this.calcMealData[2].push(day[2].power)
               }
             } else {
               if (day.length === 1) {
                 if (day[0].type === LAUNCH) {
-                  this.calcData[1].push(0)
-                  this.calcData[2].push(0)
+                  this.calcMealData[1].push(0)
+                  this.calcMealData[2].push(0)
 
-                  this.calcData[0].push(day[0].power)
+                  this.calcMealData[0].push(day[0].power)
                 }
 
                 if (day[0].type === BREAKFAST) {
-                  this.calcData[0].push(0)
-                  this.calcData[2].push(0)
+                  this.calcMealData[0].push(0)
+                  this.calcMealData[2].push(0)
 
-                  this.calcData[1].push(day[0].power)
+                  this.calcMealData[1].push(day[0].power)
                 }
 
                 if (day[0].type === DINNER) {
-                  this.calcData[0].push(0)
-                  this.calcData[1].push(0)
+                  this.calcMealData[0].push(0)
+                  this.calcMealData[1].push(0)
 
-                  this.calcData[2].push(day[0].power)
+                  this.calcMealData[2].push(day[0].power)
                 }
               }
 
               if (day.length === 2) {
                 if (day[0].type === LAUNCH && day[1].type === BREAKFAST) {
-                  this.calcData[2].push(0)
+                  this.calcMealData[2].push(0)
 
-                  this.calcData[0].push(day[0].power)
-                  this.calcData[1].push(day[1].power)
+                  this.calcMealData[0].push(day[0].power)
+                  this.calcMealData[1].push(day[1].power)
                 }
 
                 if (day[0].type === BREAKFAST && day[1].type === DINNER) {
-                  this.calcData[0].push(0)
+                  this.calcMealData[0].push(0)
 
-                  this.calcData[1].push(day[0].power)
-                  this.calcData[2].push(day[1].power)
+                  this.calcMealData[1].push(day[0].power)
+                  this.calcMealData[2].push(day[1].power)
                 }
 
                 if (day[0].type === LAUNCH && day[1].type === DINNER) {
-                  this.calcData[1].push(0)
+                  this.calcMealData[1].push(0)
 
-                  this.calcData[0].push(day[0].power)
-                  this.calcData[2].push(day[0].power)
+                  this.calcMealData[0].push(day[0].power)
+                  this.calcMealData[2].push(day[0].power)
                 }
               }
 
               if (day.length === 3) {
-                this.calcData[0].push(day[0].power)
-                this.calcData[1].push(day[1].power)
-                this.calcData[2].push(day[2].power)
+                this.calcMealData[0].push(day[0].power)
+                this.calcMealData[1].push(day[1].power)
+                this.calcMealData[2].push(day[2].power)
               }
             }
           } else {
-            this.calcData[0].push(0)
-            this.calcData[1].push(0)
-            this.calcData[2].push(0)
+            this.calcMealData[0].push(0)
+            this.calcMealData[1].push(0)
+            this.calcMealData[2].push(0)
           }
         }
       } catch (e) {
@@ -613,14 +800,33 @@ export default {
         this.isLoading = false
       }
     },
+
+    async loadScheduleExerciseData() {
+      this.isLoading = true
+      await this.delay(500)
+      try {
+        const { data } = await this.$axios.get(this.scheduledExerciseQueryUrl)
+        this.scheduledExerciseDataForChart = data.chartData
+        // this.scheduledExerciseItems = data.tableData
+
+        for (const key in this.scheduledExerciseDataForChart) {
+          let totalCal = 0
+          for (
+            let i = 0;
+            i < this.scheduledExerciseDataForChart[key].length;
+            i++
+          ) {
+            totalCal += this.scheduledExerciseDataForChart[key][i]?.calo
+          }
+
+          this.calcScheduleExerciseData.push(totalCal)
+        }
+      } catch (e) {
+        this.calcScheduleExerciseData = []
+      } finally {
+        this.isLoading = false
+      }
+    },
   },
 }
 </script>
-
-<style>
-.chart-wrapper {
-  border: 1px solid blue;
-  height: 300px;
-  width: 600px;
-}
-</style>

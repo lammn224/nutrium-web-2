@@ -1,10 +1,12 @@
 import { routeMenu } from '~/config/menu.config'
 export default function ({ $auth, route, redirect }) {
+  console.log(route)
   if (
     route.fullPath === '/error' ||
     route.fullPath === '/login' ||
     route.fullPath === '/test' ||
-    route.fullPath === '/profile'
+    route.fullPath === '/profile' ||
+    route.name === 'student-slug'
   ) {
     return
   }

@@ -14,16 +14,22 @@
             <div class="d-flex flex-row-fluid mb-5">
               <student-info-card :student="child"></student-info-card>
               <div class="w-100">
-                <meal-statistic
+                <!--                <meal-statistic-->
+                <!--                  :student="child"-->
+                <!--                  :class-name="-->
+                <!--                    $auth.user.child?.length === 1 ? 'ml-lg-8' : 'ml-lg-8'-->
+                <!--                  "-->
+                <!--                />-->
+                <student-statistic
                   :student="child"
                   :class-name="
                     $auth.user.child?.length === 1 ? 'ml-lg-8' : 'ml-lg-8'
                   "
                 />
-                <schedule-exercise-statistic
-                  :student="child"
-                  :class-name="'ml-lg-8'"
-                />
+                <!--                <schedule-exercise-statistic-->
+                <!--                  :student="child"-->
+                <!--                  :class-name="'ml-lg-8'"-->
+                <!--                />-->
               </div>
             </div>
             <hr class="mb-12 d-block" />
@@ -33,14 +39,15 @@
         <div v-else class="d-flex flex-row-fluid mb-5">
           <student-info-card :student="$auth.user"></student-info-card>
           <div class="w-100">
-            <meal-statistic
-              :student="$auth.user"
-              :class-name="'ml-lg-8'"
-            ></meal-statistic>
-            <schedule-exercise-statistic
-              :student="$auth.user"
-              :class-name="'ml-lg-8'"
-            />
+            <student-statistic :student="$auth.user" :class-name="'ml-lg-8'" />
+            <!--            <meal-statistic-->
+            <!--              :student="$auth.user"-->
+            <!--              :class-name="'ml-lg-8'"-->
+            <!--            ></meal-statistic>-->
+            <!--            <schedule-exercise-statistic-->
+            <!--              :student="$auth.user"-->
+            <!--              :class-name="'ml-lg-8'"-->
+            <!--            />-->
           </div>
         </div>
       </div>

@@ -32,8 +32,6 @@
 </template>
 
 <script>
-// import { VeLoading } from 'vue-easytable'
-
 export default {
   name: 'AvgBodyIndexByGrade',
   data() {
@@ -41,8 +39,6 @@ export default {
       barChartOptions: {
         responsive: true,
       },
-      loadingInstance: null,
-      loading: true,
       remoteUrl: '/students/student-idx-by-grade',
       labels: [],
       dataForChart: [],
@@ -72,34 +68,14 @@ export default {
     },
   },
 
-  watch: {
-    loading(val) {
-      if (val) {
-        this.loadingInstance.show()
-      } else {
-        this.loadingInstance.close()
-      }
-    },
-  },
-
   created() {
     this.loadStudentIdxData()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
   },
 
-  async mounted() {
-    // this.loadingInstance = VeLoading({
-    //   target: this.$refs.datatable,
-    //   name: null,
-    // })
-    // await this.loadStudentIdxData()
-  },
-
   methods: {
     async loadStudentIdxData() {
-      // this.loadingInstance.show()
-
       try {
         const { data } = await this.$axios.get(this.remoteUrl)
         this.isLoading = true
