@@ -227,9 +227,10 @@ export default {
   },
 
   created() {
-    this.loadActivities()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadActivities()
   },
 
   methods: {
@@ -245,10 +246,12 @@ export default {
       this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
         this.limit
       }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+      this.isLoading = true
+      await this.delay(500)
+
       try {
         const { data } = await this.$axios.get(`/activities?${this.params}`)
-        this.isLoading = true
-        await this.delay(500)
+
         this.activities = data.results
         this.totalRows = data.total
       } catch (e) {

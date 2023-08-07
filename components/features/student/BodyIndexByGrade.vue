@@ -69,17 +69,19 @@ export default {
   },
 
   created() {
-    this.loadStudentIdxData()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadStudentIdxData()
   },
 
   methods: {
     async loadStudentIdxData() {
+      this.isLoading = true
+      await this.delay(500)
       try {
         const { data } = await this.$axios.get(this.remoteUrl)
-        this.isLoading = true
-        await this.delay(500)
+
         data.forEach((d) => {
           this.labels.push(d.grade)
           this.calcData[0].push(d.avgWeight)

@@ -200,11 +200,13 @@ export default {
   created() {
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadSchools()
   },
 
-  async mounted() {
-    await this.loadSchools()
-  },
+  // async mounted() {
+  //   await this.loadSchools()
+  // },
 
   methods: {
     async loadSchools() {
@@ -242,12 +244,13 @@ export default {
       }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${
         this.sortType
       }&schoolId=${this.selectedSchool?._id}`
+      this.isLoading = true
+      await this.delay(500)
+
       try {
         const { data } = await this.$axios.get(
           `/students/account?${this.params}`
         )
-        this.isLoading = true
-        await this.delay(500)
         this.studentAccounts = data.results
         this.totalRows = data.total
       } catch (e) {

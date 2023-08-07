@@ -151,9 +151,10 @@ export default {
   },
 
   created() {
-    this.loadGrades()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadGrades()
   },
 
   methods: {
@@ -162,10 +163,12 @@ export default {
         this.limit
       }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
 
+      this.isLoading = true
+      await this.delay(500)
+
       try {
         const { data } = await this.$axios.get(`/grade?${this.params}`)
-        this.isLoading = true
-        await this.delay(500)
+
         this.grades = data.results
         this.totalRows = data.total
       } catch (e) {

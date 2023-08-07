@@ -124,9 +124,10 @@ export default {
   },
 
   created() {
-    this.detailsClass()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.detailsClass()
   },
 
   methods: {
@@ -134,10 +135,11 @@ export default {
 
     async detailsClass() {
       const params = this.$route.params
+      this.isLoading = true
+      await this.delay(500)
       try {
         const { data } = await this.$axios.get(`classes/${params.slug}`)
-        this.isLoading = true
-        await this.delay(500)
+
         this.class = data
         this.tableTitle += data.name
         this.tableData = data.members

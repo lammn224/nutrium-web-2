@@ -102,18 +102,19 @@ export default {
   },
 
   created() {
-    this.loadGradeOption()
-    this.loadStudentIdxData()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadGradeOption()
+    this.loadStudentIdxData()
   },
 
   methods: {
     async loadStudentIdxData() {
+      this.isLoading = true
+      await this.delay(500)
       try {
         const { data } = await this.$axios.get(this.queryUrl)
-        this.isLoading = true
-        await this.delay(500)
         const filteredData = [[], []]
         const labels = []
         data.forEach((d) => {

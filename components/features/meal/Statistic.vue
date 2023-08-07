@@ -363,7 +363,11 @@ export default {
     },
 
     mealModalTitle() {
-      return `${this.student.fullName}: Chi tiết bữa ăn ${this.startWeekStr} - ${this.endWeekStr}`
+      if (this.student) {
+        return `${this.student.fullName}: Chi tiết bữa ăn ${this.startWeekStr} - ${this.endWeekStr}`
+      }
+
+      return `Chi tiết bữa ăn ${this.startWeekStr} - ${this.endWeekStr}`
     },
 
     queryUrl() {

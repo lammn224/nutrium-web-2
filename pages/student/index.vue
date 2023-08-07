@@ -195,9 +195,10 @@ export default {
   },
 
   created() {
-    this.loadStudents()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadStudents()
   },
 
   methods: {
@@ -216,10 +217,13 @@ export default {
       this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
         this.limit
       }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+
+      this.isLoading = true
+      await this.delay(500)
+
       try {
         const { data } = await this.$axios.get(`/students?${this.params}`)
-        this.isLoading = true
-        await this.delay(500)
+
         this.students = data.results
         this.totalRows = data.total
       } catch (e) {

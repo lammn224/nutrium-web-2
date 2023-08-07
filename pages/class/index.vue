@@ -148,9 +148,10 @@ export default {
   },
 
   created() {
-    this.loadClassesData()
     this.delay = (ms) =>
       new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+    this.loadClassesData()
   },
 
   methods: {
@@ -159,10 +160,12 @@ export default {
         this.limit
       }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
 
+      this.isLoading = true
+      await this.delay(500)
+
       try {
         const { data } = await this.$axios.get(`/classes?${this.params}`)
-        this.isLoading = true
-        await this.delay(500)
+
         this.classes = data.results
         this.totalRows = data.total
       } catch (e) {
