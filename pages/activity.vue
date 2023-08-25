@@ -164,7 +164,6 @@ export default {
             label: 'Tên hoạt động',
             sortable: true,
             thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
-            tdClass: { 'text-center': true },
           },
           {
             key: 'metIdx',
@@ -192,7 +191,6 @@ export default {
             label: 'Tên hoạt động',
             sortable: true,
             thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
-            tdClass: { 'text-center': true },
           },
           {
             key: 'metIdx',

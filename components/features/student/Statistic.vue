@@ -181,50 +181,6 @@
               :title="scheduledExerciseModalTitle"
               ok-only
             >
-              <!--              <div>-->
-              <!--                <b-table-->
-              <!--                  :items="scheduledExerciseItems"-->
-              <!--                  :fields="scheduledExerciseFields"-->
-              <!--                  stacked="md"-->
-              <!--                  show-empty-->
-              <!--                  bordered-->
-              <!--                  striped-->
-              <!--                  head-variant="light"-->
-              <!--                  small-->
-              <!--                >-->
-              <!--                  <template #cell(activity)="row">-->
-              <!--                    <div class="d-flex justify-content-start">-->
-              <!--                      <b-card-->
-              <!--                        v-for="(d, idx) in row.item.scheduleExercise"-->
-              <!--                        :key="idx"-->
-              <!--                        class="m-2"-->
-              <!--                        bg-variant="primary"-->
-              <!--                        text-variant="white"-->
-              <!--                      >-->
-              <!--                        &lt;!&ndash;                    <i class="fa-arrow-circle-o-right"></i>&ndash;&gt;-->
-              <!--                        <div class="d-flex align-items-center">-->
-              <!--                          <i class="flaticon2-arrow text-white mr-2"></i>-->
-              <!--                          <span class="font-weight-bold">Hoạt động:&nbsp;</span>-->
-              <!--                          <span>{{ d.activity.name }}</span>-->
-              <!--                        </div>-->
-              <!--                        <div class="d-flex align-items-center">-->
-              <!--                          <i class="flaticon2-arrow text-white mr-2"></i>-->
-              <!--                          <span class="font-weight-bold"-->
-              <!--                          >Lượng calo đốt cháy:&nbsp;</span-->
-              <!--                          >-->
-              <!--                          <span>{{ d.calo }} cal</span>-->
-              <!--                        </div>-->
-              <!--                        <div class="d-flex align-items-center">-->
-              <!--                          <i class="flaticon2-arrow text-white mr-2"></i>-->
-              <!--                          <span class="font-weight-bold">Thời gian:&nbsp;</span>-->
-              <!--                          <span>{{ d.timeDur }} phút</span>-->
-              <!--                        </div>-->
-              <!--                      </b-card>-->
-              <!--                    </div>-->
-              <!--                  </template>-->
-              <!--                </b-table>-->
-              <!--              </div>-->
-
               <b-tabs
                 active-nav-item-class="font-weight-bold text-primary"
                 card
@@ -444,56 +400,56 @@ export default {
         },
         {
           key: 'power',
-          label: 'Năng lượng',
+          label: 'Năng lượng (kcal)',
           thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'protein',
-          label: 'Protein',
+          label: 'Protein (g)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'lipid',
-          label: 'Lipid',
+          label: 'Lipid (g)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'glucid',
-          label: 'Glucid',
+          label: 'Glucid (g)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'ca',
-          label: 'Canxi',
+          label: 'Canxi (mg)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'fe',
-          label: 'Sắt',
+          label: 'Sắt (mg)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'zn',
-          label: 'Kẽm',
+          label: 'Kẽm (mg)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },
         },
         {
           key: 'fiber',
-          label: 'Chất xơ',
+          label: 'Chất xơ (g)',
           thStyle: { width: '7%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
           thClass: { 'align-middle': true },

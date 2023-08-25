@@ -12,7 +12,7 @@
     cancel-title="Hủy bỏ"
     no-close-on-backdrop
     no-enforce-focus
-    size="lg"
+    size="xl"
     :hide-footer="
       $auth.user._id !== form.createdBy ||
       convertStringToTimeStamps(form.date) <
@@ -152,7 +152,7 @@
             name="Năng lượng"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Năng lượng">
+            <b-form-group v-bind="$attrs" label="Năng lượng (kcal)">
               <b-form-input
                 v-model="form.power"
                 class="border border-2 border-primary"
@@ -172,7 +172,7 @@
             name="Protein"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Protein">
+            <b-form-group v-bind="$attrs" label="Protein (g)">
               <b-form-input
                 v-model="form.protein"
                 class="border border-2 border-primary"
@@ -192,7 +192,7 @@
             name="Lipid"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Lipid">
+            <b-form-group v-bind="$attrs" label="Lipid (g)">
               <b-form-input
                 v-model="form.lipid"
                 class="border border-2 border-primary"
@@ -212,7 +212,7 @@
             name="Glucid"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Glucid">
+            <b-form-group v-bind="$attrs" label="Glucid (g)">
               <b-form-input
                 v-model="form.glucid"
                 class="border border-2 border-primary"
@@ -235,7 +235,7 @@
             name="Canxi"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Canxi">
+            <b-form-group v-bind="$attrs" label="Canxi (mg)">
               <b-form-input
                 v-model="form.ca"
                 class="border border-2 border-primary"
@@ -255,7 +255,7 @@
             name="Sắt"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Sắt">
+            <b-form-group v-bind="$attrs" label="Sắt (mg)">
               <b-form-input
                 v-model="form.fe"
                 class="border border-2 border-primary"
@@ -275,7 +275,7 @@
             name="Chất xơ"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Chất xơ">
+            <b-form-group v-bind="$attrs" label="Chất xơ (g)">
               <b-form-input
                 v-model="form.fiber"
                 class="border border-2 border-primary"
@@ -295,7 +295,7 @@
             name="Kẽm"
             rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
           >
-            <b-form-group v-bind="$attrs" label="Kẽm">
+            <b-form-group v-bind="$attrs" label="Kẽm (mg)">
               <b-form-input
                 v-model="form.zn"
                 class="border border-2 border-primary"
@@ -332,7 +332,10 @@
                   : ''
               "
               :disabled="
-                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+                $auth.user.role === STUDENT ||
+                $auth.user._id !== form.createdBy ||
+                convertStringToTimeStamps(form.date) <
+                  convertStringToTimeStamps(dateToString(new Date()))
               "
               @input="onSelectChange(index)"
             />
@@ -344,7 +347,9 @@
               :disabled="
                 selectValues[index] === '' ||
                 $auth.user.role === STUDENT ||
-                $auth.user._id !== form.createdBy
+                $auth.user._id !== form.createdBy ||
+                convertStringToTimeStamps(form.date) <
+                  convertStringToTimeStamps(dateToString(new Date()))
               "
               placeholder="Khối lượng (gam)"
               label="Khối lượng (gam)"
@@ -356,7 +361,10 @@
           <div class="col-xl-2 pt-9">
             <b-button
               :disabled="
-                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+                $auth.user.role === STUDENT ||
+                $auth.user._id !== form.createdBy ||
+                convertStringToTimeStamps(form.date) <
+                  convertStringToTimeStamps(dateToString(new Date()))
               "
               @click="removeSelect(index)"
               >Xoá</b-button
@@ -365,7 +373,10 @@
         </div>
         <b-button
           :disabled="
-            $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
+            $auth.user.role === STUDENT ||
+            $auth.user._id !== form.createdBy ||
+            convertStringToTimeStamps(form.date) <
+              convertStringToTimeStamps(dateToString(new Date()))
           "
           @click="addSelect"
           >Thêm món ăn</b-button

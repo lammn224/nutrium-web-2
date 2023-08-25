@@ -106,7 +106,7 @@ export default {
         this.bmiResult = 'Gầy'
         this.diseaseRisk = 'Thấp'
       } else if (this.student.bmi >= 25 && this.student.bmi <= 29.9) {
-        this.bmiResult = 'Hơi béo'
+        this.bmiResult = 'Tiền béo phì'
         this.diseaseRisk = 'Cao'
       } else if (this.student.bmi >= 30 && this.student.bmi <= 34.9) {
         this.bmiResult = 'Béo phì cấp độ 1'

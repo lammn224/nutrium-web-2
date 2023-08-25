@@ -65,49 +65,6 @@
         </div>
         <div>
           <b-modal ref="modal" size="xl" :title="modalTitle" ok-only>
-            <div>
-              <!--              <b-table-->
-              <!--                :items="items"-->
-              <!--                :fields="fields"-->
-              <!--                stacked="md"-->
-              <!--                show-empty-->
-              <!--                bordered-->
-              <!--                striped-->
-              <!--                head-variant="light"-->
-              <!--                small-->
-              <!--              >-->
-              <!--                <template #cell(activity)="row">-->
-              <!--                  <div class="d-flex justify-content-start">-->
-              <!--                    <b-card-->
-              <!--                      v-for="(d, idx) in row.item.scheduleExercise"-->
-              <!--                      :key="idx"-->
-              <!--                      class="m-2"-->
-              <!--                      bg-variant="primary"-->
-              <!--                      text-variant="white"-->
-              <!--                    >-->
-              <!--                      &lt;!&ndash;                    <i class="fa-arrow-circle-o-right"></i>&ndash;&gt;-->
-              <!--                      <div class="d-flex align-items-center">-->
-              <!--                        <i class="flaticon2-arrow text-white mr-2"></i>-->
-              <!--                        <span class="font-weight-bold">Hoạt động:&nbsp;</span>-->
-              <!--                        <span>{{ d.activity.name }}</span>-->
-              <!--                      </div>-->
-              <!--                      <div class="d-flex align-items-center">-->
-              <!--                        <i class="flaticon2-arrow text-white mr-2"></i>-->
-              <!--                        <span class="font-weight-bold"-->
-              <!--                          >Lượng calo đốt cháy:&nbsp;</span-->
-              <!--                        >-->
-              <!--                        <span>{{ d.calo }} cal</span>-->
-              <!--                      </div>-->
-              <!--                      <div class="d-flex align-items-center">-->
-              <!--                        <i class="flaticon2-arrow text-white mr-2"></i>-->
-              <!--                        <span class="font-weight-bold">Thời gian:&nbsp;</span>-->
-              <!--                        <span>{{ d.timeDur }} phút</span>-->
-              <!--                      </div>-->
-              <!--                    </b-card>-->
-              <!--                  </div>-->
-              <!--                </template>-->
-              <!--              </b-table>-->
-            </div>
             <b-tabs active-nav-item-class="font-weight-bold text-primary" card>
               <b-tab
                 v-for="(se, key) in dataForChart"
