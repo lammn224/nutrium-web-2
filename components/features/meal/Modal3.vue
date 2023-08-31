@@ -150,7 +150,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Năng lượng"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Năng lượng (kcal)">
               <b-form-input
@@ -170,7 +170,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Protein"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Protein (g)">
               <b-form-input
@@ -190,7 +190,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Lipid"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Lipid (g)">
               <b-form-input
@@ -210,7 +210,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Glucid"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Glucid (g)">
               <b-form-input
@@ -233,7 +233,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Canxi"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Canxi (mg)">
               <b-form-input
@@ -253,7 +253,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Sắt"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Sắt (mg)">
               <b-form-input
@@ -273,7 +273,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Chất xơ"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Chất xơ (g)">
               <b-form-input
@@ -293,7 +293,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Kẽm"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
             <b-form-group v-bind="$attrs" label="Kẽm (mg)">
               <b-form-input
@@ -353,7 +353,7 @@
               "
               placeholder="Khối lượng (gam)"
               label="Khối lượng (gam)"
-              rules="required|max:100"
+              rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
               name="name"
               class="w-25"
             />
@@ -401,7 +401,6 @@ import {
 } from '~/constants/meal-type.constant'
 import {
   convertStringToTimeStamps,
-  convertTimeStampsToString,
   dateToString,
 } from '~/services/convertTimeStamps.service'
 import { ERROR_CODES } from '~/constants/error-code.constants'
@@ -626,7 +625,6 @@ export default {
   methods: {
     dateToString,
     convertStringToTimeStamps,
-    convertTimeStampsToString,
     LAUNCH() {
       return LAUNCH
     },
@@ -731,7 +729,7 @@ export default {
     },
     addSelect() {
       this.selectValues.push('')
-      this.inputValues.push('0')
+      this.inputValues.push('0.0')
       this.canAddSelect = true
     },
   },

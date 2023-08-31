@@ -68,7 +68,7 @@
                 card
               >
                 <b-tab
-                  v-for="(mealsData, key) in dataForChart"
+                  v-for="(mealsData, key) in mealSummaryData"
                   :key="key"
                   :title="WEEKDAY.get(key)"
                 >
@@ -77,7 +77,7 @@
                     card
                   >
                     <b-tab
-                      v-for="(meal, index) in mealsData"
+                      v-for="(meal, index) in mealsData.meals"
                       :key="index"
                       :title="MEALS.get(meal.type)"
                     >
@@ -257,7 +257,7 @@ export default {
       },
       timestamp: Math.floor(Date.now() / 1000),
       remoteUrl: '/meals/by-week-chart',
-      dataForChart: [],
+      mealSummaryData: [],
       calcData: [[], [], []],
       foodField: [
         {
@@ -489,120 +489,137 @@ export default {
       await this.delay(500)
       try {
         const { data } = await this.$axios.get(this.queryUrl)
-        this.dataForChart = data
+        this.mealSummaryData = data
 
-        for (const key in this.dataForChart) {
-          if (this.dataForChart[key].length) {
-            const day = this.dataForChart[key]
+        for (const key in this.mealSummaryData) {
+          const listMealsOfDay = this.mealSummaryData[key].meals
 
-            const isWeekend = new Date(day[0].date * 1000).toLocaleString(
-              'en-US',
-              { weekday: 'short' }
-            )
+          if (listMealsOfDay.length) {
+            const isWeekend = new Date(
+              listMealsOfDay[0].date * 1000
+            ).toLocaleString('en-US', { weekday: 'short' })
 
             if (isWeekend === 'Sun' || isWeekend === 'Sat') {
-              if (day.length === 1) {
-                if (day[0].type === LAUNCH) {
+              if (listMealsOfDay.length === 1) {
+                if (listMealsOfDay[0].type === LAUNCH) {
                   this.calcData[1].push(0)
                   this.calcData[2].push(0)
 
-                  this.calcData[0].push(day[0].power)
+                  this.calcData[0].push(listMealsOfDay[0].power)
                 }
 
-                if (day[0].type === BREAKFAST) {
+                if (listMealsOfDay[0].type === BREAKFAST) {
                   this.calcData[0].push(0)
                   this.calcData[2].push(0)
 
-                  this.calcData[1].push(day[0].power)
+                  this.calcData[1].push(listMealsOfDay[0].power)
                 }
 
-                if (day[0].type === DINNER) {
+                if (listMealsOfDay[0].type === DINNER) {
                   this.calcData[0].push(0)
                   this.calcData[1].push(0)
 
-                  this.calcData[2].push(day[0].power)
+                  this.calcData[2].push(listMealsOfDay[0].power)
                 }
               }
 
-              if (day.length === 2) {
-                if (day[0].type === BREAKFAST && day[1].type === LAUNCH) {
+              if (listMealsOfDay.length === 2) {
+                if (
+                  listMealsOfDay[0].type === BREAKFAST &&
+                  listMealsOfDay[1].type === LAUNCH
+                ) {
                   this.calcData[2].push(0)
 
-                  this.calcData[0].push(day[1].power)
-                  this.calcData[1].push(day[0].power)
+                  this.calcData[0].push(listMealsOfDay[1].power)
+                  this.calcData[1].push(listMealsOfDay[0].power)
                 }
 
-                if (day[0].type === BREAKFAST && day[1].type === DINNER) {
+                if (
+                  listMealsOfDay[0].type === BREAKFAST &&
+                  listMealsOfDay[1].type === DINNER
+                ) {
                   this.calcData[0].push(0)
 
-                  this.calcData[1].push(day[0].power)
-                  this.calcData[2].push(day[1].power)
+                  this.calcData[1].push(listMealsOfDay[0].power)
+                  this.calcData[2].push(listMealsOfDay[1].power)
                 }
 
-                if (day[0].type === DINNER && day[1].type === LAUNCH) {
+                if (
+                  listMealsOfDay[0].type === DINNER &&
+                  listMealsOfDay[1].type === LAUNCH
+                ) {
                   this.calcData[1].push(0)
 
-                  this.calcData[0].push(day[1].power)
-                  this.calcData[2].push(day[0].power)
+                  this.calcData[0].push(listMealsOfDay[1].power)
+                  this.calcData[2].push(listMealsOfDay[0].power)
                 }
               }
 
-              if (day.length === 3) {
-                this.calcData[0].push(day[0].power)
-                this.calcData[1].push(day[1].power)
-                this.calcData[2].push(day[2].power)
+              if (listMealsOfDay.length === 3) {
+                this.calcData[0].push(listMealsOfDay[0].power)
+                this.calcData[1].push(listMealsOfDay[1].power)
+                this.calcData[2].push(listMealsOfDay[2].power)
               }
             } else {
-              if (day.length === 1) {
-                if (day[0].type === LAUNCH) {
+              if (listMealsOfDay.length === 1) {
+                if (listMealsOfDay[0].type === LAUNCH) {
                   this.calcData[1].push(0)
                   this.calcData[2].push(0)
 
-                  this.calcData[0].push(day[0].power)
+                  this.calcData[0].push(listMealsOfDay[0].power)
                 }
 
-                if (day[0].type === BREAKFAST) {
+                if (listMealsOfDay[0].type === BREAKFAST) {
                   this.calcData[0].push(0)
                   this.calcData[2].push(0)
 
-                  this.calcData[1].push(day[0].power)
+                  this.calcData[1].push(listMealsOfDay[0].power)
                 }
 
-                if (day[0].type === DINNER) {
+                if (listMealsOfDay[0].type === DINNER) {
                   this.calcData[0].push(0)
                   this.calcData[1].push(0)
 
-                  this.calcData[2].push(day[0].power)
+                  this.calcData[2].push(listMealsOfDay[0].power)
                 }
               }
 
-              if (day.length === 2) {
-                if (day[0].type === LAUNCH && day[1].type === BREAKFAST) {
+              if (listMealsOfDay.length === 2) {
+                if (
+                  listMealsOfDay[0].type === LAUNCH &&
+                  listMealsOfDay[1].type === BREAKFAST
+                ) {
                   this.calcData[2].push(0)
 
-                  this.calcData[0].push(day[0].power)
-                  this.calcData[1].push(day[1].power)
+                  this.calcData[0].push(listMealsOfDay[0].power)
+                  this.calcData[1].push(listMealsOfDay[1].power)
                 }
 
-                if (day[0].type === BREAKFAST && day[1].type === DINNER) {
+                if (
+                  listMealsOfDay[0].type === BREAKFAST &&
+                  listMealsOfDay[1].type === DINNER
+                ) {
                   this.calcData[0].push(0)
 
-                  this.calcData[1].push(day[0].power)
-                  this.calcData[2].push(day[1].power)
+                  this.calcData[1].push(listMealsOfDay[0].power)
+                  this.calcData[2].push(listMealsOfDay[1].power)
                 }
 
-                if (day[0].type === LAUNCH && day[1].type === DINNER) {
+                if (
+                  listMealsOfDay[0].type === LAUNCH &&
+                  listMealsOfDay[1].type === DINNER
+                ) {
                   this.calcData[1].push(0)
 
-                  this.calcData[0].push(day[0].power)
-                  this.calcData[2].push(day[0].power)
+                  this.calcData[0].push(listMealsOfDay[0].power)
+                  this.calcData[2].push(listMealsOfDay[0].power)
                 }
               }
 
-              if (day.length === 3) {
-                this.calcData[0].push(day[0].power)
-                this.calcData[1].push(day[1].power)
-                this.calcData[2].push(day[2].power)
+              if (listMealsOfDay.length === 3) {
+                this.calcData[0].push(listMealsOfDay[0].power)
+                this.calcData[1].push(listMealsOfDay[1].power)
+                this.calcData[2].push(listMealsOfDay[2].power)
               }
             }
           } else {

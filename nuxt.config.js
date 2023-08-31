@@ -43,7 +43,6 @@ export default {
     '~/plugins/chart',
     '~/plugins/element-ui',
     '~/plugins/firebase',
-    '~/plugins/date-picker',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

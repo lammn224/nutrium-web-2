@@ -39,23 +39,14 @@
             rules="required"
           >
             <b-form-group v-bind="$attrs" label="Ngày sinh">
-              <!--          <b-form-datepicker-->
-              <!--            v-model="form.dateOfBirth"-->
-              <!--            :date-format-options="{-->
-              <!--              year: 'numeric',-->
-              <!--              month: '2-digit',-->
-              <!--              day: '2-digit',-->
-              <!--            }"-->
-              <!--            locale="vi"-->
-              <!--            placeholder="Ngày sinh"-->
-              <!--            :state="errors[0] || error !== null ? false : null"-->
-              <!--          ></b-form-datepicker>-->
               <el-date-picker
                 v-model="form.dateOfBirth"
+                class="custom-size-datepicker"
                 type="date"
                 size="large"
-                placeholder="Pick a date"
+                placeholder="Ngày sinh"
                 format="dd/MM/yyyy"
+                :picker-options="pickerOption"
               ></el-date-picker>
 
               <b-form-invalid-feedback>
@@ -135,7 +126,6 @@ import cloneDeep from 'lodash/cloneDeep'
 import BaseFormModal from '@/components/base/form/Modal'
 import BaseFormMixin from '~/components/base/form/Mixin.vue'
 import { ERROR_CODES } from '~/constants/error-code.constants'
-import { convertTimeStampsToDatePickerString } from '~/services/convertTimeStamps.service'
 import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 
 const defaultForm = {
@@ -160,11 +150,8 @@ export default {
         { text: 'Nam', value: 'male' },
         { text: 'Nữ', value: 'female' },
       ],
-      datePickerOptions: {
-        format: 'DD/MM/YYYY',
-        useCurrent: false,
-        showClear: true,
-        showClose: true,
+      pickerOption: {
+        firstDayOfWeek: 1,
       },
     }
   },
@@ -190,8 +177,9 @@ export default {
     },
 
     async addItem() {
+      const dob = this.form.dateOfBirth
       try {
-        this.form.dateOfBirth = new Date(this.form.dateOfBirth).getTime() / 1000
+        this.form.dateOfBirth = this.form.dateOfBirth.getTime() / 1000
 
         this.vForm = new Form(this.form)
         await this.vForm.post(this.$axios.defaults.baseURL + '/students')
@@ -200,9 +188,7 @@ export default {
         this.$refs.modal.hide()
         this.onActionSuccess()
       } catch (e) {
-        this.form.dateOfBirth = convertTimeStampsToDatePickerString(
-          this.form.dateOfBirth
-        )
+        this.form.dateOfBirth = dob
         if (e.response) {
           if (e.response.status === 422) {
             this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
@@ -247,3 +233,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.custom-size-datepicker {
+  input {
+    padding-top: 21px;
+    padding-bottom: 21px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+}
+</style>

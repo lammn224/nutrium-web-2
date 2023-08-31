@@ -156,24 +156,16 @@
                 <label class="col-xl-3 col-lg-3 col-form-label text-right"
                   >Ngày sinh</label
                 >
-                <div class="col-lg-9 col-xl-6">
-                  <!--                <input-->
-                  <!--                  ref="fullName"-->
-                  <!--                  v-model="form.dateOfBirth"-->
-                  <!--                  class="form-control form-control-lg form-control-solid"-->
-                  <!--                  type="text"-->
-                  <!--                  placeholder="Ngày sinh"-->
-                  <!--                />-->
-
-                  <b-form-datepicker
+                <div class="col-lg-9 col-xl-9">
+                  <el-date-picker
                     v-model="form.dateOfBirth"
-                    :date-format-options="{
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    }"
-                    locale="vi"
-                  ></b-form-datepicker>
+                    class="custom-size-datepicker-info"
+                    type="date"
+                    size="large"
+                    placeholder="Ngày sinh"
+                    format="dd/MM/yyyy"
+                    :picker-options="pickerOption"
+                  ></el-date-picker>
                 </div>
               </div>
               <div class="form-group row">
@@ -351,11 +343,7 @@
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import { ROLES } from '~/constants/role.constant'
-import {
-  convertStringDatePickerToTimeStamps,
-  convertTimeStampsToDatePickerString,
-  convertTimeStampsToString,
-} from '~/services/convertTimeStamps.service'
+import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
 import { FEMALE, MALE } from '~/constants/gender.constant'
 import { ACTIVITY_TYPE } from '~/constants/activity-type.constant'
 import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
@@ -370,11 +358,9 @@ export default {
       student: cloneDeep(this.$auth.user),
       form: {
         fullName: this.$auth.user.fullName,
-        dateOfBirth: convertTimeStampsToDatePickerString(
-          this.$auth.user.dateOfBirth
-        ),
-        weight: this.$auth.user.weight,
-        height: this.$auth.user.height,
+        dateOfBirth: new Date(this.$auth.user.dateOfBirth * 1000),
+        weight: this.$auth.user.weight.toString(),
+        height: this.$auth.user.height.toString(),
         gender: this.$auth.user.gender,
         activityType: this.$auth.user.activityType,
         rcmCalories: this.$auth.user.rcmCalories,
@@ -396,6 +382,9 @@ export default {
       diseaseRisk: '',
       isLoading: false,
       delay: null,
+      pickerOption: {
+        firstDayOfWeek: 1,
+      },
     }
   },
 
@@ -408,7 +397,7 @@ export default {
   watch: {
     'form.dateOfBirth': {
       handler(newVal, oldVal) {
-        if (typeof newVal === 'string') {
+        if (newVal && typeof newVal !== 'number') {
           this.form.rcmCalories = this.calculateRcmCalories()
         }
       },
@@ -454,7 +443,6 @@ export default {
   },
 
   mounted() {
-    this.current_photo = this.student.photo
     this.calculateBMIResult()
   },
 
@@ -466,14 +454,11 @@ export default {
 
       if (
         this.form.fullName === this.student.fullName &&
-        this.form.dateOfBirth ===
-          convertTimeStampsToDatePickerString(this.student.dateOfBirth) &&
-        // eslint-disable-next-line eqeqeq
-        this.form.weight == this.student.weight &&
-        // eslint-disable-next-line eqeqeq
-        this.form.height == this.student.height &&
-        // eslint-disable-next-line eqeqeq
-        this.form.gender == this.student.gender &&
+        this.form.dateOfBirth.getTime() ===
+          new Date(this.student.dateOfBirth * 1000).getTime() &&
+        this.form.weight === this.student.weight.toString() &&
+        this.form.height === this.student.height.toString() &&
+        this.form.gender === this.student.gender &&
         this.form.activityType === this.student.activityType
       ) {
         return
@@ -483,7 +468,7 @@ export default {
       await this.delay(500)
 
       try {
-        this.form.dateOfBirth = new Date(this.form.dateOfBirth).getTime() / 1000
+        this.form.dateOfBirth = this.form.dateOfBirth.getTime() / 1000
         submitButton.classList.add('spinner', 'spinner-light', 'spinner-right')
         const { data } = await this.$axios.post(
           'students/update-info',
@@ -492,13 +477,11 @@ export default {
 
         this.student.fullName = data.fullName
         this.student.dateOfBirth = data.dateOfBirth
-        this.student.weight = data.weight
-        this.student.height = data.height
+        this.student.weight = data.weight.toString()
+        this.student.height = data.height.toString()
         this.student.gender = data.gender
         this.student.activityType = data.activityType
-        this.form.dateOfBirth = convertTimeStampsToDatePickerString(
-          data.dateOfBirth
-        )
+        this.form.dateOfBirth = new Date(data.dateOfBirth * 1000)
 
         setTimeout(() => {
           submitButton.classList.remove(
@@ -521,9 +504,7 @@ export default {
     },
     cancel() {
       this.form.fullName = this.student.fullName
-      this.form.dateOfBirth = convertTimeStampsToDatePickerString(
-        this.student.dateOfBirth
-      )
+      this.form.dateOfBirth = new Date(this.student.dateOfBirth * 1000)
       this.form.weight = this.student.weight
       this.form.height = this.student.height
       this.form.gender = this.student.gender
@@ -614,12 +595,7 @@ export default {
               5.003 * this.form.height -
               6.755 *
                 parseInt(
-                  new Date().getFullYear() -
-                    new Date(
-                      convertStringDatePickerToTimeStamps(
-                        this.form.dateOfBirth
-                      ) * 1000
-                    ).getFullYear()
+                  new Date().getFullYear() - this.form.dateOfBirth.getFullYear()
                 )) *
               ACTIVITY_TYPE.get(this.form.activityType)
           )
@@ -631,12 +607,7 @@ export default {
               1.85 * this.form.height -
               4.676 *
                 parseInt(
-                  new Date().getFullYear() -
-                    new Date(
-                      convertStringDatePickerToTimeStamps(
-                        this.form.dateOfBirth
-                      ) * 1000
-                    ).getFullYear()
+                  new Date().getFullYear() - this.form.dateOfBirth.getFullYear()
                 )) *
               ACTIVITY_TYPE.get(this.form.activityType)
           )
@@ -648,3 +619,14 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.custom-size-datepicker-info {
+  input {
+    padding-top: 21px;
+    padding-bottom: 21px;
+    font-size: 14px;
+    border-radius: 12px;
+    background-color: #f4f6f9;
+  }
+}
+</style>

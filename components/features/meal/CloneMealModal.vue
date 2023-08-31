@@ -21,9 +21,10 @@
           >
             <el-date-picker
               v-model="form.srcWeek"
+              class="custom-size-datepicker"
               type="week"
               size="large"
-              placeholder="Pick a date"
+              placeholder="Chọn tuần"
               format="Tuần WW-yyyy"
               :picker-options="srcPickerOption"
             ></el-date-picker>
@@ -35,9 +36,10 @@
           >
             <el-date-picker
               v-model="form.desWeek"
+              class="custom-size-datepicker"
               type="week"
               size="large"
-              placeholder="Pick a date"
+              placeholder="Chọn tuần"
               format="Tuần WW-yyyy"
               :picker-options="desPickerOption"
             ></el-date-picker>

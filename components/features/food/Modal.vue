@@ -29,7 +29,7 @@
             :error="vForm.errors.get('power')"
             placeholder="Năng lượng"
             label="Năng lượng"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -40,7 +40,7 @@
             :error="vForm.errors.get('protein')"
             placeholder="Protein"
             label="Protein"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -54,7 +54,7 @@
             :error="vForm.errors.get('lipid')"
             placeholder="Lipid"
             label="Lipid"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -65,7 +65,7 @@
             :error="vForm.errors.get('glucid')"
             placeholder="Glucid"
             label="Glucid"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -79,7 +79,7 @@
             :error="vForm.errors.get('ca')"
             placeholder="Canxi"
             label="Canxi"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -90,7 +90,7 @@
             :error="vForm.errors.get('fe')"
             placeholder="Sắt"
             label="Sắt"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -104,7 +104,7 @@
             :error="vForm.errors.get('zn')"
             placeholder="Kẽm"
             label="Kẽm"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -115,7 +115,7 @@
             :error="vForm.errors.get('fiber')"
             placeholder="Chất xơ"
             label="Chất xơ"
-            rules="required|max:100|regex:^[-+]?[0-9]*(\.[0-9]+)$"
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
           />
         </div>
@@ -157,6 +157,14 @@ export default {
     },
     processFormToSubmit() {
       const form = cloneDeep(this.form)
+      form.power = Number(form.power).toFixed(2)
+      form.protein = Number(form.protein).toFixed(2)
+      form.lipid = Number(form.lipid).toFixed(2)
+      form.glucid = Number(form.glucid).toFixed(2)
+      form.ca = Number(form.ca).toFixed(2)
+      form.fe = Number(form.fe).toFixed(2)
+      form.zn = Number(form.zn).toFixed(2)
+      form.fiber = Number(form.fiber).toFixed(2)
       return form
     },
     async addItem() {

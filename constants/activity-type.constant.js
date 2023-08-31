@@ -13,3 +13,13 @@ export const ACTIVITY_TYPE = new Map([
 
   [HEAVY, 1.725],
 ])
+
+export const ACTIVITY = new Map([
+  [NONE, 'Không (Không luyện tập thể dục)'],
+
+  [LIGHT, 'Nhẹ (Tập thể dục nhẹ nhàng 1-3 ngày/tuần)'],
+
+  [MODERATE, 'Trung bình (Tập thể dục 3-5 ngày/tuần)'],
+
+  [HEAVY, 'Nặng (Tập thể dục nhiều 6-7 ngày/tuần)'],
+])
