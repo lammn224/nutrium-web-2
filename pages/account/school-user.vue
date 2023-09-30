@@ -1,6 +1,6 @@
 <template>
   <div>
-    <content-card title="Danh sách tài khoản học sinh">
+    <content-card title="Danh sách tài khoản">
       <template #body>
         <div class="d-flex justify-content-between">
           <div class="d-flex mb-5">
@@ -10,11 +10,11 @@
               </div>
               <el-select
                 v-model="selectedSchool"
-                value-key="_id"
+                :placeholder="'Chọn trường học'"
                 class="pr-5"
                 clearable
                 filterable
-                :placeholder="'Chọn trường học'"
+                value-key="_id"
               >
                 <el-option
                   v-for="item in schoolOptions"
@@ -31,11 +31,11 @@
               </div>
               <el-select
                 v-model="selectedRole"
-                value-key="_id"
+                :placeholder="'Chọn vai trò'"
                 class="pr-5"
                 clearable
                 filterable
-                :placeholder="'Chọn vai trò'"
+                value-key="_id"
               >
                 <el-option
                   v-for="item in roleOptions"
@@ -65,22 +65,22 @@
 
         <b-overlay
           :show="isLoading"
-          spinner-variant="primary"
-          spinner-type="grow"
-          spinner-small
           rounded="sm"
+          spinner-small
+          spinner-type="grow"
+          spinner-variant="primary"
         >
           <b-table
             ref="table"
-            hover
-            bordered
-            show-empty
-            head-variant="light"
-            :items="parentsAccounts"
-            :fields="fields"
-            :current-page="curPage"
-            :per-page="0"
             :busy="isLoading"
+            :current-page="curPage"
+            :fields="fields"
+            :items="parentsAccounts"
+            :per-page="0"
+            bordered
+            head-variant="light"
+            hover
+            show-empty
             thead-class="font-weight-bold font-size-lg text-center"
           >
             <template #empty>
@@ -91,18 +91,18 @@
             </template>
             <template #cell(action)="row">
               <b-button
+                class="mr-1"
                 size="sm"
                 variant="info"
-                class="mr-1"
                 @click="resetPassword(row)"
-                >Đổi mật khẩu</b-button
-              >
+                >Đổi mật khẩu
+              </b-button>
             </template>
           </b-table>
           <b-pagination
             v-model="curPage"
-            :total-rows="totalRows"
             :per-page="limit"
+            :total-rows="totalRows"
             class="justify-content-end"
             pills
           ></b-pagination>
@@ -325,6 +325,7 @@ export default {
 
 <style lang="scss">
 @import './assets/sass/init';
+
 th {
   vertical-align: middle !important;
 }

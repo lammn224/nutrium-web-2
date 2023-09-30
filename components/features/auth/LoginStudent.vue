@@ -4,8 +4,8 @@
       <form
         id="kt_login_signinstudent_form"
         class="form"
-        novalidate="novalidate"
         method="post"
+        novalidate="novalidate"
         @submit.prevent="handleSubmit(onSubmit)"
       >
         <div class="pb-13 pt-lg-0 pt-5">
@@ -14,21 +14,12 @@
           </h3>
           <span class="text-muted font-weight-bold font-size-h4">
             Học sinh
-            <!--            Chưa có tài khoản?-->
-            <!--            <a-->
-            <!--              id="kt_login_signup"-->
-            <!--              class="text-primary font-weight-bolder"-->
-            <!--              style="cursor: pointer"-->
-            <!--              @click="showForm('signup')"-->
-            <!--            >-->
-            <!--              Đăng ký-->
-            <!--            </a>-->
 
             <div class="pt-13 pt-5">
               <a
                 id="kt_login_siginstudent"
-                href="javascript:;"
                 class="text-primary font-weight-bolder"
+                href="javascript:"
                 tabindex="4"
                 @click="showForm('signin')"
               >
@@ -59,11 +50,11 @@
               <input
                 ref="schoolCode"
                 v-model="schoolCode"
-                placeholder="Nhập mã trường..."
                 class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-                type="text"
                 name="schoolCode"
+                placeholder="Nhập mã trường..."
                 tabindex="1"
+                type="text"
                 @blur="getSchool"
               />
             </div>
@@ -89,11 +80,11 @@
               <input
                 ref="studentId"
                 v-model="studentId"
-                placeholder="Nhập mã học sinh của bạn..."
                 class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-                type="text"
                 name="studentId"
+                placeholder="Nhập mã học sinh của bạn..."
                 tabindex="1"
+                type="text"
               />
             </div>
 
@@ -113,8 +104,8 @@
               >
               <a
                 id="kt_login_forgot"
-                href="javascript:;"
                 class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
+                href="javascript:"
                 tabindex="4"
                 @click="showForm('forgot')"
                 >Quên mật khẩu ?</a
@@ -128,12 +119,12 @@
               <input
                 ref="password"
                 v-model="password"
+                autocomplete="off"
                 class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-                type="password"
                 name="password"
                 placeholder="Nhập mật khẩu của bạn..."
-                autocomplete="off"
                 tabindex="2"
+                type="password"
               />
             </div>
 
@@ -143,9 +134,9 @@
         <div class="pb-lg-0 pb-5">
           <button
             ref="kt_login_signin_submit"
-            class="btn btn-block btn-primary font-weight-bolder font-size-h6 px-15 py-4 my-3 mr-3"
             :class="[isLoading ? 'spinner spinner-white spinner-right' : null]"
             :disabled="isLoading"
+            class="btn btn-block btn-primary font-weight-bolder font-size-h6 px-15 py-4 my-3 mr-3"
             tabindex="3"
           >
             Đăng nhập

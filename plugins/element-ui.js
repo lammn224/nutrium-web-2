@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
-import 'element-ui/lib/theme-chalk/index.css'
+import 'assets/sass/components/element-ui-custom.scss'
 
 locale.use(lang)
 

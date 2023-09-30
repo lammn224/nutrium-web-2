@@ -4,8 +4,8 @@
       <template #toolbar>
         <b-button
           v-if="$auth.user.role === ADMIN || $auth.user.role === SYSADMIN"
-          variant="primary"
           size="sm"
+          variant="primary"
           @click="show"
         >
           <i class="flaticon2-plus"></i> Thêm mới
@@ -14,54 +14,83 @@
       <template #body>
         <b-overlay
           :show="isLoading"
-          spinner-variant="primary"
-          spinner-type="grow"
-          spinner-small
           rounded="sm"
+          spinner-small
+          spinner-type="grow"
+          spinner-variant="primary"
         >
-          <b-input-group class="float-right pb-2" style="width: 300px">
-            <template #prepend>
-              <b-input-group-text>
-                <i class="flaticon-search"></i>
-              </b-input-group-text>
-            </template>
-            <b-form-input
-              v-model="keyword"
-              :placeholder="'Tìm kiếm'"
-              debounce="500"
-            ></b-form-input>
-          </b-input-group>
+          <div class="mb-8">
+            <div>
+              <label class="font-weight-bold font-size-lg">Mức vận động</label>
+            </div>
+            <el-select
+              v-model="selectedLevel"
+              :placeholder="'Chọn mức vận động'"
+              class="pr-5"
+              clearable
+              filterable
+              value-key="_id"
+            >
+              <el-option
+                v-for="item in levelOptions"
+                :key="item.key"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+
+            <b-input-group class="float-right pb-2" style="width: 300px">
+              <template #prepend>
+                <b-input-group-text>
+                  <i class="flaticon-search"></i>
+                </b-input-group-text>
+              </template>
+              <b-form-input
+                v-model="keyword"
+                :placeholder="'Tìm kiếm'"
+                debounce="500"
+              ></b-form-input>
+            </b-input-group>
+          </div>
+
           <b-table
             ref="table"
-            hover
-            bordered
-            show-empty
-            head-variant="light"
-            :items="activities"
-            :fields="fields"
-            :current-page="curPage"
-            :per-page="0"
             :busy="isLoading"
+            :current-page="curPage"
+            :fields="fields"
+            :items="activities"
+            :per-page="0"
+            bordered
+            head-variant="light"
+            hover
+            show-empty
             thead-class="font-weight-bold font-size-lg text-center"
           >
             <template #empty>
               <h4 class="text-center">Không có dữ liệu</h4>
             </template>
+
             <template #cell(idx)="row">
               {{ ++row.index + limit * (curPage - 1) }}
             </template>
+
+            <template #cell(level)="row">
+              <span>{{ ACTIVITY_LEVEL.get(row.item.level) }}</span>
+            </template>
+
             <template
               v-if="$auth.user.role === SYSADMIN || $auth.user.role === ADMIN"
               #cell(action)="row"
             >
               <span :id="`tooltip-update-${row.item._id}`">
                 <b-button
-                  size="sm"
-                  variant="primary"
-                  class="mr-1"
                   :disabled="
                     $auth.user.role !== SYSADMIN && row.item.school === null
                   "
+                  class="mr-1"
+                  size="sm"
+                  variant="primary"
                   @click="updateActivity(row.item)"
                   >Cập nhật</b-button
                 >
@@ -75,12 +104,12 @@
               </b-tooltip>
               <span :id="`tooltip-delete-${row.item._id}`">
                 <b-button
-                  size="sm"
-                  variant="danger"
-                  class="mr-1"
                   :disabled="
                     $auth.user.role !== SYSADMIN && row.item.school === null
                   "
+                  class="mr-1"
+                  size="sm"
+                  variant="danger"
                   @click="deleteActivity(row.item)"
                 >
                   Xoá
@@ -97,8 +126,8 @@
           </b-table>
           <b-pagination
             v-model="curPage"
-            :total-rows="totalRows"
             :per-page="limit"
+            :total-rows="totalRows"
             class="justify-content-end"
             pills
           ></b-pagination>
@@ -115,6 +144,12 @@ import { ACTIVE, PENDING, STATUS } from '~/constants/status.constant'
 import NotifyMixin from '~/components/base/form/NotifyMixin'
 import { ERROR_CODES } from '~/constants/error-code.constants'
 import { ADMIN, SYSADMIN } from '~/constants/role.constant'
+import {
+  ACTIVITY_LEVEL,
+  HEAVY,
+  LIGHT,
+  MODERATE,
+} from '~/constants/level.constant'
 
 export default {
   name: 'ActivityPage',
@@ -122,6 +157,7 @@ export default {
   data() {
     return {
       activities: [],
+      selectedLevel: '',
       curPage: 1,
       keyword: '',
       totalRows: 0,
@@ -141,6 +177,9 @@ export default {
   },
 
   computed: {
+    ACTIVITY_LEVEL() {
+      return ACTIVITY_LEVEL
+    },
     STATUS() {
       return STATUS
     },
@@ -150,27 +189,56 @@ export default {
     ADMIN() {
       return ADMIN
     },
+    levelOptions() {
+      return [
+        {
+          value: HEAVY,
+          label: ACTIVITY_LEVEL.get(HEAVY),
+          key: HEAVY,
+        },
+        {
+          value: MODERATE,
+          label: ACTIVITY_LEVEL.get(MODERATE),
+          key: MODERATE,
+        },
+        {
+          value: LIGHT,
+          label: ACTIVITY_LEVEL.get(LIGHT),
+          key: LIGHT,
+        },
+      ]
+    },
     fields() {
+      const defaultActivityField = [
+        {
+          key: 'idx',
+          label: 'STT',
+          thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+        },
+        {
+          key: 'name',
+          label: 'Tên hoạt động',
+          sortable: true,
+          thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
+        },
+        {
+          key: 'metIdx',
+          label: 'Chỉ số MET',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+        },
+        {
+          key: 'level',
+          label: 'Mức vận động',
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+        },
+      ]
+
       if (this.$auth.user.role === ADMIN || this.$auth.user.role === SYSADMIN) {
         return [
-          {
-            key: 'idx',
-            label: 'STT',
-            thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
-            tdClass: { 'text-center': true },
-          },
-          {
-            key: 'name',
-            label: 'Tên hoạt động',
-            sortable: true,
-            thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
-          },
-          {
-            key: 'metIdx',
-            label: 'Chỉ số MET',
-            thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
-            tdClass: { 'text-center': true },
-          },
+          ...defaultActivityField,
           {
             key: 'action',
             label: 'Hành động',
@@ -179,26 +247,7 @@ export default {
           },
         ]
       } else {
-        return [
-          {
-            key: 'idx',
-            label: 'STT',
-            thStyle: { width: '3%', fontSize: '17px', fontWeight: 'bold' },
-            tdClass: { 'text-center': true },
-          },
-          {
-            key: 'name',
-            label: 'Tên hoạt động',
-            sortable: true,
-            thStyle: { width: '20%', fontSize: '17px', fontWeight: 'bold' },
-          },
-          {
-            key: 'metIdx',
-            label: 'Chỉ số MET',
-            thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
-            tdClass: { 'text-center': true },
-          },
-        ]
+        return [...defaultActivityField]
       }
     },
   },
@@ -208,17 +257,29 @@ export default {
       async handler(value) {
         this.params = `offset=${(value - 1) * this.limit}&limit=${
           this.limit
-        }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${
-          this.sortType
-        }`
+        }&keyword=${this.keyword}&level=${this.selectedLevel}&sortBy=${
+          this.sortBy
+        }&sortType=${this.sortType}`
         await this.loadActivities()
       },
     },
     keyword: {
       async handler(value) {
-        this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
-          this.limit
-        }&keyword=${value}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+        // this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
+        //   this.limit
+        // }$level=${this.selectedLevel}&keyword=${value}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+        // console.log('watch keyword', this.params)
+        this.curPage = 1
+        await this.loadActivities()
+      },
+    },
+    selectedLevel: {
+      async handler(value) {
+        this.curPage = 1
+        // this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
+        //   this.limit
+        // }&level=${this.selectedLevel}&keyword=${value}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+        // console.log('watch level', this.params)
         await this.loadActivities()
       },
     },
@@ -243,7 +304,9 @@ export default {
     async loadActivities() {
       this.params = `offset=${(this.curPage - 1) * this.limit}&limit=${
         this.limit
-      }&keyword=${this.keyword}&sortBy=${this.sortBy}&sortType=${this.sortType}`
+      }&keyword=${this.keyword}&level=${this.selectedLevel}&sortBy=${
+        this.sortBy
+      }&sortType=${this.sortType}`
       this.isLoading = true
       await this.delay(500)
 
@@ -308,6 +371,7 @@ export default {
 
 <style lang="scss">
 @import './assets/sass/init';
+
 th {
   vertical-align: middle !important;
 }

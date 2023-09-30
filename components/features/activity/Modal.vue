@@ -7,31 +7,50 @@
     no-close-on-backdrop
     no-enforce-focus
     size="lg"
-    @ok="handleModalOk"
     @hidden="handleModalHidden"
+    @ok="handleModalOk"
   >
     <validation-observer ref="observer">
       <base-form-text-input
         v-model="form.name"
-        required
         :error="vForm.errors.get('name')"
-        placeholder="Tên bài tập"
-        label="Tên bài tập"
-        rules="required|max:100"
-        name="name"
         class="w-25"
+        label="Tên bài tập"
+        name="name"
+        placeholder="Tên bài tập"
+        required
+        rules="required|max:100"
       />
 
       <base-form-text-input
         v-model="form.metIdx"
-        required
         :error="vForm.errors.get('metIdx')"
-        placeholder="Chỉ số MET"
-        label="Chỉ số MET"
-        rules="required|max:100"
-        name="name"
         class="w-25"
+        label="Chỉ số MET"
+        name="name"
+        placeholder="Chỉ số MET"
+        required
+        rules="required|max:100"
       />
+
+      <validation-provider
+        v-slot="{ errors }"
+        name="Mức vận động"
+        rules="required"
+      >
+        <b-form-group label="Mức vận động" v-bind="$attrs">
+          <b-form-select
+            v-model="form.level"
+            :options="levelOptions"
+            :state="errors[0] || error !== null ? false : null"
+          >
+          </b-form-select>
+
+          <b-form-invalid-feedback>
+            {{ errors[0] || error }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </validation-provider>
     </validation-observer>
   </b-modal>
 </template>
@@ -42,11 +61,18 @@ import { Form } from 'vform'
 import BaseFormModal from '~/components/base/form/Modal.vue'
 import BaseFormMixin from '~/components/base/form/Mixin.vue'
 import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
+import {
+  ACTIVITY_LEVEL,
+  HEAVY,
+  LIGHT,
+  MODERATE,
+} from '~/constants/level.constant'
 
 const defaultForm = {
   name: '',
   metIdx: '',
   school: null,
+  level: '',
 }
 export default {
   name: 'ActivityModal',
@@ -56,6 +82,29 @@ export default {
       form: cloneDeep(defaultForm),
     }
   },
+
+  computed: {
+    levelOptions() {
+      return [
+        {
+          value: HEAVY,
+          text: ACTIVITY_LEVEL.get(HEAVY),
+          key: HEAVY,
+        },
+        {
+          value: MODERATE,
+          text: ACTIVITY_LEVEL.get(MODERATE),
+          key: MODERATE,
+        },
+        {
+          value: LIGHT,
+          text: ACTIVITY_LEVEL.get(LIGHT),
+          key: LIGHT,
+        },
+      ]
+    },
+  },
+
   methods: {
     handleModalHidden(bvModalEvt) {
       this.form = cloneDeep(defaultForm)
@@ -98,3 +147,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.el-input--suffix .el-input__inner {
+  border-radius: 12px;
+}
+</style>
