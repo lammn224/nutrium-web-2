@@ -1,11 +1,11 @@
 <template>
-  <div class="flex-row-fluid" :class="className">
+  <div :class="className" class="flex-row-fluid">
     <b-overlay
       :show="isLoading"
-      spinner-variant="primary"
-      spinner-type="grow"
-      spinner-small
       rounded="sm"
+      spinner-small
+      spinner-type="grow"
+      spinner-variant="primary"
     >
       <div class="card card-custom card-stretch mb-5">
         <div class="card-header pt-5" style="display: block">
@@ -46,19 +46,19 @@
         </div>
         <div class="card-body">
           <b-button
-            variant="primary"
-            size="sm"
             class="float-right"
+            size="sm"
+            variant="primary"
             @click="showDetailMeal"
-            >Xem chi tiết</b-button
-          >
+            >Xem chi tiết
+          </b-button>
           <BarChart
             :chart-data="barChartMealData"
             :chart-options="barChartMealOptions"
             class="w-100 mb-10"
           />
           <div>
-            <b-modal ref="mealModal" size="xl" :title="mealModalTitle" ok-only>
+            <b-modal ref="mealModal" :title="mealModalTitle" ok-only size="xl">
               <b-tabs
                 active-nav-item-class="font-weight-bold text-primary"
                 card
@@ -68,6 +68,40 @@
                   :key="key"
                   :title="WEEKDAY.get(key)"
                 >
+                  <div class="font-size-lg">
+                    Hiện tại học sinh đang được khuyến nghị cung cấp một lượng
+                    calo hàng ngày là
+                    <span class="font-weight-bold">{{
+                      student.rcmCalories
+                    }}</span>
+                    (kcal) để đáp ứng cho cơ thể với nhu cầu hoạt động thể lực:
+                    <span class="font-weight-bold">{{
+                      ACTIVITY.get(student.activityType)
+                    }}</span
+                    >, tương đương với việc đốt cháy khoảng
+                    <span class="font-weight-bold">{{
+                      (
+                        student.rcmCalories -
+                        student.rcmCalories /
+                          ACTIVITY_TYPE.get(student.activityType)
+                      ).toFixed(2)
+                    }}</span>
+                    (calo/ngày)
+                    <br />
+                    <!--                    Hiện tại học sinh đang được khuyến nghị nạp lượng calo-->
+                    <!--                    <span class="font-weight-bold">{{ student.rcmCalories }}</span>-->
+                    <!--                    (kcal)/ngày để đáp ứng cho cơ thể có nhu cầu hoạt động thể lực:-->
+                    <!--                    <span class="font-weight-bold">{{ ACTIVITY.get(student.activityType) }}</span>, tương đương đốt cháy-->
+                    <!--                    khoảng-->
+                    <!--                    <span class="font-weight-bold">{{-->
+                    <!--                        (-->
+                    <!--                          student.rcmCalories - -->
+                    <!--                          student.rcmCalories / ACTIVITY_TYPE.get(student.activityType)-->
+                    <!--                        ).toFixed(2)-->
+                    <!--                      }}</span>-->
+                    <!--                    (calo/ngày)-->
+                    <!--                    <br/>-->
+                  </div>
                   <b-tabs
                     active-nav-item-class="font-weight-bold text-primary"
                     card
@@ -78,12 +112,12 @@
                       :title="MEALS.get(meal.type)"
                     >
                       <b-table
-                        hover
-                        bordered
-                        show-empty
-                        head-variant="light"
                         :fields="foodField"
                         :items="meal.foods"
+                        bordered
+                        head-variant="light"
+                        hover
+                        show-empty
                         thead-class="font-weight-bold text-center align-middle"
                       >
                         <template #empty>
@@ -166,12 +200,12 @@
 
           <div class="w-100">
             <b-button
-              variant="primary"
-              size="sm"
               class="float-right"
+              size="sm"
+              variant="primary"
               @click="showDetailScheduledExercise"
-              >Xem chi tiết</b-button
-            >
+              >Xem chi tiết
+            </b-button>
           </div>
           <BarChart
             :chart-data="barChartScheduledExerciseData"
@@ -181,9 +215,9 @@
           <div>
             <b-modal
               ref="scheduledExerciseModal"
-              size="xl"
               :title="scheduledExerciseModalTitle"
               ok-only
+              size="xl"
             >
               <b-tabs
                 active-nav-item-class="font-weight-bold text-primary"
@@ -195,12 +229,12 @@
                   :title="WEEKDAY.get(key)"
                 >
                   <b-table
-                    hover
-                    bordered
-                    show-empty
-                    head-variant="light"
                     :fields="exerciseField"
                     :items="se"
+                    bordered
+                    head-variant="light"
+                    hover
+                    show-empty
                     thead-class="font-weight-bold text-center align-middle"
                   >
                     <template #empty>

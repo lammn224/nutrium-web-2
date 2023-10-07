@@ -3,22 +3,22 @@
     <template #body>
       <b-overlay
         :show="isLoading"
-        spinner-variant="primary"
-        spinner-type="grow"
-        spinner-small
         rounded="sm"
+        spinner-small
+        spinner-type="grow"
+        spinner-variant="primary"
       >
         <b-table
           ref="table"
-          hover
+          :busy="isLoading"
+          :fields="fields"
+          :items="students"
+          :no-border-collapse="true"
           bordered
+          head-variant="light"
+          hover
           show-empty
           sticky-header="600px"
-          :no-border-collapse="true"
-          head-variant="light"
-          :items="students"
-          :fields="fields"
-          :busy="isLoading"
           thead-class="font-weight-bold font-size-lg text-center"
         >
           <template #empty>
@@ -35,12 +35,12 @@
           </template>
           <template #cell(action)="row">
             <b-button
+              class="mr-1"
               size="sm"
               variant="info"
-              class="mr-1"
               @click="getDetailsStudent(row.item._id)"
-              >Chi tiết</b-button
-            >
+              >Chi tiết
+            </b-button>
           </template>
         </b-table>
       </b-overlay>
@@ -108,9 +108,21 @@ export default {
           tdClass: { 'text-center': true },
         },
         {
+          key: 'height',
+          label: 'Chiều cao (cm)',
+          thStyle: { width: '15%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+        },
+        {
+          key: 'weight',
+          label: 'Cân nặng (kg)',
+          thStyle: { width: '15%', fontSize: '17px', fontWeight: 'bold' },
+          tdClass: { 'text-center': true },
+        },
+        {
           key: 'gender',
           label: 'Giới tính',
-          thStyle: { width: '15%', fontSize: '17px', fontWeight: 'bold' },
+          thStyle: { width: '10%', fontSize: '17px', fontWeight: 'bold' },
           tdClass: { 'text-center': true },
         },
         {

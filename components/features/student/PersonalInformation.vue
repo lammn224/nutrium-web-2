@@ -14,9 +14,9 @@
             >
               <div class="symbol-label">
                 <img
+                  alt=""
                   class="symbol-label"
                   src="~/assets/media/users/blank.png"
-                  alt=""
                 />
               </div>
               <i class="symbol-badge bg-success"></i>
@@ -71,8 +71,8 @@
           <!--begin::Parents-->
           <div>
             <a
-              style="cursor: pointer"
               class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
+              style="cursor: pointer"
             >
               Thông tin liên hệ
             </a>
@@ -115,13 +115,13 @@
           <div class="card-toolbar">
             <button
               ref="kt_save_changes"
-              type="reset"
               class="btn btn-primary mr-2"
+              type="reset"
               @click="save()"
             >
               Lưu thay đổi
             </button>
-            <button type="reset" class="btn btn-secondary" @click="cancel()">
+            <button class="btn btn-secondary" type="reset" @click="cancel()">
               Huỷ bỏ
             </button>
           </div>
@@ -132,10 +132,10 @@
           <!--begin::Body-->
           <b-overlay
             :show="isLoading"
-            spinner-variant="primary"
-            spinner-type="grow"
-            spinner-small
             rounded="sm"
+            spinner-small
+            spinner-type="grow"
+            spinner-variant="primary"
           >
             <div class="card-body">
               <div class="form-group row">
@@ -147,8 +147,8 @@
                     ref="fullName"
                     v-model="form.fullName"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
                     placeholder="Họ tên"
+                    type="text"
                   />
                 </div>
               </div>
@@ -159,12 +159,12 @@
                 <div class="col-lg-9 col-xl-9">
                   <el-date-picker
                     v-model="form.dateOfBirth"
-                    class="custom-size-datepicker-info"
-                    type="date"
-                    size="large"
-                    placeholder="Ngày sinh"
-                    format="dd/MM/yyyy"
                     :picker-options="pickerOption"
+                    class="custom-size-datepicker-info"
+                    format="dd/MM/yyyy"
+                    placeholder="Ngày sinh"
+                    size="large"
+                    type="date"
                   ></el-date-picker>
                 </div>
               </div>
@@ -177,8 +177,8 @@
                     ref="fullName"
                     v-model="form.height"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
                     placeholder="Chiều cao"
+                    type="text"
                   />
                 </div>
               </div>
@@ -191,8 +191,8 @@
                     ref="fullName"
                     v-model="form.weight"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
                     placeholder="Cân nặng"
+                    type="text"
                   />
                 </div>
               </div>
@@ -204,21 +204,21 @@
                 <div class="col-lg-4 col-xl-2">
                   <input
                     ref="fullName"
-                    disabled
                     :value="form.bmi"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
+                    disabled
                     placeholder="Cân nặng"
+                    type="text"
                   />
                 </div>
                 <div class="col-lg-4 col-xl-4">
                   <input
                     ref="fullName"
-                    disabled
                     :value="bmiResult"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
+                    disabled
                     placeholder="Cân nặng"
+                    type="text"
                   />
                 </div>
               </div>
@@ -230,11 +230,11 @@
                 <div class="col-lg-9 col-xl-6">
                   <input
                     ref="diseaseRisk"
-                    disabled
                     :value="diseaseRisk"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
+                    disabled
                     placeholder="Không xác định"
+                    type="text"
                   />
                 </div>
               </div>
@@ -248,8 +248,8 @@
                     <b-form-radio-group
                       id="radio-group-1"
                       v-model="form.gender"
-                      :options="genderOptions"
                       :aria-describedby="ariaDescribedby"
+                      :options="genderOptions"
                       name="radio-options"
                     ></b-form-radio-group>
                   </b-form-group>
@@ -265,8 +265,8 @@
                     <b-form-radio-group
                       id="radio-group-2"
                       v-model="form.activityType"
-                      :options="activityTypeOptions"
                       :aria-describedby="ariaDescribedby2"
+                      :options="activityTypeOptions"
                       name="radio-options2"
                     ></b-form-radio-group>
                   </b-form-group>
@@ -282,8 +282,8 @@
                     ref="school"
                     v-model="form.rcmCalories"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
                     disabled
+                    type="text"
                   />
                 </div>
               </div>
@@ -295,10 +295,10 @@
                 <div class="col-lg-9 col-xl-6">
                   <input
                     ref="school"
-                    class="form-control form-control-lg form-control-solid"
-                    type="text"
-                    disabled
                     :value="student.studentId"
+                    class="form-control form-control-lg form-control-solid"
+                    disabled
+                    type="text"
                   />
                 </div>
               </div>
@@ -309,10 +309,10 @@
                 <div class="col-lg-9 col-xl-6">
                   <input
                     ref="school"
-                    class="form-control form-control-lg form-control-solid"
-                    type="text"
-                    disabled
                     :value="student.school.name"
+                    class="form-control form-control-lg form-control-solid"
+                    disabled
+                    type="text"
                   />
                 </div>
               </div>
@@ -323,10 +323,10 @@
                 <div class="col-lg-9 col-xl-6">
                   <input
                     ref="school"
-                    class="form-control form-control-lg form-control-solid"
-                    type="text"
-                    disabled
                     :value="student.class.name"
+                    class="form-control form-control-lg form-control-solid"
+                    disabled
+                    type="text"
                   />
                 </div>
               </div>
@@ -345,9 +345,17 @@ import cloneDeep from 'lodash/cloneDeep'
 import { ROLES } from '~/constants/role.constant'
 import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
 import { FEMALE, MALE } from '~/constants/gender.constant'
-import { ACTIVITY_TYPE } from '~/constants/activity-type.constant'
+import {
+  ACTIVITY,
+  ACTIVITY_TYPE,
+  HEAVY,
+  LIGHT,
+  MODERATE,
+  NONE,
+} from '~/constants/activity-type.constant'
 import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
 import { ERROR_CODES } from '~/constants/error-code.constants'
+
 export default {
   name: 'StudentPersonalInformation',
   mixins: [NotifyMixin],
@@ -372,12 +380,12 @@ export default {
         { text: 'Nữ', value: 'female' },
       ],
       selectedActivityType: this.$auth.user.activityType,
-      activityTypeOptions: [
-        { text: 'Không (Không luyện tập thể dục)', value: 'none' },
-        { text: 'Nhẹ (Tập thể dục nhẹ nhàng 1-3 ngày/tuần)', value: 'light' },
-        { text: 'Trung bình (Tập thể dục 3-5 ngày/tuần)', value: 'moderate' },
-        { text: 'Nặng (Tập thể dục nhiều 6-7 ngày/tuần)', value: 'heavy' },
-      ],
+      // activityTypeOptions: [
+      //   { text: 'Không (Không luyện tập thể dục)', value: 'none' },
+      //   { text: 'Nhẹ (Tập thể dục nhẹ nhàng 1-3 ngày/tuần)', value: 'light' },
+      //   { text: 'Trung bình (Tập thể dục 3-5 ngày/tuần)', value: 'moderate' },
+      //   { text: 'Nặng (Tập thể dục nhiều 6-7 ngày/tuần)', value: 'heavy' },
+      // ],
       bmiResult: '',
       diseaseRisk: '',
       isLoading: false,
@@ -391,6 +399,15 @@ export default {
   computed: {
     ROLES() {
       return ROLES
+    },
+
+    activityTypeOptions() {
+      return [
+        { text: ACTIVITY.get(NONE), value: NONE },
+        { text: ACTIVITY.get(LIGHT), value: LIGHT },
+        { text: ACTIVITY.get(MODERATE), value: MODERATE },
+        { text: ACTIVITY.get(HEAVY), value: HEAVY },
+      ]
     },
   },
 

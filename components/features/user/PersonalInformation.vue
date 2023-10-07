@@ -14,9 +14,9 @@
             >
               <div class="symbol-label">
                 <img
+                  alt=""
                   class="symbol-label"
                   src="~/assets/media/users/blank.png"
-                  alt=""
                 />
               </div>
               <i class="symbol-badge bg-success"></i>
@@ -57,41 +57,6 @@
             </div>
           </div>
           <!--end::Contact-->
-
-          <!--begin::Student-->
-          <!--          <div v-if="$auth.user.child">-->
-          <!--            <a-->
-          <!--              style="cursor: pointer"-->
-          <!--              class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"-->
-          <!--              @click="getDetailsStudent($auth.user.child._id)"-->
-          <!--            >-->
-          <!--              Thông tin học sinh-->
-          <!--            </a>-->
-          <!--            <div class="pt-2">-->
-          <!--              <div-->
-          <!--                class="d-flex align-items-center justify-content-between mb-2"-->
-          <!--              >-->
-          <!--                <span class="font-weight-bold mr-2">Họ và tên học sinh:</span>-->
-          <!--                <a class="text-muted text-hover-primary">{{-->
-          <!--                  user.child.fullName-->
-          <!--                }}</a>-->
-          <!--              </div>-->
-          <!--              <div-->
-          <!--                class="d-flex align-items-center justify-content-between mb-2"-->
-          <!--              >-->
-          <!--                <span class="font-weight-bold mr-2">Mã học sinh:</span>-->
-          <!--                <span class="text-muted">{{ user.child.studentId }}</span>-->
-          <!--              </div>-->
-          <!--              <div-->
-          <!--                class="d-flex align-items-center justify-content-between mb-2"-->
-          <!--              >-->
-          <!--                <span class="font-weight-bold mr-2">Lớp:</span>-->
-          <!--                <span class="text-muted">{{ user.child.class.name }}</span>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
-
-          <!--end::Student-->
         </div>
       </div>
     </div>
@@ -111,13 +76,13 @@
           <div class="card-toolbar">
             <button
               ref="kt_save_changes"
-              type="reset"
               class="btn btn-primary mr-2"
+              type="reset"
               @click="save()"
             >
               Lưu thay đổi
             </button>
-            <button type="reset" class="btn btn-secondary" @click="cancel()">
+            <button class="btn btn-secondary" type="reset" @click="cancel()">
               Huỷ bỏ
             </button>
           </div>
@@ -128,10 +93,10 @@
           <!--begin::Body-->
           <b-overlay
             :show="isLoading"
-            spinner-variant="primary"
-            spinner-type="grow"
-            spinner-small
             rounded="sm"
+            spinner-small
+            spinner-type="grow"
+            spinner-variant="primary"
           >
             <div class="card-body">
               <div class="form-group row">
@@ -143,8 +108,8 @@
                     ref="fullName"
                     v-model="form.fullName"
                     class="form-control form-control-lg form-control-solid"
-                    type="text"
                     placeholder="Họ tên"
+                    type="text"
                   />
                 </div>
               </div>
@@ -155,10 +120,10 @@
                 <div class="col-lg-9 col-xl-6">
                   <input
                     ref="school"
-                    class="form-control form-control-lg form-control-solid"
-                    type="text"
-                    disabled
                     :value="user.school.name"
+                    class="form-control form-control-lg form-control-solid"
+                    disabled
+                    type="text"
                   />
                 </div>
               </div>
@@ -182,9 +147,9 @@
                     <input
                       ref="phoneNumber"
                       v-model="form.phoneNumber"
-                      type="text"
                       class="form-control form-control-lg form-control-solid"
                       placeholder="Số điện thoại"
+                      type="text"
                     />
                   </div>
                 </div>

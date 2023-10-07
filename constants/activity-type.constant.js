@@ -21,5 +21,8 @@ export const ACTIVITY = new Map([
 
   [MODERATE, 'Trung bình (Tập thể dục 3-5 ngày/tuần)'],
 
-  [HEAVY, 'Nặng (Tập thể dục nhiều 6-7 ngày/tuần)'],
+  [
+    HEAVY,
+    'Nặng (Tập thể dục hàng ngày hoặc tập thể dục cường độ cao 4-6 lần/tuần)',
+  ],
 ])

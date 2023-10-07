@@ -2,27 +2,13 @@
   <div>
     <div v-if="mealCompilation">
       <div class="font-size-lg">
-        Hiện tại bạn đang được khuyến nghị nạp lượng calo
-        <span class="font-weight-bold">{{ student.rcmCalories }}</span>
-        (kcal)/ngày để đáp ứng cho cơ thể có nhu cầu hoạt động thể lực:
-        <span class="font-weight-bold">
-          {{ ACTIVITY.get(student.activityType) }}</span
-        >, tương đương đốt cháy khoảng
-        <span class="font-weight-bold">{{
-          (
-            student.rcmCalories -
-            student.rcmCalories / ACTIVITY_TYPE.get(student.activityType)
-          ).toFixed(2)
-        }}</span>
-        (calo/ngày)
-        <br />
-        <br />
         <div>
           Hôm nay đã lên thực đơn tổng cộng
           <span class="font-weight-bold">{{ mealCompilation.totalPower }}</span>
           (kcal).
         </div>
       </div>
+
       <div class="row pt-2">
         <div class="col-4">
           <div class="d-flex align-items-center p-2">
@@ -45,6 +31,7 @@
           {{ mealCompilation.recommendStable }}
         </div>
       </div>
+
       <hr class="w-100 d-block" />
       <div class="row">
         <div class="col-4">

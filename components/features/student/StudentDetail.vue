@@ -14,9 +14,9 @@
             >
               <div class="symbol-label">
                 <img
+                  alt=""
                   class="symbol-label"
                   src="~/assets/media/users/blank.png"
-                  alt=""
                 />
               </div>
               <i class="symbol-badge bg-success"></i>
@@ -71,8 +71,8 @@
           <!--begin::Parents-->
           <div>
             <a
-              style="cursor: pointer"
               class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"
+              style="cursor: pointer"
             >
               Thông tin liên hệ
             </a>
@@ -128,11 +128,11 @@
                     <div class="col-lg-9 col-xl-6">
                       <input
                         ref="fullName"
-                        disabled
                         :value="student.fullName"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Họ tên"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -143,11 +143,11 @@
                     <div class="col-lg-9 col-xl-6">
                       <input
                         ref="fullName"
-                        disabled
                         :value="convertTimeStampsToString(student.dateOfBirth)"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Ngày sinh"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -158,11 +158,11 @@
                     <div class="col-lg-9 col-xl-6">
                       <input
                         ref="fullName"
-                        disabled
                         :value="student.height"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Chiều cao"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -173,11 +173,11 @@
                     <div class="col-lg-9 col-xl-6">
                       <input
                         ref="fullName"
-                        disabled
                         :value="student.weight"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Cân nặng"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -189,21 +189,21 @@
                     <div class="col-lg-4 col-xl-2">
                       <input
                         ref="bmi"
-                        disabled
                         :value="student.bmi"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Cân nặng"
+                        type="text"
                       />
                     </div>
                     <div class="col-lg-4 col-xl-4">
                       <input
                         ref="bmiResult"
-                        disabled
                         :value="bmiResult"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Không xác định"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -215,11 +215,11 @@
                     <div class="col-lg-9 col-xl-6">
                       <input
                         ref="diseaseRisk"
-                        disabled
                         :value="diseaseRisk"
                         class="form-control form-control-lg form-control-solid"
-                        type="text"
+                        disabled
                         placeholder="Không xác định"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -233,9 +233,9 @@
                         <b-form-radio-group
                           id="radio-group-1"
                           v-model="selectedGender"
-                          disabled
-                          :options="genderOptions"
                           :aria-describedby="ariaDescribedby"
+                          :options="genderOptions"
+                          disabled
                           name="radio-options"
                         ></b-form-radio-group>
                       </b-form-group>
@@ -251,9 +251,9 @@
                         <b-form-radio-group
                           id="radio-group-2"
                           v-model="selectedActivityType"
-                          disabled
-                          :options="activityTypeOptions"
                           :aria-describedby="ariaDescribedby2"
+                          :options="activityTypeOptions"
+                          disabled
                           name="radio-options2"
                         ></b-form-radio-group>
                       </b-form-group>
@@ -267,9 +267,9 @@
                     <div class="col-lg-9 col-xl-6">
                       <input
                         ref="school"
-                        disabled
                         :value="student.rcmCalories"
                         class="form-control form-control-lg form-control-solid"
+                        disabled
                         type="text"
                       />
                     </div>
@@ -295,6 +295,13 @@
 import { mapActions } from 'vuex'
 import { ROLES } from '~/constants/role.constant'
 import { convertTimeStampsToString } from '~/services/convertTimeStamps.service'
+import {
+  ACTIVITY,
+  HEAVY,
+  LIGHT,
+  MODERATE,
+  NONE,
+} from '~/constants/activity-type.constant'
 
 export default {
   name: 'StudentDetail',
@@ -314,12 +321,12 @@ export default {
         { text: 'Nữ', value: 'female' },
       ],
       selectedActivityType: this.student.activityType,
-      activityTypeOptions: [
-        { text: 'Không (Không luyện tập thể dục)', value: 'none' },
-        { text: 'Nhẹ (Tập thể dục nhẹ nhàng 1-3 ngày/tuần)', value: 'light' },
-        { text: 'Trung bình (Tập thể dục 3-5 ngày/tuần)', value: 'moderate' },
-        { text: 'Nặng (Tập thể dục nặng 6-7 ngày/tuần)', value: 'heavy' },
-      ],
+      // activityTypeOptions: [
+      //   { text: 'Không (Không luyện tập thể dục)', value: 'none' },
+      //   { text: 'Nhẹ (Tập thể dục nhẹ nhàng 1-3 ngày/tuần)', value: 'light' },
+      //   { text: 'Trung bình (Tập thể dục 3-5 ngày/tuần)', value: 'moderate' },
+      //   { text: 'Nặng (Tập thể dục nặng 6-7 ngày/tuần)', value: 'heavy' },
+      // ],
       bmiResult: '',
       diseaseRisk: '',
     }
@@ -328,6 +335,15 @@ export default {
   computed: {
     ROLES() {
       return ROLES
+    },
+
+    activityTypeOptions() {
+      return [
+        { text: ACTIVITY.get(NONE), value: NONE },
+        { text: ACTIVITY.get(LIGHT), value: LIGHT },
+        { text: ACTIVITY.get(MODERATE), value: MODERATE },
+        { text: ACTIVITY.get(HEAVY), value: HEAVY },
+      ]
     },
   },
 

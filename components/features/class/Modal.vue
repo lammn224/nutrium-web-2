@@ -8,8 +8,8 @@
     no-close-on-esc
     no-enforce-focus
     size="lg"
-    @ok="handleModalOk"
     @hidden="handleModalHidden"
+    @ok="handleModalOk"
   >
     <validation-observer ref="observer">
       <validation-provider
@@ -21,10 +21,10 @@
           <b-form-file
             ref="fileInput"
             v-model="fileExcel"
-            placeholder="Chọn file để tải lên..."
-            drop-placeholder="Kéo thả file vào đây..."
-            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             :state="errors[0] || error !== null ? false : null"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            drop-placeholder="Kéo thả file vào đây..."
+            placeholder="Chọn file để tải lên..."
           ></b-form-file>
 
           <b-form-invalid-feedback>
@@ -38,7 +38,7 @@
       </validation-provider>
 
       <validation-provider v-slot="{ errors }" name="Khối lớp" rules="required">
-        <b-form-group v-if="!isEdit" v-bind="$attrs" label="Khối lớp">
+        <b-form-group v-if="!isEdit" label="Khối lớp" v-bind="$attrs">
           <b-form-select
             v-model="grade"
             :options="gradeOption"
@@ -163,6 +163,7 @@ export default {
         addBtn.classList.remove('spinner', 'spinner-light', 'spinner-right')
         addBtn.disabled = false
         cancelBtn.disabled = false
+        this.fileExcel = null
         if (e.response) {
           if (e.response.status === 422) {
             this.$notifyTryAgain(this.notifyTitle, this.tryAgainMsg)
