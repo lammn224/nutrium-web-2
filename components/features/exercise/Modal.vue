@@ -7,8 +7,8 @@
     no-close-on-backdrop
     no-enforce-focus
     size="lg"
-    @ok="handleModalOk"
     @hidden="handleModalHidden"
+    @ok="handleModalOk"
   >
     <validation-observer ref="observer">
       <validation-provider
@@ -19,13 +19,13 @@
       >
         <b-form-group
           v-if="$auth.user.role === PARENTS()"
-          v-bind="$attrs"
           label="Chọn học sinh"
+          v-bind="$attrs"
         >
           <b-form-select
             v-model="form.student"
-            :options="studentOption"
             :disabled="isEdit"
+            :options="studentOption"
             :state="errors[0] || error !== null ? false : null"
           ></b-form-select>
 
@@ -36,43 +36,68 @@
       </validation-provider>
       <base-form-text-input
         v-model="form.date"
-        required
         :error="vForm.errors.get('date')"
-        placeholder="Ngày"
+        class="w-25"
         disabled
         label="Ngày"
-        rules="required|max:100"
         name="name"
-        class="w-25"
-      />
-      <activity-select
-        v-model="form.activity"
+        placeholder="Ngày"
         required
-        rules="required"
-        :activities="activities"
+        rules="required|max:100"
       />
+      <!--      <activity-select-->
+      <!--        v-model="form.activity"-->
+      <!--        :activities="activities"-->
+      <!--        required-->
+      <!--        rules="required"-->
+      <!--      />-->
+
+      <div class="form-group w-100">
+        <el-select
+          v-model="form.activity"
+          clearable
+          filterable
+          placeholder="Select"
+          value-key="_id"
+        >
+          <el-option-group
+            v-for="group in activityOptions"
+            :key="group.label"
+            :label="group.label"
+          >
+            <el-option
+              v-for="item in group.options"
+              :key="item.label"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-option-group>
+        </el-select>
+      </div>
+
       <div class="row">
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.timeDur"
-            required
             :error="vForm.errors.get('timeDur')"
-            placeholder="Thời gian (phút)"
             label="Thời gian (phút)"
-            rules="required"
             name="timeDur"
+            placeholder="Thời gian (phút)"
+            required
+            rules="required"
           />
         </div>
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.calo"
-            required
             :error="vForm.errors.get('calo')"
-            placeholder="Calo"
-            label="Calo"
             disabled
-            rules="required"
+            label="Calo"
             name="calo"
+            placeholder="Calo"
+            required
+            rules="required"
           />
         </div>
       </div>
@@ -89,6 +114,7 @@ import BaseFormMixin from '~/components/base/form/Mixin'
 import { PARENTS, STUDENT } from '~/constants/role.constant'
 import { convertStringToTimeStamps } from '~/services/convertTimeStamps.service'
 import NotifyMixin from '~/components/base/form/NotifyMixin.vue'
+import { LIGHT, MODERATE, HEAVY } from '~/constants/activity-type.constant'
 
 const defaultForm = {
   activity: null,
@@ -111,6 +137,52 @@ export default {
     ...mapGetters({
       activities: 'activity/activities',
     }),
+
+    activityOptions() {
+      const options = [
+        {
+          label: 'Nhẹ',
+          options: [],
+        },
+        {
+          label: 'Trung bình',
+          options: [],
+        },
+        {
+          label: 'Nặng',
+          options: [],
+        },
+        {
+          label: 'Khác',
+          options: [],
+        },
+      ]
+
+      this.activities.forEach((a) => {
+        if (a.level === LIGHT) {
+          options[0].options.push({
+            value: a,
+            label: a.name,
+          })
+        } else if (a.level === MODERATE) {
+          options[1].options.push({
+            value: a,
+            label: a.name,
+          })
+        } else if (a.level === HEAVY) {
+          options[2].options.push({
+            value: a,
+            label: a.name,
+          })
+        } else {
+          options[3].options.push({
+            value: a,
+            label: a.name,
+          })
+        }
+      })
+      return options
+    },
   },
 
   watch: {

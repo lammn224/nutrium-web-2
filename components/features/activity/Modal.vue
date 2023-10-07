@@ -151,5 +151,6 @@ export default {
 <style lang="scss">
 .el-input--suffix .el-input__inner {
   border-radius: 12px;
+  height: 43.3px;
 }
 </style>

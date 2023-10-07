@@ -88,19 +88,6 @@
                     }}</span>
                     (calo/ngày)
                     <br />
-                    <!--                    Hiện tại học sinh đang được khuyến nghị nạp lượng calo-->
-                    <!--                    <span class="font-weight-bold">{{ student.rcmCalories }}</span>-->
-                    <!--                    (kcal)/ngày để đáp ứng cho cơ thể có nhu cầu hoạt động thể lực:-->
-                    <!--                    <span class="font-weight-bold">{{ ACTIVITY.get(student.activityType) }}</span>, tương đương đốt cháy-->
-                    <!--                    khoảng-->
-                    <!--                    <span class="font-weight-bold">{{-->
-                    <!--                        (-->
-                    <!--                          student.rcmCalories - -->
-                    <!--                          student.rcmCalories / ACTIVITY_TYPE.get(student.activityType)-->
-                    <!--                        ).toFixed(2)-->
-                    <!--                      }}</span>-->
-                    <!--                    (calo/ngày)-->
-                    <!--                    <br/>-->
                   </div>
                   <b-tabs
                     active-nav-item-class="font-weight-bold text-primary"
