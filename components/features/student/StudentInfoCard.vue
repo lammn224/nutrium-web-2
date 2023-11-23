@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="kt_profile_aside"
-    class="flex-row-auto offcanvas-mobile w-300px w-xl-350px h-100"
-  >
+  <div id="kt_profile_aside" class="h-100">
     <div class="card card-custom card-stretch">
       <div class="card-body pt-4">
         <!--begin::Contact-->
@@ -12,9 +9,9 @@
           >
             <div class="symbol-label">
               <img
+                alt=""
                 class="symbol-label"
                 src="~/assets/media/users/blank.png"
-                alt=""
               />
             </div>
             <i class="symbol-badge bg-success"></i>

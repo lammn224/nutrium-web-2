@@ -4,8 +4,8 @@
       <template #toolbar>
         <b-button
           v-if="$auth.user.role === ADMIN || $auth.user.role === SYSADMIN"
-          variant="primary"
           size="sm"
+          variant="primary"
           @click="show"
         >
           <i class="flaticon2-plus"></i> Thêm mới
@@ -14,10 +14,10 @@
       <template #body>
         <b-overlay
           :show="isLoading"
-          spinner-variant="primary"
-          spinner-type="grow"
-          spinner-small
           rounded="sm"
+          spinner-small
+          spinner-type="grow"
+          spinner-variant="primary"
         >
           <b-input-group class="float-right pb-2" style="width: 300px">
             <template #prepend>
@@ -33,15 +33,16 @@
           </b-input-group>
           <b-table
             ref="table"
-            hover
-            bordered
-            show-empty
-            head-variant="light"
-            :items="foods"
-            :fields="fields"
-            :current-page="curPage"
-            :per-page="0"
             :busy="isLoading"
+            :current-page="curPage"
+            :fields="fields"
+            :items="foods"
+            :per-page="0"
+            bordered
+            head-variant="light"
+            hover
+            responsive
+            show-empty
             thead-class="font-weight-bold font-size-lg text-center"
           >
             <template #empty>
@@ -56,12 +57,12 @@
             >
               <span :id="`tooltip-update-${row.item._id}`">
                 <b-button
-                  size="sm"
-                  variant="primary"
-                  class="mr-1"
                   :disabled="
                     $auth.user.role !== SYSADMIN && row.item.school === null
                   "
+                  class="mr-1"
+                  size="sm"
+                  variant="primary"
                   @click="updateFood(row.item)"
                   >Cập nhật</b-button
                 >
@@ -75,12 +76,12 @@
               </b-tooltip>
               <span :id="`tooltip-delete-${row.item._id}`">
                 <b-button
-                  size="sm"
-                  variant="danger"
-                  class="mr-1"
                   :disabled="
                     $auth.user.role !== SYSADMIN && row.item.school === null
                   "
+                  class="mr-1"
+                  size="sm"
+                  variant="danger"
                   @click="deleteFood(row.item)"
                 >
                   Xoá
@@ -97,8 +98,8 @@
           </b-table>
           <b-pagination
             v-model="curPage"
-            :total-rows="totalRows"
             :per-page="limit"
+            :total-rows="totalRows"
             class="justify-content-end"
             pills
           ></b-pagination>
@@ -393,6 +394,7 @@ export default {
 
 <style lang="scss">
 @import './assets/sass/init';
+
 th {
   vertical-align: middle !important;
 }

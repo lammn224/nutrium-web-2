@@ -1,6 +1,6 @@
 <template>
   <!-- begin:: Header Topbar -->
-  <div class="topbar">
+  <div>
     <!--begin: Search -->
     <!--    <DropdownCreate></DropdownCreate>-->
 
@@ -45,6 +45,7 @@ export default {
 .topbar {
   .dropdown-toggle {
     padding: 0;
+
     &:hover {
       text-decoration: none;
     }
@@ -60,6 +61,7 @@ export default {
     margin: 0;
     padding: 0;
     outline: none;
+
     .b-dropdown-text {
       padding: 0;
     }

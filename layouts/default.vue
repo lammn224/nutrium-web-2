@@ -1,13 +1,16 @@
 <template>
   <div class="d-flex flex-column flex-root">
     <!-- begin:: Header Mobile -->
-    <header-mobile></header-mobile>
+    <!--    <header-mobile></header-mobile>-->
     <!-- end:: Header Mobile -->
 
     <ContentLoader v-if="loaderEnabled" :logo="loaderLogo"></ContentLoader>
 
     <div class="d-flex flex-row flex-column-fluid page">
-      <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
+      <div
+        id="kt_wrapper"
+        class="d-flex flex-column flex-row-fluid wrapper padding-top-none"
+      >
         <!-- begin:: Header -->
         <MainHeader></MainHeader>
         <!-- end:: header -->
@@ -157,3 +160,10 @@ export default {
   },
 }
 </script>
+<style>
+@media only screen and (max-width: 991px) {
+  .padding-top-none {
+    padding-top: 0 !important;
+  }
+}
+</style>

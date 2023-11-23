@@ -1,9 +1,9 @@
 <template>
   <!--begin::Card-->
-  <div class="d-flex flex-row">
+  <div class="d-xl-flex d-block">
     <div
       id="kt_profile_aside"
-      class="flex-row-auto offcanvas-mobile w-300px w-xl-350px"
+      class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4 h-100"
     >
       <div class="card card-custom card-stretch">
         <div class="card-body pt-4">
@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div class="flex-row-fluid ml-lg-8">
+    <div class="col-xxl-9 col-xl-8 col-12">
       <div class="card card-custom">
         <!--begin::Header-->
         <div class="card-header py-3">
@@ -100,7 +100,8 @@
           >
             <div class="card-body">
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Họ tên</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -114,7 +115,8 @@
                 </div>
               </div>
               <div v-if="user.school" class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Tên trường</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -134,7 +136,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Số điện thoại</label
                 >
                 <div class="col-lg-9 col-xl-6">

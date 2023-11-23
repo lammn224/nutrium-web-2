@@ -1,9 +1,9 @@
 <template>
   <!--begin::Card-->
-  <div class="d-flex flex-row">
+  <div class="d-xl-flex d-block">
     <div
       id="kt_profile_aside"
-      class="flex-row-auto offcanvas-mobile w-300px w-xl-350px h-100"
+      class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4 h-100"
     >
       <div class="card card-custom card-stretch">
         <div class="card-body pt-4">
@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <div class="flex-row-fluid ml-lg-8">
+    <div class="col-xxl-9 col-xl-8 col-12">
       <div class="card card-custom mb-5">
         <!--begin::Header-->
         <div class="card-header py-3">
@@ -139,7 +139,8 @@
           >
             <div class="card-body">
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Họ tên</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -153,7 +154,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Ngày sinh</label
                 >
                 <div class="col-lg-9 col-xl-9">
@@ -169,7 +171,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Chiều cao (cm)</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -183,7 +186,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Cân nặng (kg)</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -198,12 +202,14 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
-                  >Chỉ số BMI</label
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                 >
-                <div class="col-lg-4 col-xl-2">
+                  Chỉ số BMI
+                </label>
+                <div class="col-xl-2 col-lg-4">
                   <input
-                    ref="fullName"
+                    ref="bmi"
                     :value="form.bmi"
                     class="form-control form-control-lg form-control-solid"
                     disabled
@@ -211,23 +217,24 @@
                     type="text"
                   />
                 </div>
-                <div class="col-lg-4 col-xl-4">
+                <div class="col-xl-4 col-lg-5 mt-lg-0 mt-4">
                   <input
-                    ref="fullName"
+                    ref="bmiResult"
                     :value="bmiResult"
                     class="form-control form-control-lg form-control-solid"
                     disabled
-                    placeholder="Cân nặng"
+                    placeholder="Không xác định"
                     type="text"
                   />
                 </div>
               </div>
 
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Nguy cơ phát triển bệnh</label
                 >
-                <div class="col-lg-9 col-xl-6">
+                <div class="col-xl-6 col-lg-9">
                   <input
                     ref="diseaseRisk"
                     :value="diseaseRisk"
@@ -240,7 +247,9 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
+                >
                   Giới tính
                 </label>
                 <div class="col-lg-9 col-xl-6">
@@ -257,7 +266,9 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
+                >
                   Hoạt động thể lực
                 </label>
                 <div class="col-lg-9 col-xl-6">
@@ -274,7 +285,8 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >KNNL (kcal)</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -289,7 +301,8 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Mã học sinh</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -303,7 +316,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Tên trường</label
                 >
                 <div class="col-lg-9 col-xl-6">
@@ -317,7 +331,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right"
+                <label
+                  class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-lg-right text-left"
                   >Lớp</label
                 >
                 <div class="col-lg-9 col-xl-6">

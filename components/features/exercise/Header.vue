@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="btn-group">
+  <div class="row align-items-center">
+    <div class="col-xl-5 col-12">
+      <div class="btn-group btn-group w-100">
         <button
           class="btn btn-outline btn-primary"
           form=""
@@ -25,7 +25,7 @@
         </button>
       </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-xl-3 col-12 mt-xl-0 mt-4">
       <div class="title">{{ title }}</div>
     </div>
   </div>

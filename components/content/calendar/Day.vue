@@ -1,17 +1,17 @@
 <template>
   <div
-    class="day-cell"
     :class="{
       today: day.isToday,
       'current-month': day.isCurrentMonth,
       weekend: day.isWeekEnd,
       'selected-day': isDaySelected,
     }"
+    class="day-cell"
     @click="showDayOptions"
   >
     <div class="row">
       <div class="col-sm-6">
-        <div v-show="isDaySelected" v-if="$auth.user.role !== STUDENT()">
+        <div v-if="$auth.user.role !== STUDENT()" v-show="isDaySelected">
           <span class="label-cus bg-primary" @click="showAddMealForm">
             Tạo bữa ăn</span
           >
@@ -25,9 +25,9 @@
       <content-calendar-event-card
         v-for="meal in day.meals"
         :key="meal.id"
-        :meal="meal"
         :day-date="day.date"
         :is-day-selected="isDaySelected"
+        :meal="meal"
         @click.native="showDetailMeal(meal)"
       >
       </content-calendar-event-card>
@@ -98,7 +98,7 @@ export default {
     showDayOptions() {
       const startOfToday = moment().startOf('day')
       if (
-        // this.day.date.isBefore(startOfToday) ||
+        this.day.date.isBefore(startOfToday) ||
         this.day.date.isAfter(startOfToday) ||
         this.day.date.isSame(startOfToday)
       ) {

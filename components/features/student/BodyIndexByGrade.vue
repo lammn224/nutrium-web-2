@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row-fluid col-lg-6">
+  <div class="flex-row-fluid col-lg-6 pl-lg-2 p-0">
     <div class="card card-custom card-stretch mb-5">
       <div class="card-header pt-5" style="display: block">
         <div class="row justify-content-between">
@@ -13,10 +13,10 @@
 
       <b-overlay
         :show="isLoading"
-        spinner-variant="primary"
-        spinner-type="grow"
-        spinner-small
         rounded="sm"
+        spinner-small
+        spinner-type="grow"
+        spinner-variant="primary"
       >
         <div class="card-body">
           <BarChart

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row-fluid col-lg-6">
+  <div class="flex-row-fluid col-lg-6 pr-lg-2 p-0">
     <div class="card card-custom card-stretch mb-5">
       <div class="card-header pt-5" style="display: block">
         <div class="row justify-content-between">
@@ -11,11 +11,11 @@
         </div>
         <div class="row">
           <label class="col-lg-auto col-form-label"> Khối lớp </label>
-          <b-form-group class="col-lg-4" v-bind="$attrs" label="">
+          <b-form-group class="col-lg-4" label="" v-bind="$attrs">
             <b-form-select
               v-model="grade"
-              class=""
               :options="gradeOption"
+              class=""
             ></b-form-select>
           </b-form-group>
         </div>
@@ -23,10 +23,10 @@
 
       <b-overlay
         :show="isLoading"
-        spinner-variant="primary"
-        spinner-type="grow"
-        spinner-small
         rounded="sm"
+        spinner-small
+        spinner-type="grow"
+        spinner-variant="primary"
       >
         <div class="card-body">
           <BarChart

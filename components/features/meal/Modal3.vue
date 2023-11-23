@@ -1,6 +1,7 @@
 <template>
   <b-modal
     ref="modal"
+    :hide-footer="$auth.user._id !== form.createdBy"
     :ok-title="isEdit ? 'Cập nhật' : 'Thêm mới'"
     :title="
       !isEdit
@@ -13,13 +14,8 @@
     no-close-on-backdrop
     no-enforce-focus
     size="xl"
-    :hide-footer="
-      $auth.user._id !== form.createdBy ||
-      convertStringToTimeStamps(form.date) <
-        convertStringToTimeStamps(dateToString(new Date()))
-    "
-    @ok="handleModalOk"
     @hidden="handleModalHidden"
+    @ok="handleModalOk"
   >
     <validation-observer ref="observer">
       <validation-provider
@@ -28,7 +24,7 @@
         name="Loại bữa ăn"
         rules="required"
       >
-        <b-form-group v-if="isEdit" v-bind="$attrs" label="Loại bữa ăn">
+        <b-form-group v-if="isEdit" label="Loại bữa ăn" v-bind="$attrs">
           <b-form-select
             v-model="form.type"
             :options="isEditOptions"
@@ -49,7 +45,7 @@
         name="Loại bữa ăn"
         rules="required"
       >
-        <b-form-group v-if="!isEdit" v-bind="$attrs" label="Loại bữa ăn">
+        <b-form-group v-if="!isEdit" label="Loại bữa ăn" v-bind="$attrs">
           <b-form-select
             v-model="form.type"
             :options="options"
@@ -64,14 +60,14 @@
 
       <base-form-text-input
         v-model="form.date"
-        required
         :error="vForm.errors.get('date')"
-        placeholder="Ngày"
+        class="w-25"
         disabled
         label="Ngày"
-        rules="required|max:100"
         name="name"
-        class="w-25"
+        placeholder="Ngày"
+        required
+        rules="required|max:100"
       />
 
       <!--      <base-form-text-input-->
@@ -91,13 +87,13 @@
       >
         <b-form-group
           v-if="$auth.user.role !== ADMIN"
-          v-bind="$attrs"
           label="Chọn học sinh"
+          v-bind="$attrs"
         >
           <b-form-select
             v-model="form.student"
-            :options="studentOption"
             :disabled="isEdit"
+            :options="studentOption"
             :state="errors[0] || error !== null ? false : null"
           ></b-form-select>
 
@@ -118,9 +114,9 @@
           <base-form-text-input
             :value="`${selectedStudent.rcmCalories} kcal`"
             disabled
-            placeholder="KNNL"
             label="Năng lượng khuyến nghị"
             name="name"
+            placeholder="KNNL"
           />
         </div>
 
@@ -128,9 +124,9 @@
           <base-form-text-input
             :value="`40% ~ ${selectedStudent.maxBreakfastCalories} kcal`"
             disabled
-            placeholder="KNNL"
             label="% Năng lượng khuyến nghị bữa sáng"
             name="name"
+            placeholder="KNNL"
           />
         </div>
 
@@ -138,9 +134,9 @@
           <base-form-text-input
             :value="`25% ~ ${selectedStudent.maxDinnerCalories} kcal`"
             disabled
-            placeholder="KNNL"
             label="% Năng lượng khuyến nghị bữa tối"
             name="name"
+            placeholder="KNNL"
           />
         </div>
       </div>
@@ -152,7 +148,7 @@
             name="Năng lượng"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Năng lượng (kcal)">
+            <b-form-group label="Năng lượng (kcal)" v-bind="$attrs">
               <b-form-input
                 v-model="form.power"
                 class="border border-2 border-primary"
@@ -172,7 +168,7 @@
             name="Protein"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Protein (g)">
+            <b-form-group label="Protein (g)" v-bind="$attrs">
               <b-form-input
                 v-model="form.protein"
                 class="border border-2 border-primary"
@@ -192,7 +188,7 @@
             name="Lipid"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Lipid (g)">
+            <b-form-group label="Lipid (g)" v-bind="$attrs">
               <b-form-input
                 v-model="form.lipid"
                 class="border border-2 border-primary"
@@ -212,7 +208,7 @@
             name="Glucid"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Glucid (g)">
+            <b-form-group label="Glucid (g)" v-bind="$attrs">
               <b-form-input
                 v-model="form.glucid"
                 class="border border-2 border-primary"
@@ -235,7 +231,7 @@
             name="Canxi"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Canxi (mg)">
+            <b-form-group label="Canxi (mg)" v-bind="$attrs">
               <b-form-input
                 v-model="form.ca"
                 class="border border-2 border-primary"
@@ -255,7 +251,7 @@
             name="Sắt"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Sắt (mg)">
+            <b-form-group label="Sắt (mg)" v-bind="$attrs">
               <b-form-input
                 v-model="form.fe"
                 class="border border-2 border-primary"
@@ -275,7 +271,7 @@
             name="Chất xơ"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Chất xơ (g)">
+            <b-form-group label="Chất xơ (g)" v-bind="$attrs">
               <b-form-input
                 v-model="form.fiber"
                 class="border border-2 border-primary"
@@ -295,7 +291,7 @@
             name="Kẽm"
             rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           >
-            <b-form-group v-bind="$attrs" label="Kẽm (mg)">
+            <b-form-group label="Kẽm (mg)" v-bind="$attrs">
               <b-form-input
                 v-model="form.zn"
                 class="border border-2 border-primary"
@@ -311,6 +307,17 @@
         </div>
       </div>
 
+      <validation-provider
+        v-if="selectValues.length === 0"
+        v-slot="{ errors }"
+        name="zzz"
+        rules="required"
+      >
+        <div class="text-danger mb-5">
+          {{ selectValues.length ? '' : (errors[0] = 'Chưa chọn món ăn') }}
+        </div>
+      </validation-provider>
+
       <div>
         <div
           v-for="(selectValue, index) in selectValues"
@@ -320,67 +327,56 @@
           <div class="col-xl-7">
             <food-select
               v-model="selectValues[index]"
-              required
-              :filtered-foods="filteredFoods"
-              placeholder="Món ăn"
-              label="Món ăn"
-              rules="required"
-              name="food"
               :class="
                 $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
                   ? 'font-weight-bold text-dark'
                   : ''
               "
               :disabled="
-                $auth.user.role === STUDENT ||
-                $auth.user._id !== form.createdBy ||
-                convertStringToTimeStamps(form.date) <
-                  convertStringToTimeStamps(dateToString(new Date()))
+                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
               "
+              :filtered-foods="filteredFoods"
+              label="Món ăn"
+              name="food"
+              placeholder="Món ăn"
+              required
+              rules="required"
               @input="onSelectChange(index)"
             />
           </div>
           <div class="col-xl-3">
             <base-form-text-input
               v-model="inputValues[index]"
-              required
               :disabled="
                 selectValues[index] === '' ||
                 $auth.user.role === STUDENT ||
-                $auth.user._id !== form.createdBy ||
-                convertStringToTimeStamps(form.date) <
-                  convertStringToTimeStamps(dateToString(new Date()))
+                $auth.user._id !== form.createdBy
               "
-              placeholder="Khối lượng (gam)"
-              label="Khối lượng (gam)"
-              rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
-              name="name"
               class="w-25"
+              label="Khối lượng (gam)"
+              name="name"
+              placeholder="Khối lượng (gam)"
+              required
+              rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             />
           </div>
           <div class="col-xl-2 pt-9">
             <b-button
               :disabled="
-                $auth.user.role === STUDENT ||
-                $auth.user._id !== form.createdBy ||
-                convertStringToTimeStamps(form.date) <
-                  convertStringToTimeStamps(dateToString(new Date()))
+                $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
               "
               @click="removeSelect(index)"
-              >Xoá</b-button
-            >
+              >Xoá
+            </b-button>
           </div>
         </div>
         <b-button
           :disabled="
-            $auth.user.role === STUDENT ||
-            $auth.user._id !== form.createdBy ||
-            convertStringToTimeStamps(form.date) <
-              convertStringToTimeStamps(dateToString(new Date()))
+            $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
           "
           @click="addSelect"
-          >Thêm món ăn</b-button
-        >
+          >Thêm món ăn
+        </b-button>
       </div>
     </validation-observer>
   </b-modal>
@@ -434,6 +430,7 @@ export default {
   },
   data() {
     return {
+      zzz: null,
       selectValues: [],
       inputValues: [],
       canAddSelect: true,

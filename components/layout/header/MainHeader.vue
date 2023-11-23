@@ -3,14 +3,14 @@
   <div
     id="kt_header"
     ref="kt_header"
-    class="header header-fixed"
     :class="headerClasses"
+    class="header header-fixed"
   >
     <div
-      class="d-flex align-items-stretch justify-content-between"
       :class="{ 'container-fluid': widthFluid, container: !widthFluid }"
+      class="d-flex align-items-center justify-content-between"
     >
-      <div class="d-none d-lg-flex align-items-center mr-3">
+      <div class="d-flex align-items-center mr-3">
         <!--begin::Aside Toggle-->
         <button
           id="kt_aside_desktop_toggle"
@@ -29,8 +29,8 @@
         <div class="header-logo">
           <router-link to="/">
             <img
-              alt="Logo"
               :src="layoutConfig('self.logo.default')"
+              alt="Logo"
               class="logo-sticky max-h-35px"
             />
           </router-link>
@@ -75,21 +75,21 @@
           <!--begin::Search Toggle-->
           <div
             id="kt_quick_search_toggle"
-            data-toggle="dropdown"
             data-offset="0px,1px"
+            data-toggle="dropdown"
           ></div>
           <!--end::Search Toggle-->
           <!--begin::Dropdown-->
-          <div
-            class="dropdown-menu dropdown-menu-left dropdown-menu-lg dropdown-menu-anim-up"
-          >
-            <div
-              class="quick-search-wrapper scroll"
-              data-scroll="true"
-              data-height="350"
-              data-mobile-height="200"
-            ></div>
-          </div>
+          <!--          <div-->
+          <!--            class="dropdown-menu dropdown-menu-left dropdown-menu-lg dropdown-menu-anim-up"-->
+          <!--          >-->
+          <!--            <div-->
+          <!--              class="quick-search-wrapper scroll"-->
+          <!--              data-height="350"-->
+          <!--              data-mobile-height="200"-->
+          <!--              data-scroll="true"-->
+          <!--            ></div>-->
+          <!--          </div>-->
           <!--end::Dropdown-->
         </div>
         <!--end::Desktop Search-->

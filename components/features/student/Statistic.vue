@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" class="flex-row-fluid">
+  <div>
     <b-overlay
       :show="isLoading"
       rounded="sm"
