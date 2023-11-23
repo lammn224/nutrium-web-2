@@ -19,28 +19,32 @@
           spinner-type="grow"
           spinner-variant="primary"
         >
-          <div class="mb-8">
-            <div>
-              <label class="font-weight-bold font-size-lg">Mức vận động</label>
-            </div>
-            <el-select
-              v-model="selectedLevel"
-              :placeholder="'Chọn mức vận động'"
-              class="pr-5"
-              clearable
-              filterable
-              value-key="_id"
-            >
-              <el-option
-                v-for="item in levelOptions"
-                :key="item.key"
-                :label="item.label"
-                :value="item.value"
+          <div class="row align-items-end mb-8">
+            <div class="col-5">
+              <div>
+                <label class="font-weight-bold font-size-lg"
+                  >Mức vận động</label
+                >
+              </div>
+              <el-select
+                v-model="selectedLevel"
+                :placeholder="'Chọn mức vận động'"
+                class="pr-5"
+                clearable
+                filterable
+                value-key="_id"
               >
-              </el-option>
-            </el-select>
+                <el-option
+                  v-for="item in levelOptions"
+                  :key="item.key"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
 
-            <b-input-group class="float-right pb-2" style="width: 300px">
+            <b-input-group class="ml-auto mr-4 h-100" style="width: 250px">
               <template #prepend>
                 <b-input-group-text>
                   <i class="flaticon-search"></i>

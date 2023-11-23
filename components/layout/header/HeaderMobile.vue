@@ -1,12 +1,12 @@
 <template>
   <div
     id="kt_header_mobile"
-    class="header-mobile align-items-center"
     :class="headerClasses"
+    class="header-mobile align-items-center"
   >
     <!--begin::Logo-->
     <a href="/">
-      <img alt="Logo" :src="headerLogo" class="logo-default max-h-30px" />
+      <img :src="headerLogo" alt="Logo" class="logo-default max-h-30px" />
     </a>
     <!--end::Logo-->
     <!--begin::Toolbar-->
@@ -71,7 +71,7 @@ export default {
      * @returns {string}
      */
     headerLogo() {
-      return process.env.BASE_URL + this.layoutConfig('self.logo.sticky')
+      return this.layoutConfig('self.logo.default')
     },
 
     /**

@@ -33,8 +33,8 @@
         <h3 class="font-weight-bold m-0">Thông tin người dùng</h3>
         <a
           id="kt_quick_user_close"
-          href="#"
           class="btn btn-xs btn-icon btn-light btn-hover-primary"
+          href="#"
         >
           <i class="ki ki-close icon-xs text-muted"></i>
         </a>
@@ -50,22 +50,22 @@
         <div class="d-flex align-items-center mt-5">
           <div class="symbol symbol-100 mr-5">
             <img
+              alt=""
               class="symbol-label"
               src="~/assets/media/users/blank.png"
-              alt=""
             />
             <i class="symbol-badge bg-success"></i>
           </div>
           <div class="d-flex flex-column">
             <a
-              href="#"
               class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
+              href="#"
             >
               {{ $auth.user.fullName }}
             </a>
             <div class="text-muted mt-1">{{ ROLES.get($auth.user.role) }}</div>
             <div class="navi mt-2">
-              <a href="#" class="navi-item">
+              <a class="navi-item" href="#">
                 <span class="navi-link p-0 pb-2">
                   <span class="navi-icon mr-1">
                     <span class="svg-icon svg-icon-lg svg-icon-primary">
@@ -95,9 +95,9 @@
         <div class="navi navi-spacer-x-0 p-0">
           <!--begin::Item-->
           <nuxt-link
-            to="/profile"
-            href="#"
             class="navi-item"
+            href="#"
+            to="/profile"
             @click.native="closeOffcanvas"
           >
             <div class="navi-link">
@@ -139,7 +139,14 @@
                 </div>
               </div>
               <div class="navi-item">
-                <b-dropdown size="sm" variant="link" no-caret left no-flip>
+                <b-dropdown
+                  class="child-list-dropdown"
+                  left
+                  no-caret
+                  no-flip
+                  size="sm"
+                  variant="link"
+                >
                   <template #button-content>
                     <div>
                       <span class="font-weight-bold font-size-base"
@@ -153,8 +160,8 @@
                     <b-dropdown-text
                       v-for="(child, idx) in $auth.user.child"
                       :key="idx"
-                      tag="div"
                       class="navi-item"
+                      tag="div"
                       @click="childDetail(child._id)"
                     >
                       <div class="navi-link p-5">
@@ -214,5 +221,17 @@ export default {
 <style lang="scss" scoped>
 #kt_quick_user {
   overflow: hidden;
+}
+</style>
+
+<style lang="scss">
+.child-list-dropdown {
+  .btn.dropdown-toggle.btn-link.btn-sm.dropdown-toggle-no-caret {
+    padding: 0;
+  }
+
+  .dropdown-menu.show {
+    max-width: 250px;
+  }
 }
 </style>

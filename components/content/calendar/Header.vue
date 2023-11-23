@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="btn-group">
+  <div class="row align-items-center">
+    <div class="col-xl-5 col-12">
+      <div class="btn-group w-100">
         <button
           class="btn btn-outline btn-primary"
           form=""
@@ -25,17 +25,19 @@
         </button>
       </div>
     </div>
-    <div class="col-sm-4">
+    <div
+      :class="$auth.user.role === ADMIN() ? 'col-6' : 'col-12'"
+      class="col-xl-3 mt-xl-0 mt-4"
+    >
       <div class="title">{{ title }}</div>
     </div>
-    <div class="col-sm-4">
+    <div v-if="$auth.user.role === ADMIN()" class="col-xl-4 col-6 mt-xl-0 mt-4">
       <b-button
-        v-if="$auth.user.role === ADMIN()"
         class="float-right"
         variant="primary"
         @click="showCloneMealsModal"
-        >Sao chép bữa ăn tuần trước</b-button
-      >
+        >Sao chép bữa ăn tuần trước
+      </b-button>
     </div>
     <meal-clone-meal-modal
       v-if="$auth.user.role === ADMIN()"

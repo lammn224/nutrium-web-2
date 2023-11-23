@@ -3,7 +3,7 @@ export default {
     layout: 'default',
     logo: {
       default: require('~/assets/media/logos/logo-nutrium-green.png'),
-      // sticky: require('~/assets/media/logos/logo-nutrium-green.png'),
+      sticky: require('~/assets/media/logos/logo-nutrium-green.png'),
     },
   },
   loader: {

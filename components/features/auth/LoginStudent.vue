@@ -8,7 +8,7 @@
         novalidate="novalidate"
         @submit.prevent="handleSubmit(onSubmit)"
       >
-        <div class="pb-13 pt-lg-0 pt-5">
+        <div class="pb-13 pt-lg-0 pt-5 min-w-450px">
           <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
             Chào mừng tới Nutrium
           </h3>
@@ -102,14 +102,14 @@
               <label class="font-size-h6 font-weight-bolder text-dark pt-5"
                 >Mật khẩu</label
               >
-              <a
-                id="kt_login_forgot"
-                class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
-                href="javascript:"
-                tabindex="4"
-                @click="showForm('forgot')"
-                >Quên mật khẩu ?</a
-              >
+              <!--              <a-->
+              <!--                id="kt_login_forgot"-->
+              <!--                class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"-->
+              <!--                href="javascript:"-->
+              <!--                tabindex="4"-->
+              <!--                @click="showForm('forgot')"-->
+              <!--              >Quên mật khẩu ?</a-->
+              <!--              >-->
             </div>
             <div
               id="password-input-group"
