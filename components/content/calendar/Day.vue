@@ -98,7 +98,7 @@ export default {
     showDayOptions() {
       const startOfToday = moment().startOf('day')
       if (
-        this.day.date.isBefore(startOfToday) ||
+        // this.day.date.isBefore(startOfToday) ||
         this.day.date.isAfter(startOfToday) ||
         this.day.date.isSame(startOfToday)
       ) {

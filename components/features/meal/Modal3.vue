@@ -1,7 +1,11 @@
 <template>
   <b-modal
     ref="modal"
-    :hide-footer="$auth.user._id !== form.createdBy"
+    :hide-footer="
+      $auth.user._id !== form.createdBy ||
+      convertStringToTimeStamps(form.date) <
+        convertStringToTimeStamps(dateToString(new Date()))
+    "
     :ok-title="isEdit ? 'Cập nhật' : 'Thêm mới'"
     :title="
       !isEdit
