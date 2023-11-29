@@ -3,7 +3,7 @@
   <div class="d-xl-flex d-block">
     <div
       id="kt_profile_aside"
-      class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4 h-100"
+      class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4 pl-0 h-100"
     >
       <div class="card card-custom card-stretch">
         <div class="card-body pt-4">
@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div class="col-xxl-9 col-xl-8 col-12">
+    <div class="col-xxl-9 col-xl-8 col-12 pl-xl-2 pl-0">
       <div class="card card-custom">
         <!--begin::Header-->
         <div class="card-header py-3">

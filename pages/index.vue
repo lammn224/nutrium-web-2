@@ -13,9 +13,9 @@
             <div class="d-xl-flex d-block mb-5">
               <student-info-card
                 :student="child"
-                class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4"
+                class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4 pl-0"
               />
-              <div class="col-xxl-9 col-xl-8 col-12">
+              <div class="col-xxl-9 col-xl-8 col-12 pl-xl-2 pl-0">
                 <student-statistic
                   :class-name="
                     $auth.user.child?.length === 1 ? 'ml-lg-8' : 'ml-lg-8'
@@ -31,9 +31,9 @@
         <div v-else class="d-xl-flex d-block mb-5">
           <student-info-card
             :student="$auth.user"
-            class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4"
+            class="col-xxl-3 col-xl-4 col-12 mb-xl-0 mb-4 pl-0"
           />
-          <div class="col-xxl-9 col-xl-8 col-12">
+          <div class="col-xxl-9 col-xl-8 col-12 pl-xl-2 pl-0">
             <student-statistic :class-name="'ml-lg-8'" :student="$auth.user" />
           </div>
         </div>
