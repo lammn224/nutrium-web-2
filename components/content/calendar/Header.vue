@@ -39,10 +39,7 @@
         >Sao chép bữa ăn tuần trước
       </b-button>
     </div>
-    <meal-clone-meal-modal
-      v-if="$auth.user.role === ADMIN()"
-      ref="modal"
-    ></meal-clone-meal-modal>
+    <meal-clone-meal-modal v-if="$auth.user.role === ADMIN()" ref="modal" />
   </div>
 </template>
 

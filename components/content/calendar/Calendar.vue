@@ -2,10 +2,10 @@
   <div class="">
     <b-overlay
       :show="isLoading"
-      spinner-variant="primary"
-      spinner-type="grow"
-      spinner-small
       rounded="sm"
+      spinner-small
+      spinner-type="grow"
+      spinner-variant="primary"
     >
       <div class="panel panel-default">
         <div class="panel-heading rounded"><h2>Lập lịch bữa ăn</h2></div>
@@ -80,8 +80,8 @@ export default {
       error: null,
       currentMonth: moment().startOf('month'),
       appLocale: 'vi',
-      startMonth: moment().startOf('month').unix(),
-      endMonth: moment().endOf('month').unix(),
+      startMonth: moment().startOf('month'),
+      // endMonth: moment().endOf('month').unix(),
     }
   },
   computed: {
@@ -121,13 +121,21 @@ export default {
 
       return weeks
     },
+
+    startView() {
+      return moment(this.startMonth).startOf('month').startOf('isoWeek').unix()
+    },
+
+    endView() {
+      return moment(this.startMonth).endOf('month').endOf('isoWeek').unix()
+    },
   },
   created() {
     const me = this
     this.$root.$on(CHANGE_MONTH, async (payload) => {
       me.currentMonth = payload
-      this.startMonth = moment(payload).startOf('month').unix()
-      this.endMonth = moment(payload).endOf('month').unix()
+      this.startMonth = moment(payload).startOf('month')
+      // this.endMonth = moment(payload).endOf('month').unix()
       await this.loadMeals()
       await this.loadFoodData()
     })
@@ -149,7 +157,8 @@ export default {
     }),
 
     async loadMeals() {
-      const params = `startMonth=${this.startMonth}&endMonth=${this.endMonth}`
+      // const params = `startMonth=${this.startMonth}&endMonth=${this.endMonth}`
+      const params = `startMonth=${this.startView}&endMonth=${this.endView}`
       this.isLoading = true
       await this.delay(500)
 

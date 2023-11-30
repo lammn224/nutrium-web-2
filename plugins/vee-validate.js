@@ -25,7 +25,10 @@ extend('max', max)
 extend('min', min)
 extend('confirmed', confirmed)
 extend('numeric', numeric)
-extend('regex', regex)
+extend('regex', {
+  ...regex,
+  message: (field) => field + ' giá trị không hợp lệ',
+})
 extend('ext', ext)
 
 Vue.component('ValidationProvider', ValidationProvider)

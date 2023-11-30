@@ -1,11 +1,7 @@
 <template>
   <b-modal
     ref="modal"
-    :hide-footer="
-      $auth.user._id !== form.createdBy ||
-      convertStringToTimeStamps(form.date) <
-        convertStringToTimeStamps(dateToString(new Date()))
-    "
+    :hide-footer="$auth.user._id !== form.createdBy"
     :ok-title="isEdit ? 'Cập nhật' : 'Thêm mới'"
     :title="
       !isEdit
@@ -22,90 +18,95 @@
     @ok="handleModalOk"
   >
     <validation-observer ref="observer">
-      <validation-provider
-        v-if="isEdit"
-        v-slot="{ errors }"
-        name="Loại bữa ăn"
-        rules="required"
-      >
-        <b-form-group v-if="isEdit" label="Loại bữa ăn" v-bind="$attrs">
-          <b-form-select
-            v-model="form.type"
-            :options="isEditOptions"
-            :state="errors[0] || error !== null ? false : null"
-            disabled
-          >
-          </b-form-select>
-
-          <b-form-invalid-feedback>
-            {{ errors[0] || error }}
-          </b-form-invalid-feedback>
-        </b-form-group>
-      </validation-provider>
-
-      <validation-provider
-        v-if="!isEdit"
-        v-slot="{ errors }"
-        name="Loại bữa ăn"
-        rules="required"
-      >
-        <b-form-group v-if="!isEdit" label="Loại bữa ăn" v-bind="$attrs">
-          <b-form-select
-            v-model="form.type"
-            :options="options"
-            :state="errors[0] || error !== null ? false : null"
-          ></b-form-select>
-
-          <b-form-invalid-feedback>
-            {{ errors[0] || error }}
-          </b-form-invalid-feedback>
-        </b-form-group>
-      </validation-provider>
-
-      <base-form-text-input
-        v-model="form.date"
-        :error="vForm.errors.get('date')"
-        class="w-25"
-        disabled
-        label="Ngày"
-        name="name"
-        placeholder="Ngày"
-        required
-        rules="required|max:100"
-      />
-
-      <!--      <base-form-text-input-->
-      <!--        v-model="form.topic"-->
-      <!--        :error="vForm.errors.get('topic')"-->
-      <!--        placeholder="Chủ đề"-->
-      <!--        label="Chủ đề"-->
-      <!--        name="topic"-->
-      <!--        class="w-25"-->
-      <!--      />-->
-
-      <validation-provider
-        v-if="form.createdBy === $auth.user._id && $auth.user.role !== ADMIN"
-        v-slot="{ errors }"
-        name="Học sinh"
-        rules="required"
-      >
-        <b-form-group
-          v-if="$auth.user.role !== ADMIN"
-          label="Chọn học sinh"
-          v-bind="$attrs"
+      <div class="row">
+        <validation-provider
+          v-if="isEdit"
+          v-slot="{ errors }"
+          class="col-4 p-1"
+          name="Loại bữa ăn"
+          rules="required"
         >
-          <b-form-select
-            v-model="form.student"
-            :disabled="isEdit"
-            :options="studentOption"
-            :state="errors[0] || error !== null ? false : null"
-          ></b-form-select>
+          <b-form-group v-if="isEdit" label="Loại bữa ăn" v-bind="$attrs">
+            <b-form-select
+              v-model="form.type"
+              :options="isEditOptions"
+              :state="errors[0] || error !== null ? false : null"
+              disabled
+            >
+            </b-form-select>
 
-          <b-form-invalid-feedback>
-            {{ errors[0] || error }}
-          </b-form-invalid-feedback>
-        </b-form-group>
-      </validation-provider>
+            <b-form-invalid-feedback>
+              {{ errors[0] || error }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </validation-provider>
+
+        <validation-provider
+          v-if="!isEdit"
+          v-slot="{ errors }"
+          class="col-4 p-1"
+          name="Loại bữa ăn"
+          rules="required"
+        >
+          <b-form-group v-if="!isEdit" label="Loại bữa ăn" v-bind="$attrs">
+            <b-form-select
+              v-model="form.type"
+              :options="options"
+              :state="errors[0] || error !== null ? false : null"
+            ></b-form-select>
+
+            <b-form-invalid-feedback>
+              {{ errors[0] || error }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </validation-provider>
+
+        <base-form-text-input
+          v-model="form.date"
+          :error="vForm.errors.get('date')"
+          class="col-4 p-1"
+          disabled
+          label="Ngày"
+          name="name"
+          placeholder="Ngày"
+          required
+          rules="required|max:100"
+        />
+
+        <!--      <base-form-text-input-->
+        <!--        v-model="form.topic"-->
+        <!--        :error="vForm.errors.get('topic')"-->
+        <!--        placeholder="Chủ đề"-->
+        <!--        label="Chủ đề"-->
+        <!--        name="topic"-->
+        <!--        class="w-25"-->
+        <!--      />-->
+
+        <validation-provider
+          v-if="form.createdBy === $auth.user._id && $auth.user.role !== ADMIN"
+          v-slot="{ errors }"
+          class="col-4 p-1"
+          name="Học sinh"
+          rules="required"
+        >
+          <b-form-group
+            v-if="$auth.user.role !== ADMIN"
+            label="Chọn học sinh"
+            v-bind="$attrs"
+          >
+            <b-form-select
+              v-model="form.student"
+              :disabled="isEdit"
+              :options="studentOption"
+              :state="errors[0] || error !== null ? false : null"
+            ></b-form-select>
+
+            <b-form-invalid-feedback>
+              {{ errors[0] || error }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </validation-provider>
+      </div>
 
       <div
         v-if="
@@ -114,7 +115,7 @@
         "
         class="row"
       >
-        <div class="col-xl-4">
+        <div class="col-xl-4 p-1">
           <base-form-text-input
             :value="`${selectedStudent.rcmCalories} kcal`"
             disabled
@@ -124,7 +125,7 @@
           />
         </div>
 
-        <div class="col-xl-4">
+        <div class="col-xl-4 p-1">
           <base-form-text-input
             :value="`40% ~ ${selectedStudent.maxBreakfastCalories} kcal`"
             disabled
@@ -134,7 +135,7 @@
           />
         </div>
 
-        <div class="col-xl-4">
+        <div class="col-xl-4 p-1">
           <base-form-text-input
             :value="`25% ~ ${selectedStudent.maxDinnerCalories} kcal`"
             disabled
@@ -146,7 +147,7 @@
       </div>
 
       <div class="row">
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Năng lượng"
@@ -166,7 +167,7 @@
             </b-form-group>
           </validation-provider>
         </div>
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Protein"
@@ -186,7 +187,7 @@
             </b-form-group>
           </validation-provider>
         </div>
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Lipid"
@@ -206,7 +207,7 @@
             </b-form-group>
           </validation-provider>
         </div>
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Glucid"
@@ -229,7 +230,7 @@
       </div>
 
       <div class="row">
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Canxi"
@@ -249,7 +250,7 @@
             </b-form-group>
           </validation-provider>
         </div>
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Sắt"
@@ -269,7 +270,7 @@
             </b-form-group>
           </validation-provider>
         </div>
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Chất xơ"
@@ -289,7 +290,7 @@
             </b-form-group>
           </validation-provider>
         </div>
-        <div class="col-xl-3">
+        <div class="col-3 p-1">
           <validation-provider
             v-slot="{ errors }"
             name="Kẽm"
@@ -311,24 +312,26 @@
         </div>
       </div>
 
-      <validation-provider
-        v-if="selectValues.length === 0"
-        v-slot="{ errors }"
-        name="zzz"
-        rules="required"
-      >
-        <div class="text-danger mb-5">
-          {{ selectValues.length ? '' : (errors[0] = 'Chưa chọn món ăn') }}
+      <div class="row max-h-250px overflow-auto">
+        <div class="col-12 p-1">
+          <validation-provider
+            v-if="!selectValues.length"
+            v-slot="{ errors }"
+            name="Danh sách món ăn"
+            rules="required"
+          >
+            <div class="text-danger mb-5">
+              {{ selectValues.length ? '' : (errors[0] = 'Chưa chọn món ăn') }}
+            </div>
+          </validation-provider>
         </div>
-      </validation-provider>
 
-      <div>
         <div
           v-for="(selectValue, index) in selectValues"
           :key="index"
-          class="row"
+          class="row col-12"
         >
-          <div class="col-xl-7">
+          <div class="col-xl-7 col-6 px-1">
             <food-select
               v-model="selectValues[index]"
               :class="
@@ -348,7 +351,7 @@
               @input="onSelectChange(index)"
             />
           </div>
-          <div class="col-xl-3">
+          <div class="col-xl-3 col-4 px-1">
             <base-form-text-input
               v-model="inputValues[index]"
               :disabled="
@@ -361,10 +364,10 @@
               name="name"
               placeholder="Khối lượng (gam)"
               required
-              rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+              rules="required|max:100|regex:^[-+]?(?!0(\.0*)?$)0*(\d+(\.\d+)?)?$"
             />
           </div>
-          <div class="col-xl-2 pt-9">
+          <div class="col-xl-2 col-2 pt-9 px-1">
             <b-button
               :disabled="
                 $auth.user.role === STUDENT || $auth.user._id !== form.createdBy
@@ -434,7 +437,6 @@ export default {
   },
   data() {
     return {
-      zzz: null,
       selectValues: [],
       inputValues: [],
       canAddSelect: true,
@@ -736,3 +738,11 @@ export default {
   },
 }
 </script>
+
+<style>
+@media (max-width: 992px) {
+  .modal-xl {
+    min-width: 520px !important;
+  }
+}
+</style>

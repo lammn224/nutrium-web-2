@@ -7,48 +7,48 @@
     no-close-on-backdrop
     no-enforce-focus
     size="lg"
-    @ok="handleModalOk"
     @hidden="handleModalHidden"
+    @ok="handleModalOk"
   >
     <validation-observer ref="observer">
       <validation-provider :vid="vid" name="Lựa chọn ngày" rules="required">
         <!--        <perfect-scrollbar class="mt-4">-->
-        <div class="d-flex justify-content-between" style="width: 540px">
+        <div class="row" style="width: 540px">
           <b-form-group
+            class="font-weight-bold col-xl-6"
             label="Lựa chọn tuần nguồn"
-            class="font-weight-bold"
             label-size="lg"
           >
             <el-date-picker
               v-model="form.srcWeek"
-              class="custom-size-datepicker"
-              type="week"
-              size="large"
-              placeholder="Chọn tuần"
-              format="Tuần WW-yyyy"
               :picker-options="srcPickerOption"
+              class="custom-size-datepicker"
+              format="Tuần WW-yyyy"
+              placeholder="Chọn tuần"
+              size="large"
+              type="week"
             ></el-date-picker>
           </b-form-group>
           <b-form-group
+            class="font-weight-bold col-xl-6"
             label="Lựa chọn tuần đích"
-            class="font-weight-bold"
             label-size="lg"
           >
             <el-date-picker
               v-model="form.desWeek"
-              class="custom-size-datepicker"
-              type="week"
-              size="large"
-              placeholder="Chọn tuần"
-              format="Tuần WW-yyyy"
               :picker-options="desPickerOption"
+              class="custom-size-datepicker"
+              format="Tuần WW-yyyy"
+              placeholder="Chọn tuần"
+              size="large"
+              type="week"
             ></el-date-picker>
           </b-form-group>
         </div>
 
         <b-form-group
-          label="Lựa chọn ngày"
           class="font-weight-bold"
+          label="Lựa chọn ngày"
           label-size="lg"
         >
           <b-form-checkbox-group v-model="form.dayChecked" size="lg">
@@ -65,7 +65,7 @@
             </div>
           </b-form-checkbox-group>
         </b-form-group>
-        <b-form-invalid-feedback class="font-size-base" :state="false">
+        <b-form-invalid-feedback :state="false" class="font-size-base">
           Lưu ý: Thao tác này có thể xoá những bữa ăn đã thiết lập!
         </b-form-invalid-feedback>
         <!--        </perfect-scrollbar>-->
