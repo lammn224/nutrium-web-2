@@ -30,7 +30,7 @@
         name="name"
         placeholder="Chỉ số MET"
         required
-        rules="required|max:100"
+        rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
       />
 
       <validation-provider

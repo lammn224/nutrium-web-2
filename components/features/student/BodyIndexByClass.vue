@@ -2,23 +2,33 @@
   <div class="flex-row-fluid col-lg-6 pr-lg-2 p-0">
     <div class="card card-custom card-stretch mb-5">
       <div class="card-header pt-5" style="display: block">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between align-items-center">
           <div class="col-lg-auto">
-            <h3 class="card-label font-weight-bolder text-dark">
-              Chiều cao và cân nặng trung bình theo lớp
+            <h3 class="card-label font-weight-bolder text-dark m-0">
+              Chiều cao - cân nặng TB theo lớp
             </h3>
           </div>
-        </div>
-        <div class="row">
           <label class="col-lg-auto col-form-label"> Khối lớp </label>
-          <b-form-group class="col-lg-4" label="" v-bind="$attrs">
+          <b-form-group class="col-lg-3 pl-0 m-0" label="" v-bind="$attrs">
             <b-form-select
               v-model="grade"
               :options="gradeOption"
               class=""
+              size="sm"
             ></b-form-select>
           </b-form-group>
         </div>
+        <!--        <div class="row">-->
+        <!--          <label class="col-lg-auto col-form-label"> Khối lớp </label>-->
+        <!--          <b-form-group class="col-lg-3 pl-0" label="" v-bind="$attrs">-->
+        <!--            <b-form-select-->
+        <!--              v-model="grade"-->
+        <!--              :options="gradeOption"-->
+        <!--              class=""-->
+        <!--              size="sm"-->
+        <!--            ></b-form-select>-->
+        <!--          </b-form-group>-->
+        <!--        </div>-->
       </div>
 
       <b-overlay

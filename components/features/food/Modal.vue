@@ -7,41 +7,41 @@
     no-close-on-backdrop
     no-enforce-focus
     size="lg"
-    @ok="handleModalOk"
     @hidden="handleModalHidden"
+    @ok="handleModalOk"
   >
     <validation-observer ref="observer">
       <base-form-text-input
         v-model="form.name"
-        required
         :error="vForm.errors.get('name')"
-        placeholder="Tên món ăn"
-        label="Tên món ăn"
-        rules="required|max:100"
-        name="name"
         class="w-25"
+        label="Tên món ăn"
+        name="name"
+        placeholder="Tên món ăn"
+        required
+        rules="required|max:100"
       />
       <div class="row">
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.power"
-            required
             :error="vForm.errors.get('power')"
-            placeholder="Năng lượng"
-            label="Năng lượng"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Năng lượng (kcal)"
             name="name"
+            placeholder="Năng lượng"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.protein"
-            required
             :error="vForm.errors.get('protein')"
-            placeholder="Protein"
-            label="Protein"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Protein (g)"
             name="name"
+            placeholder="Protein"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
       </div>
@@ -50,23 +50,23 @@
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.lipid"
-            required
             :error="vForm.errors.get('lipid')"
-            placeholder="Lipid"
-            label="Lipid"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Lipid (g)"
             name="name"
+            placeholder="Lipid"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.glucid"
-            required
             :error="vForm.errors.get('glucid')"
-            placeholder="Glucid"
-            label="Glucid"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Glucid (g)"
             name="name"
+            placeholder="Glucid"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
       </div>
@@ -75,23 +75,23 @@
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.ca"
-            required
             :error="vForm.errors.get('ca')"
-            placeholder="Canxi"
             label="Canxi"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
             name="name"
+            placeholder="Canxi (mg)"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.fe"
-            required
             :error="vForm.errors.get('fe')"
-            placeholder="Sắt"
-            label="Sắt"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Sắt (mg)"
             name="name"
+            placeholder="Sắt"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
       </div>
@@ -100,23 +100,23 @@
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.zn"
-            required
             :error="vForm.errors.get('zn')"
-            placeholder="Kẽm"
-            label="Kẽm"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Kẽm (mg)"
             name="name"
+            placeholder="Kẽm"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
         <div class="col-xl-6">
           <base-form-text-input
             v-model="form.fiber"
-            required
             :error="vForm.errors.get('fiber')"
-            placeholder="Chất xơ"
-            label="Chất xơ"
-            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
+            label="Chất xơ (g)"
             name="name"
+            placeholder="Chất xơ"
+            required
+            rules="required|max:100|regex:^[-+]?\d+(\.\d+)?$"
           />
         </div>
       </div>

@@ -4,6 +4,7 @@
     :ok-title="'Thêm mới'"
     :title="'Thêm mới lớp học'"
     cancel-title="Hủy bỏ"
+    hide-header-close
     no-close-on-backdrop
     no-close-on-esc
     no-enforce-focus

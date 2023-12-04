@@ -52,12 +52,15 @@
       <!--        rules="required"-->
       <!--      />-->
 
-      <div class="form-group w-100">
+      <div class="d-flex flex-column form-group">
+        <div>
+          <label class="font-size-lg">Mức vận động</label>
+        </div>
         <el-select
           v-model="form.activity"
           clearable
           filterable
-          placeholder="Select"
+          placeholder="Hoạt động"
           value-key="_id"
         >
           <el-option-group
@@ -188,20 +191,28 @@ export default {
   watch: {
     'form.activity': {
       handler(newVal, oldVal) {
-        this.form.calo =
-          (this.form.timeDur *
-            (newVal?.metIdx * 3.5 * this.selectedStudent?.weight)) /
-          200
+        this.form.calo = Number(
+          (
+            (this.form.timeDur *
+              (newVal?.metIdx * 3.5 * this.selectedStudent?.weight)) /
+            200
+          ).toFixed(2)
+        )
       },
       deep: true,
     },
 
     'form.timeDur': {
       handler(newVal, oldVal) {
-        this.form.calo =
-          (newVal *
-            (this.form.activity?.metIdx * 3.5 * this.selectedStudent?.weight)) /
-          200
+        this.form.calo = Number(
+          (
+            (newVal *
+              (this.form.activity?.metIdx *
+                3.5 *
+                this.selectedStudent?.weight)) /
+            200
+          ).toFixed(2)
+        )
       },
       deep: true,
     },
@@ -212,12 +223,15 @@ export default {
           this.selectedStudent = this.$auth.user.child.find(
             (item) => item._id === newVal
           )
-          this.form.calo =
-            (this.form.timeDur *
-              (this.form.activity?.metIdx *
-                3.5 *
-                this.selectedStudent?.weight)) /
-            200
+          this.form.calo = Number(
+            (
+              (this.form.timeDur *
+                (this.form.activity?.metIdx *
+                  3.5 *
+                  this.selectedStudent?.weight)) /
+              200
+            ).toFixed(2)
+          )
         }
 
         if (this.$auth.user.role === STUDENT) {

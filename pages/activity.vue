@@ -30,8 +30,6 @@
                 v-model="selectedLevel"
                 :placeholder="'Chọn mức vận động'"
                 class="pr-5"
-                clearable
-                filterable
                 value-key="_id"
               >
                 <el-option
@@ -195,6 +193,11 @@ export default {
     },
     levelOptions() {
       return [
+        {
+          value: '',
+          label: 'Tất cả',
+          key: 'all',
+        },
         {
           value: HEAVY,
           label: ACTIVITY_LEVEL.get(HEAVY),

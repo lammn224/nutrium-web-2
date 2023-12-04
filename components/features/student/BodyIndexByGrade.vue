@@ -2,9 +2,9 @@
   <div class="flex-row-fluid col-lg-6 pl-lg-2 p-0">
     <div class="card card-custom card-stretch mb-5">
       <div class="card-header pt-5" style="display: block">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between align-items-center">
           <div class="col-lg-auto">
-            <h3 class="card-label font-weight-bolder text-dark">
+            <h3 class="card-label font-weight-bolder text-dark m-0">
               Chiều cao và cân nặng trung bình theo khối lớp
             </h3>
           </div>
